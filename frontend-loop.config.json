@@ -1,0 +1,84 @@
+{
+  "$schema": "./docs/frontend-loop/runner-config.schema.json",
+  "version": 1,
+  "reviewOutputWords": 350,
+  "chairOutputWords": 700,
+  "contextThresholdsPercent": {
+    "stopBroadResearch": 35,
+    "prepareHandoff": 25,
+    "stopNewMoves": 20
+  },
+  "riskClasses": {
+    "R0": {
+      "label": "mechanical",
+      "modelTier": "fast",
+      "effort": "low",
+      "reviewerCap": 1,
+      "parallelCap": 1,
+      "retryLimit": 0,
+      "timeoutMinutes": 5,
+      "maxOutputCharactersPerReviewer": 6000,
+      "roles": ["relevant-verifier"]
+    },
+    "R1": {
+      "label": "bounded implementation",
+      "modelTier": "workhorse",
+      "effort": "medium",
+      "reviewerCap": 3,
+      "parallelCap": 3,
+      "retryLimit": 1,
+      "timeoutMinutes": 12,
+      "maxOutputCharactersPerReviewer": 8000,
+      "roles": ["frontend-reviewer", "accessibility-reviewer", "triggered-specialist"]
+    },
+    "R2": {
+      "label": "product or contract",
+      "modelTier": "strong",
+      "effort": "high",
+      "reviewerCap": 5,
+      "parallelCap": 4,
+      "retryLimit": 1,
+      "timeoutMinutes": 20,
+      "maxOutputCharactersPerReviewer": 10000,
+      "roles": [
+        "backend-contract-auditor",
+        "legal-workflow-reviewer",
+        "usability-reviewer",
+        "accessibility-reviewer",
+        "devils-advocate"
+      ]
+    },
+    "R3": {
+      "label": "critical",
+      "modelTier": "strongest-available",
+      "effort": "maximum-supported",
+      "reviewerCap": 13,
+      "parallelCap": 6,
+      "retryLimit": 1,
+      "timeoutMinutes": 30,
+      "maxOutputCharactersPerReviewer": 12000,
+      "roles": [
+        "backend-contract-auditor",
+        "legal-workflow-reviewer",
+        "usability-reviewer",
+        "accessibility-reviewer",
+        "trust-privacy-security-reviewer",
+        "visual-brand-reviewer",
+        "frontend-reviewer",
+        "adversarial-red-team",
+        "devils-advocate",
+        "test-engineer",
+        "company-secretary-persona",
+        "in-house-counsel-persona",
+        "corporate-law-associate-persona"
+      ]
+    }
+  },
+  "performanceBudgets": {
+    "maxIndividualClientChunkGzipBytes": 81920,
+    "maxTotalClientChunksGzipBytes": 409600,
+    "maxLcpMillisecondsP75": 2500,
+    "maxInpMillisecondsP75": 200,
+    "maxClsP75": 0.1
+  }
+}

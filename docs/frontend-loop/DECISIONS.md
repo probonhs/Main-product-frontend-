@@ -34,6 +34,7 @@ Do not copy historical decisions here unless they are still in force. Link their
   full council for every mechanical change.
 - **Safety boundary:** Optimisation never removes backend-truth, accessibility, privacy, legal-state or final
   production-build gates.
-- **Source:** `docs/FRONTEND_MULTI_AGENT_LOOP_PROMPT.md`, section 4A.
+- **Source:** `frontend-loop.config.json`, `scripts/frontend-loop.mjs` and section 3 of
+  `docs/FRONTEND_MULTI_AGENT_LOOP_PROMPT.md`.
 - **Reversal condition:** Measured delivery data shows a different routing policy improves lead time without
   increasing escaped critical defects or repeated work.

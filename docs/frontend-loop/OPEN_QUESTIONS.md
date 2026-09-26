@@ -9,4 +9,4 @@ Items here require evidence or a human decision. Do not silently answer them in 
 | Q-003 | What is the approved public sentence on language-model use? | Founder/legal | Trust copy | One reconciled statement matching production architecture | OPEN |
 | Q-004 | When will historical-coverage metadata exist? | Backend | Earlier-date control | Typed response contract and tests | OPEN |
 | Q-005 | What feedback destination and consent record will the pilot use? | Founder/backend | Feedback control | Storage/privacy decision | OPEN |
-
+| Q-006 | Which project, domain, environments and owner will deploy the logged-in product? | Founder/engineering | Production deployment | Hosting and rollback ownership | OPEN |

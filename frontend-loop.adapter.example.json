@@ -1,0 +1,7 @@
+{
+  "name": "replace-with-local-agent-cli",
+  "command": "agent-cli",
+  "args": ["--effort", "{{effort}}", "--role", "{{role}}"],
+  "promptDelivery": "stdin",
+  "environment": {}
+}

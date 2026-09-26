@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Placedon frontend loop configuration",
+  "type": "object",
+  "required": ["version", "riskClasses", "performanceBudgets"],
+  "properties": {
+    "version": { "const": 1 },
+    "reviewOutputWords": { "type": "integer", "minimum": 100 },
+    "chairOutputWords": { "type": "integer", "minimum": 200 },
+    "riskClasses": {
+      "type": "object",
+      "required": ["R0", "R1", "R2", "R3"],
+      "additionalProperties": {
+        "type": "object",
+        "required": ["effort", "reviewerCap", "parallelCap", "retryLimit", "timeoutMinutes", "roles"]
+      }
+    },
+    "performanceBudgets": { "type": "object" }
+  }
+}

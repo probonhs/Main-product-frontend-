@@ -1,12 +1,12 @@
-# AGENTS.md — Placedon website (standing rules, re-read every turn)
+# AGENTS.md — Placedon shared frontend (standing rules, re-read every turn)
 
-This repo is the **Placedon** marketing website: Next.js 15 (App Router) + TypeScript (strict) +
-Tailwind v4 + shadcn/ui. Placedon is an evidence-first legal-intelligence layer for Indian corporate
+This repo contains the **Placedon** marketing site and product frontend: Next.js 16 (App Router) +
+TypeScript (strict) + Tailwind v4. Keep each task within its stated surface. Placedon is an evidence-first legal-intelligence layer for Indian corporate
 law (Companies Act, 2013). It answers only with the exact provision + amending instrument + operative
 date, and **abstains** when it cannot verify. It is a **witness, not a tool.**
 
-Full brief: see `codex-website-prompt.md`. These are the non-negotiables that must hold on **every**
-change — check them before you consider any task done.
+For product work, read `docs/FINAL_FRONTEND_DEVELOPMENT_PROMPT.md`. These are the non-negotiables that must
+hold on **every** change.
 
 ## Brand — do not drift
 - **Colour is near-monochrome.** Base = near-black `#0C0C0D` + warm cream `#F4EFE6` (the "white") +
@@ -54,12 +54,13 @@ change — check them before you consider any task done.
 - Product data behind a typed engine client (`src/lib/engine/*`) with a `MockProvider` now and an
   `HttpProvider` matching the real backend. Output classes
   `verified_fact | deterministic_conclusion | predictive_signal` + `abstained`.
-  **The backend has exactly SIX routes** (verified against `checker/api.py`):
+  **The inspected backend has EIGHT routes** (verify again against backend code before implementation):
   `GET /v1/health` · `POST /v1/compliance-pack` · `POST /v1/document-check` ·
   `GET /v1/company/{cin}/events` · `GET /v1/company/{cin}/events/{event_id}` ·
-  `GET /v1/instruments/{fragment}/affected`.
-  ⚠ **`/v1/company/{cin}/standing` DOES NOT EXIST** — nor does `/v1/ask`. Earlier revisions of this file
-  documented `/standing`; that was wrong. Do not call it.
+  `GET /v1/instruments/{fragment}/affected` · `POST /v1/ask` · `POST /v1/mca-strip`.
+  ⚠ **`/v1/company/{cin}/standing` DOES NOT EXIST.** Earlier revisions documented `/standing`, and this file
+  once incorrectly denied `/v1/ask`. Do not call `/standing`; map Ask and MCA strip from their current
+  validators before using them.
   ⚠ `/events` is **not** per-company: `cin` is echoed back but never used to filter. No UI may promise
   "this company's events."
   ⚠ **A transport failure must NEVER render as an abstention.** Abstention is a verified product state;
@@ -74,7 +75,7 @@ change — check them before you consider any task done.
 
 ## Before you call anything done
 Run the checklist: monochrome + ≤10% gold held on every screen · abstain-grey used only for abstention ·
-mono on every statute reference · brand fonts self-hosted · custom brand icons present · copy real,
+bold legal-serif treatment on every reader-facing statute reference · brand fonts self-hosted · custom brand icons present · copy real,
 grammatical, on-voice, no banned words, self-explanatory · a11y AA · reduced-motion respected ·
 responsive to 360px · no overclaiming · no invented figures.
 
