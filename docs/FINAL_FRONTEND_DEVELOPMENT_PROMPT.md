@@ -5,6 +5,10 @@ design-and-coding model. Give the model access to the product-frontend repositor
 repository named below. This brief is for the logged-in product application, not the public marketing
 site.
 
+For an autonomous, resumable multi-agent implementation, use this prompt together with
+`docs/FRONTEND_MULTI_AGENT_LOOP_PROMPT.md`. The loop writes provider-neutral state into Git so work can
+move between Astra, Claude, Codex and ChatGPT without depending on chat history.
+
 ---
 
 ## START OF PROMPT
