@@ -519,6 +519,14 @@ Meet WCAG 2.2 AA.
 If additional models or agents are available, use a council with clear roles. Do not let them edit the same
 files concurrently.
 
+Use the automatic effort and token-routing policy in `docs/FRONTEND_MULTI_AGENT_LOOP_PROMPT.md`. Optimise for
+the earliest verified usable slice: routine mechanical work uses the fastest capable model at low effort;
+bounded implementation uses medium effort; backend/UX/accessibility/privacy decisions use high effort; and
+legal-state, historical-law, security or release conflicts use the strongest available model at extra-high/max
+effort. Escalate only on evidence, de-escalate after focused proof, parallelise independent read-only reviews,
+and never repeat an unchanged review. Token savings may not remove a truth, accessibility, privacy, legal or
+production-build gate.
+
 1. **Backend-contract auditor** — maps each screen field to a route and response field
 2. **Indian corporate-law UX reviewer** — checks terminology, workflow and evidence presentation
 3. **Company Secretary persona** — tests portfolio and deadline usability

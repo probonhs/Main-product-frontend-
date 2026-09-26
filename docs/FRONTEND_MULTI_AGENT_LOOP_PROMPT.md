@@ -210,6 +210,84 @@ Confidence: HIGH | MEDIUM | LOW, with reason
 
 No reviewer may issue a PASS based only on another agent’s summary.
 
+## 4A. Automatic effort, model and token routing
+
+Optimise for the earliest **verified usable outcome**, not the largest council transcript. The chair assigns
+the cheapest capable model and lowest sufficient reasoning effort for each task. When the host supports
+per-agent model or effort settings, apply this policy automatically. When it does not, preserve the same
+behaviour by varying review depth and output size. Never pause merely to ask the user which effort to use.
+
+### Risk class
+
+Classify every move before dispatching work:
+
+| Class | Typical scope | Default treatment |
+|---|---|---|
+| R0 — mechanical | inventories, formatting, exact renames, status-file updates | fast model; low/minimal effort; one verifier |
+| R1 — bounded implementation | known component pattern, styling, focused tests, non-legal copy | workhorse model; medium effort; focused reviewers |
+| R2 — product/contract | route mapping, state semantics, primary UX, accessibility or privacy behaviour | strong model; high effort; independent evidence-backed review |
+| R3 — critical | legal-state meaning, historical coverage, security boundary, false-pass risk, release GO/NO-GO | strongest available model; extra-high/max effort; full relevant council and fact-check |
+
+Provider names are interchangeable. Select by capability, not branding. If a requested effort is unavailable,
+use the nearest supported level and record the substitution in `STATE.md` only when it affects confidence.
+
+### Automatic escalation and de-escalation
+
+- Start at the default treatment for the risk class.
+- Escalate one level only when there is a cited backend contradiction, failing test without a local cause,
+  unresolved reviewer disagreement, security/privacy concern, legal ambiguity, or two failed focused attempts.
+- Escalate R2 to R3 when a wrong answer could create a false legal pass, expose confidential data, corrupt
+  evidence or misstate historical law.
+- De-escalate after the contradiction is resolved and a focused test proves the result.
+- A reviewer may request escalation only with evidence and a specific unanswered question.
+- Never rerun an unchanged review with a stronger model merely to seek a different opinion.
+- Do not use high or maximum effort for file discovery, status summaries, formatting, routine test execution
+  or deterministic transformations.
+
+### Token and context discipline
+
+1. The chair owns one compact evidence packet per move: question, risk class, relevant diff, backend fields,
+   acceptance criteria, failed checks and open questions. Agents receive this packet plus named file ranges,
+   not the entire repository transcript.
+2. Read the master prompts once per model session. Thereafter use `STATE.md`, decisions and the current evidence
+   packet; reopen source sections only when needed.
+3. Search first, then read the narrowest complete semantic unit. Cite `file:line`; do not paste long source
+   files or repeat settled background.
+4. Reviewer output should normally stay under 350 words and chair synthesis under 700 words. Exceed this only
+   for evidence that changes the decision. Persona reactions are grouped into one compact hypothesis report.
+5. Reuse a test result or review only while its command inputs, relevant diff and backend commit are unchanged.
+   Record that reuse; never claim stale evidence as a fresh run.
+6. Run independent reads, searches and reviews in parallel when they do not write the same files. Keep one
+   implementation owner and a work-in-progress limit of one move.
+7. Run focused tests while building. Run the complete gate once the coherent move is ready, and rerun only the
+   affected failed checks after a fix. A final full gate is required before GO when code changed.
+8. Summarise command output to decision-relevant facts while retaining exact failures and paths in the durable
+   verification record. Do not spend model tokens narrating passing logs.
+9. Stop generating alternatives once one option meets the recorded acceptance criteria and no veto remains.
+   Park non-critical improvements in `BACKLOG.md` instead of widening the move.
+
+### Review depth by risk
+
+- **R0:** chair plus one relevant verifier; one compact pass.
+- **R1:** implementation, frontend and the specifically triggered reviewer; one pass, with a response round
+  only if findings conflict.
+- **R2:** backend-contract auditor, relevant domain reviewers and Devil's Advocate; independent pass plus a
+  targeted response round for disputed or major findings.
+- **R3:** all relevant permanent reviewers, triggered specialists and personas; two rounds and an independent
+  fact-check. Safety veto rules remain absolute.
+
+The chair may add a reviewer but must record the trigger. Do not summon every persona or specialist by default.
+
+### Fast delivery and model-switch policy
+
+- Prioritise the critical path to the next usable vertical slice. Cosmetic refinements that do not improve
+  comprehension, truth, accessibility or task completion wait in the backlog.
+- At roughly 35% context/usage remaining, do not begin broad research. At 25%, finish the current coherent
+  unit and prepare durable state. At 20%, start no new move; verify, commit if GO and write the handoff.
+- If a provider limit is reached, switch at the cleanest available boundary using the model-switch handoff.
+  The next model resumes from Git evidence and does not repeat completed research or reviews.
+- Cost or speed never permits skipping backend truth, accessibility, privacy, legal-state or final build gates.
+
 ## 5. The loop: Research → Decide → Build → Verify → Council → Commit → Learn
 
 Run one **move** at a time. A move must be small enough to understand, test and revert as one unit.
@@ -303,7 +381,7 @@ limitations. “Looks good” is not verification.
 
 Run the required reviewers on the actual diff and browser output.
 
-Use two rounds:
+Use the review depth assigned by the move’s risk class. For R3, use two rounds:
 
 1. independent review;
 2. response round where reviewers see the findings, correct factual errors and identify unresolved dissent.
@@ -319,8 +397,8 @@ The backend auditor fact-checks disputed capability claims. The chair writes `RE
 - final GO or NO-GO;
 - recorded dissent.
 
-The Devil's Advocate must review both the decision and the implemented result. Its strongest unresolved
-objection appears in the report even when the final verdict is GO.
+For R2 and R3, the Devil's Advocate must review both the decision and the implemented result. Its strongest
+unresolved objection appears in the report even when the final verdict is GO.
 
 One reviewer’s veto on false legal state, client data leakage, inaccessible core flow or destructive data loss
 is enough for NO-GO.
