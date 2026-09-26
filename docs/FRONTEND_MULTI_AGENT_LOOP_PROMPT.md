@@ -144,6 +144,15 @@ another’s opinions.
    - searches for false passes, hidden assumptions, stale fixtures, misleading dates, impossible backend
      states, empty dead ends and claims unsupported by source code.
 
+10. **Devil's Advocate**
+   - challenges the preferred direction before implementation, even when the council initially agrees;
+   - presents the strongest case for the best rejected alternative rather than manufacturing weak objections;
+   - runs a pre-mortem: “Assume this failed in the first pilot. What most likely caused the failure?”;
+   - asks what evidence would reverse the decision, whether the UI is solving the wrong user’s problem and
+     which complexity should be removed rather than polished;
+   - cannot veto merely for disagreement, but any factual contradiction or unmitigated critical risk it finds
+     must be resolved or explicitly accepted by the chair.
+
 ### Simulated user council
 
 Use at least three relevant personas for every primary flow:
@@ -238,6 +247,11 @@ Open questions
 
 The chair chooses one option and rejects the others in writing in `DECISIONS.md`.
 
+Before the choice is final, the Devil's Advocate receives the proposed decision, research record and rejected
+options. It must steelman the strongest rejected option, run the pilot-failure pre-mortem and identify the
+cheapest test that could disprove the preferred direction. The chair responds to each material objection in
+the decision record.
+
 Each decision includes:
 
 - decision and reason;
@@ -304,6 +318,9 @@ The backend auditor fact-checks disputed capability claims. The chair writes `RE
 - required fixes;
 - final GO or NO-GO;
 - recorded dissent.
+
+The Devil's Advocate must review both the decision and the implemented result. Its strongest unresolved
+objection appears in the report even when the final verdict is GO.
 
 One reviewer’s veto on false legal state, client data leakage, inaccessible core flow or destructive data loss
 is enough for NO-GO.
@@ -478,4 +495,3 @@ Return:
 Then continue automatically unless a stop condition applies.
 
 ## END OF LOOP PROMPT
-

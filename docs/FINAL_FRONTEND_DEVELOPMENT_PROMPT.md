@@ -528,6 +528,8 @@ files concurrently.
 7. **Visual-system critic** — checks brand discipline and hierarchy
 8. **Frontend engineer** — owns implementation
 9. **Red-team critic** — finds false passes, hidden assumptions and unsupported product claims
+10. **Devil's Advocate** — steelmans the strongest rejected direction, runs a first-pilot failure pre-mortem
+    and states the cheapest evidence that would overturn the preferred decision
 
 Each reviewer must cite files and fields. Persona feedback must be labelled **simulated**, never represented
 as customer research. The lead synthesises conflicts; majority vote does not override backend truth.
