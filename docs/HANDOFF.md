@@ -1,5 +1,9 @@
 # Placedon — handoff (state as of 26 Sep 2026)
 
+For final product-frontend implementation, use
+`docs/FINAL_FRONTEND_DEVELOPMENT_PROMPT.md`. It supersedes the older Astra master prompt for the
+logged-in application. The public marketing site remains a separate surface.
+
 Paste or upload this file to continue the work in another assistant.
 
 ## What Placedon is
