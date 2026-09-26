@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Placedon, guided</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&amp;family=Fraunces:opsz,wght@9..144,400;9..144,500&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;font-family:Archivo,system-ui,sans-serif;color:#0C0C0D;background:#F4EFE6}
+a{color:#0C0C0D}a:hover{color:#9F743B}
+button{font-family:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid #0C0C0D;outline-offset:2px}
+input,select{font-family:inherit}
+</style>
+</helmet>
+<div style="width: 1440px; height: 960px; background: #F4EFE6; display: flex; flex-direction: column; overflow: hidden;">
+
+  <header style="height: 64px; flex-shrink: 0; background: #0C0C0D; color: #F4EFE6; display: flex; align-items: center; gap: 28px; padding: 0 40px;">
+    <button onClick="{{ goHome }}" style="background: none; border: none; color: #F4EFE6; font-family: Fraunces, serif; font-size: 22px; padding: 0; min-height: 44px;">Placedon</button>
+    <button onClick="{{ goHome }}" style="{{ homeTab }}">Home</button>
+    <span style="font-size: 14px; color: rgba(244,239,230,0.7);">{{ crumb }}</span>
+    <div style="flex-grow: 1;"></div>
+    <span style="font-size: 14px;">Sample Company Pvt Ltd</span>
+    <span style="font-size: 12px; padding: 6px 10px; border: 1px dashed rgba(244,239,230,0.5); border-radius: 4px; color: rgba(244,239,230,0.85);">Sample data</span>
+  </header>
+
+  <div style="flex-grow: 1; min-height: 0; display: grid; grid-template-columns: minmax(0, 1fr) 330px;">
+    <main style="overflow-y: auto; padding: 36px 44px 44px;">
+
+      <!-- HOME -->
+      <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+        <div style="display: flex; flex-direction: column; gap: 28px;">
+          <div style="display: flex; flex-direction: column; gap: 10px;">
+            <h1 style="margin: 0; font-family: Fraunces, serif; font-weight: 400; font-size: 46px; line-height: 1.1;">What do you need to do today?</h1>
+            <p style="margin: 0; font-size: 17px; line-height: 1.55; color: #45423C; max-width: 720px;">Pick a task. Each one takes three steps: you tell us a little, Placedon checks it against the Companies Act, 2013, and you get a result where every line shows where it came from.</p>
+          </div>
+          <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px;">
+            <sc-for list="{{ tasks }}" as="t" hint-placeholder-count="5">
+              <button onClick="{{ t.open }}" style="text-align: left; background: #FBF8F2; border: 1px solid #DAD3C6; border-radius: 6px; padding: 22px; display: flex; flex-direction: column; gap: 10px; min-height: 190px; color: #0C0C0D;">
+                <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #45423C;">{{ t.n }} · {{ t.tool }}</span>
+                <span style="font-family: Fraunces, serif; font-size: 23px; line-height: 1.2;">{{ t.title }}</span>
+                <span style="font-size: 14px; line-height: 1.5; color: #45423C; flex-grow: 1;">{{ t.blurb }}</span>
+                <span style="font-size: 14px; font-weight: 600; text-decoration: underline; text-underline-offset: 3px;">Start</span>
+              </button>
+            </sc-for>
+            <div style="border: 1px dashed #5B6472; border-radius: 6px; padding: 22px; display: flex; flex-direction: column; gap: 10px; min-height: 190px;">
+              <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #4A5260;">Not yet</span>
+              <span style="font-family: Fraunces, serif; font-size: 23px; line-height: 1.2;">Other laws: FEMA, SEBI, IBC and more</span>
+              <span style="font-size: 14px; line-height: 1.5; color: #45423C;">Placedon holds the Companies Act, 2013 today. Ask about another law and it will say so plainly, rather than answer from memory.</span>
+            </div>
+          </div>
+          <section aria-labelledby="how-h" style="background: #FBF8F2; border: 1px solid #DAD3C6; border-radius: 6px; padding: 26px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px;">
+            <h2 id="how-h" style="grid-column: 1 / -1; margin: 0; font-size: 16px; font-weight: 600;">How every task works</h2>
+            <div style="display: flex; flex-direction: column; gap: 6px;">
+              <span style="font-family: Fraunces, serif; font-size: 34px;">1</span>
+              <span style="font-size: 16px; font-weight: 600;">You tell us</span>
+              <span style="font-size: 14px; line-height: 1.5; color: #45423C;">A question, a document, or a few facts about the company.</span>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 6px;">
+              <span style="font-family: Fraunces, serif; font-size: 34px;">2</span>
+              <span style="font-size: 16px; font-weight: 600;">We check</span>
+              <span style="font-size: 14px; line-height: 1.5; color: #45423C;">Against the exact section of the Act, and the date that section took its current form.</span>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 6px;">
+              <span style="font-family: Fraunces, serif; font-size: 34px;">3</span>
+              <span style="font-size: 16px; font-weight: 600;">You decide</span>
+              <span style="font-size: 14px; line-height: 1.5; color: #45423C;">Every line shows its source. Where we can’t be sure, we say what’s missing.</span>
+            </div>
+          </section>
+        </div>
+      </sc-if>
+
+      <!-- TASK -->
+      <sc-if value="{{ isTask }}" hint-placeholder-val="{{ false }}">
+        <div style="display: flex; flex-direction: column; gap: 22px;">
+          <div style="display: flex; flex-direction: column; gap: 6px;">
+            <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #45423C;">{{ task.n }} · {{ task.tool }}</span>
+            <h1 style="margin: 0; font-family: Fraunces, serif; font-weight: 400; font-size: 36px;">{{ task.title }}</h1>
+          </div>
+          <ol aria-label="Steps" style="list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px;">
+            <sc-for list="{{ steps }}" as="st" hint-placeholder-count="3">
+              <li style="display: flex;">
+                <button onClick="{{ st.go }}" aria-current="{{ st.current }}" style="{{ st.style }}">
+                  <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px;">{{ st.num }}</span>
+                  <span style="font-size: 16px; font-weight: 600;">{{ st.label }}</span>
+                </button>
+              </li>
+            </sc-for>
+          </ol>
+
+          <sc-if value="{{ isStep1 }}" hint-placeholder-val="{{ true }}">
+            <section style="background: #FBF8F2; border: 1px solid #DAD3C6; border-radius: 6px; padding: 28px; display: flex; flex-direction: column; gap: 16px;">
+              <p style="margin: 0; font-size: 16px; line-height: 1.5;">{{ task.ask }}</p>
+              <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px;">
+                <sc-for list="{{ task.fields }}" as="f" hint-placeholder-count="4">
+                  <label style="display: flex; flex-direction: column; gap: 6px;">
+                    <span style="font-size: 14px; font-weight: 600;">{{ f.label }}</span>
+                    <input value="{{ f.value }}" readonly="{{ yes }}" style="border: 1px solid #CFC7B8; border-radius: 4px; padding: 12px; font-size: 15px; background: #FFFFFF; min-height: 44px; box-sizing: border-box;">
+                    <span style="font-size: 12px; color: #45423C;">{{ f.help }}</span>
+                  </label>
+                </sc-for>
+              </div>
+              <p style="margin: 0; font-size: 13px; color: #45423C;">Filled in with sample data so you can see the whole flow.</p>
+            </section>
+          </sc-if>
+
+          <sc-if value="{{ isStep2 }}" hint-placeholder-val="{{ false }}">
+            <section style="background: #FBF8F2; border: 1px solid #DAD3C6; border-radius: 6px; padding: 28px; display: flex; flex-direction: column; gap: 4px;">
+              <p style="margin: 0 0 12px; font-size: 16px;">Here is exactly what Placedon checked, in order.</p>
+              <sc-for list="{{ task.checks }}" as="c" hint-placeholder-count="4">
+                <div style="display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 16px; padding: 12px 0; border-top: 1px solid #E0D9CC; align-items: start;">
+                  <span style="{{ c.chip }}">{{ c.label }}</span>
+                  <span style="font-size: 15px; line-height: 1.5;">{{ c.t }}</span>
+                </div>
+              </sc-for>
+            </section>
+          </sc-if>
+
+          <sc-if value="{{ isStep3 }}" hint-placeholder-val="{{ false }}">
+            <section style="background: #FBF8F2; border: 1px solid #DAD3C6; border-radius: 6px; padding: 28px; display: flex; flex-direction: column; gap: 14px;">
+              <span style="{{ task.resChip }}">{{ task.resLabel }}</span>
+              <p style="margin: 0; font-family: Fraunces, serif; font-size: 28px; line-height: 1.25;">{{ task.headline }}</p>
+              <p style="margin: 0; font-size: 15px; line-height: 1.6; color: #2A2824; max-width: 760px;">{{ task.sub }}</p>
+              <div style="display: flex; flex-direction: column;">
+                <sc-for list="{{ task.rows }}" as="r" hint-placeholder-count="5">
+                  <div style="display: grid; grid-template-columns: 150px 96px minmax(0, 1fr); gap: 16px; padding: 12px 0; border-top: 1px solid #E0D9CC; align-items: start;">
+                    <span style="{{ r.chip }}">{{ r.label }}</span>
+                    <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; padding-top: 4px;">{{ r.ref }}</span>
+                    <span style="font-size: 15px; line-height: 1.5;">{{ r.t }}</span>
+                  </div>
+                </sc-for>
+              </div>
+              <sc-if value="{{ isDraftTask }}" hint-placeholder-val="{{ false }}">
+                <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap; border-top: 1px solid #E0D9CC; padding-top: 14px;">
+                  <label for="venueC" style="font-size: 14px; font-weight: 600;">Fill the one blank: meeting place</label>
+                  <input id="venueC" value="{{ venue }}" onChange="{{ typeVenue }}" placeholder="e.g. the registered office" style="border: 1px solid #CFC7B8; border-radius: 4px; padding: 10px 12px; font-size: 15px; min-height: 44px; box-sizing: border-box; width: 280px; background: #FFFFFF;">
+                  <button onClick="{{ approve }}" disabled="{{ approveDisabled }}" style="{{ approveStyle }}">{{ approveLabel }}</button>
+                  <span style="font-size: 13px; color: #45423C;">{{ approveHelp }}</span>
+                </div>
+              </sc-if>
+            </section>
+          </sc-if>
+
+          <div style="display: flex; gap: 12px;">
+            <sc-if value="{{ hasBack }}" hint-placeholder-val="{{ false }}">
+              <button onClick="{{ back }}" style="background: none; border: 1px solid #CFC7B8; border-radius: 4px; padding: 0 20px; font-size: 15px; min-height: 44px;">Back</button>
+            </sc-if>
+            <button onClick="{{ next }}" style="background: #0C0C0D; color: #F4EFE6; border: none; border-radius: 4px; padding: 0 24px; font-size: 15px; font-weight: 600; min-height: 44px;">{{ nextLabel }}</button>
+          </div>
+        </div>
+      </sc-if>
+    </main>
+
+    <!-- GLOSSARY -->
+    <aside aria-labelledby="gl-h" style="border-left: 1px solid #DAD3C6; background: #FBF8F2; padding: 32px 26px; overflow-y: auto; display: flex; flex-direction: column; gap: 16px;">
+      <h2 id="gl-h" style="margin: 0; font-family: Fraunces, serif; font-weight: 400; font-size: 22px;">Words you’ll see</h2>
+      <p style="margin: 0; font-size: 13px; color: #45423C; line-height: 1.5;">{{ glossHint }}</p>
+      <sc-for list="{{ gloss }}" as="g" hint-placeholder-count="6">
+        <div style="{{ g.style }}">
+          <span style="font-size: 15px; font-weight: 600;">{{ g.term }} <span style="font-family: 'IBM Plex Mono', monospace; font-weight: 400; font-size: 12px; color: #45423C;">{{ g.eg }}</span></span>
+          <span style="font-size: 14px; line-height: 1.5; color: #2A2824;">{{ g.means }}</span>
+        </div>
+      </sc-for>
+      <div style="display: flex; flex-direction: column; gap: 8px; padding-top: 8px; border-top: 1px solid #DAD3C6;">
+        <span style="font-size: 14px; font-weight: 600;">The labels</span>
+        <sc-for list="{{ legend }}" as="l" hint-placeholder-count="5">
+          <span style="display: flex; align-items: center; gap: 10px;"><span style="{{ l.chip }}">{{ l.label }}</span><span style="font-size: 13px; color: #45423C;">{{ l.means }}</span></span>
+        </sc-for>
+      </div>
+    </aside>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":960}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { task: -1, step: 1, venue: '', approved: false };
+  }
+  chip(kind) {
+    var base = 'display: inline-flex; align-self: flex-start; font-size: 12px; font-weight: 600; padding: 5px 9px; border-radius: 4px; white-space: nowrap; ';
+    var m = {
+      met: 'background: #0C0C0D; color: #F4EFE6; border: 1px solid #0C0C0D;',
+      notmet: 'background: #FBF3E2; color: #6E4A17; border: 1.5px solid #9F743B;',
+      pending: 'background: transparent; color: #2A2824; border: 1px dotted #2A2824;',
+      na: 'background: transparent; color: #5F5A50; border: 1px solid #CFC7B8;',
+      cant: 'background: #EEF0F2; color: #4A5260; border: 1px dashed #5B6472;'
+    };
+    return base + (m[kind] || m.na);
+  }
+  renderVals() {
+    var s = this.state, self = this;
+    var L = { met: '✓ Met', notmet: '! Needs action', pending: '… Comes later', na: '– Doesn’t apply', cant: '? Can’t tell' };
+    var K = { done: ['✓ Done', 'met'], cant: ['? Can’t confirm', 'cant'], skip: ['– Not needed', 'na'], flag: ['! Found an issue', 'notmet'] };
+    var row = function (st, ref, t) { return { chip: self.chip(st), label: L[st], ref: ref, t: t }; };
+    var chk = function (k, t) { return { chip: self.chip(K[k][1]), label: K[k][0], t: t }; };
+
+    var tasks = [
+      { n: '01', tool: 'Company duties', title: 'Find out what the law asks of my company', blurb: 'Answer a few questions about the company. See every duty the Act gives it, and which ones are met.',
+        ask: 'Tell us about the company. Each fact decides whether a duty applies.',
+        fields: [{ label: 'Company name', value: 'Sample Company Pvt Ltd', help: 'As registered.' }, { label: 'CIN', value: 'U74999DL2015PTC000001', help: 'The company’s registration number.' }, { label: 'Type of company', value: 'Private company', help: 'Private, public or one-person.' }, { label: 'Financial year ended', value: '31 Mar 2026', help: 'Deadlines count from this date.' }, { label: 'Directors', value: '2', help: 'Number on the board today.' }, { label: 'Last board meeting', value: '16 Jun 2026', help: 'The gap between meetings is limited.' }],
+        checks: [chk('done', 'Looked up the 15 duties Placedon covers in the Companies Act, 2013.'), chk('done', 'Checked each section is in force as of 26 Sep 2026.'), chk('done', 'Matched each duty against the facts you gave.'), chk('cant', 'Two rules we depend on are not yet confirmed: G.S.R. 880(E) and Rule 6 of the 2014 board-meeting rules.')],
+        resKind: 'notmet', resLabel: '! 1 duty needs action now', headline: 'Your AGM is due by 30 Sep 2026, four days from today.', sub: 'Below is every duty we checked. “Can’t tell” is never a pass: it names what we still need.',
+        rows: [row('notmet', 's.96(1)', 'Hold the AGM by 30 Sep 2026. None is on record yet.'), row('met', 's.173(1)', 'Board meetings on track. Next one due by 14 Oct 2026.'), row('met', 's.149(1)', 'Two directors: enough for a private company.'), row('pending', 's.137(1)', 'File the financial statements. The deadline counts from the AGM date.'), row('na', 's.135(1)', 'No CSR committee needed: below all three limits.'), row('cant', 's.2(85)', 'Small-company status waits on G.S.R. 880(E).'), row('cant', 's.149(3)', 'Resident director: tell us the days each director spent in India.')] },
+      { n: '02', tool: 'Ask', title: 'Ask a question about the law', blurb: 'Ask in plain words. Get the answer with its section and date, or a clear note of what’s missing.',
+        ask: 'Type your question the way you’d ask a colleague.',
+        fields: [{ label: 'Your question', value: 'When is our AGM due this year?', help: 'Plain words are fine.' }, { label: 'About', value: 'The Companies Act, 2013', help: 'The law Placedon holds today.' }],
+        checks: [chk('done', 'Found the section that answers it: s.96(1).'), chk('done', 'Confirmed s.96(1) is in force as of today.'), chk('done', 'Worked out the date from your year end, 31 Mar 2026.'), chk('skip', 'No notification has changed this rule since, so none is cited.')],
+        resKind: 'met', resLabel: '■ Answered', headline: 'By 30 Sep 2026.', sub: 'A company other than a One Person Company must hold its AGM within six months of the end of its financial year, and no more than fifteen months after the last one.',
+        rows: [row('met', 's.96(1)', '“…within a period of six months, from the date of closing of the financial year.” The last allowed date is 30 Sep 2026.')] },
+      { n: '03', tool: 'Documents', title: 'Check a document', blurb: 'Upload a notice, minutes or a resolution. See whether the law it relies on was right then, and still is.',
+        ask: 'Choose the document. We read its date from the document itself.',
+        fields: [{ label: 'Document', value: 'Draft board resolution.pdf', help: 'PDF or Word.' }, { label: 'Date on the document', value: '14 Aug 2025', help: 'Read from the page.' }],
+        checks: [chk('done', 'Identified it as a board resolution.'), chk('done', 'Found the law it relies on: small-company status under s.2(85).'), chk('flag', 'That law changed after the document was written.'), chk('skip', 'Signature not checked: drafts aren’t signed.')],
+        resKind: 'notmet', resLabel: '⟳ The law has changed since', headline: 'This resolution relies on limits that were revised later.', sub: 'It was written on 14 Aug 2025. The small-company limits it uses were revised afterwards by G.S.R. 880(E).',
+        rows: [row('met', 'Type', 'A board resolution. It says so on its face.'), row('notmet', 's.2(85)', 'Read it again once G.S.R. 880(E) is checked against the Gazette.'), row('notmet', 'Missing', 'The date of the meeting that passed it isn’t recorded.')] },
+      { n: '04', tool: 'Watch', title: 'Keep watch for changes', blurb: 'When the law, a deadline or a counterparty changes, see which of your duties it affects.',
+        ask: 'Choose what to watch. You can change this at any time.',
+        fields: [{ label: 'Your company', value: 'Sample Company Pvt Ltd', help: 'Deadlines and duties.' }, { label: 'Counterparties', value: '3 suppliers', help: 'Checked for insolvency and sanctions.' }, { label: 'Law changes', value: 'Companies Act, 2013', help: 'New notifications in the Gazette.' }],
+        checks: [chk('done', 'Read new notifications in the e-Gazette of India.'), chk('done', 'Read IBBI insolvency announcements.'), chk('done', 'Compared your counterparties with the OFAC sanctions list.'), chk('cant', 'One name match needs a person to confirm it.')],
+        resKind: 'pending', resLabel: '4 new items', headline: 'Four things happened that touch this company.', sub: 'Each item says why it reached you, so you can decide what to do.',
+        rows: [row('notmet', '30 Sep 2026', 'AGM deadline in four days (s.96(1)).'), row('cant', '01 Dec 2025', 'G.S.R. 880(E) revised the small-company limits. Not yet checked.'), row('cant', '22 Sep 2026', 'Possible insolvency match for Supplier A Pvt Ltd. Compare CINs.'), row('met', '26 Sep 2026', 'No sanctions match for your 3 counterparties.')] },
+      { n: '05', tool: 'Drafts', title: 'Draft a notice or resolution', blurb: 'Every part of the draft shows where it came from. Blanks lock approval until they’re filled.',
+        ask: 'Choose what to draft and the meeting date.',
+        fields: [{ label: 'Document', value: 'Notice of a board meeting', help: 'More templates to come.' }, { label: 'Meeting date', value: '8 Oct 2026', help: 'Must be at least seven days away.' }],
+        checks: [chk('done', 'Filled the company name from the company record.'), chk('done', 'Checked 8 Oct 2026 gives the seven days’ notice s.173(3) asks for.'), chk('done', 'Worked out the latest allowed date, 14 Oct 2026, from s.173(1).'), chk('cant', 'Meeting place isn’t on record, so it’s left blank.')],
+        resKind: 'pending', resLabel: '… One blank left', headline: 'Your notice is drafted. One part is still blank.', sub: 'Approval stays locked until every part has a source.',
+        rows: [row('met', 'Record', 'Company name: Sample Company Pvt Ltd.'), row('met', 's.173(3)', 'Notice sent at least seven days before 8 Oct 2026.'), row('met', 's.173(1)', 'Held before the latest allowed date, 14 Oct 2026.'), row('cant', 'Blank', 'Where the meeting will be held.')] }
+    ];
+
+    var inTask = s.task >= 0;
+    var t = inTask ? tasks[s.task] : tasks[0];
+    var filled = (s.venue || '').trim().length > 0;
+    var draftDone = s.task === 4 && filled;
+    var rows = t.rows;
+    if (draftDone) rows = t.rows.slice(0, 3).concat([row('met', 'You', 'Meeting place: ' + s.venue.trim() + '.')]);
+    var task = Object.assign({}, t, { rows: rows, resChip: this.chip(draftDone ? 'met' : t.resKind), resLabel: draftDone ? '✓ Ready to approve' : t.resLabel, headline: draftDone ? 'Your notice is complete.' : t.headline });
+
+    var stepNames = ['Tell us', 'We check', 'Your result'];
+    var steps = stepNames.map(function (nm, i) {
+      var n = i + 1, on = s.step === n, done = s.step > n;
+      return { num: 'Step ' + n + (done ? ' · done' : ''), label: nm, current: on ? 'step' : 'false', go: function () { self.setState({ step: n }); },
+        style: 'flex-grow: 1; display: flex; flex-direction: column; gap: 4px; text-align: left; border-radius: 6px; padding: 14px 16px; min-height: 44px; color: #0C0C0D; ' + (on ? 'background: #0C0C0D; color: #F4EFE6; border: 1px solid #0C0C0D;' : (done ? 'background: #FBF8F2; border: 1px solid #0C0C0D;' : 'background: transparent; border: 1px solid #DAD3C6;')) };
+    });
+
+    var glossAll = [
+      { k: 'section', term: 'Section', eg: 's.96(1)', means: 'A numbered part of an Act. s.96(1) means section 96, sub-section 1.' },
+      { k: 'instrument', term: 'Notification', eg: 'G.S.R. 880(E)', means: 'A government order that changes the rules under an Act. Each has a number like this one.' },
+      { k: 'inforce', term: 'In force from', eg: '', means: 'The date a rule started to apply. The same section can say different things on different dates.' },
+      { k: 'cant', term: 'Can’t tell', eg: '', means: 'Placedon holds back instead of guessing, and names what it needs to give an answer.' },
+      { k: 'cin', term: 'CIN', eg: 'U74999…', means: 'Corporate Identity Number: the company’s registration number with the Ministry of Corporate Affairs.' },
+      { k: 'gazette', term: 'Gazette', eg: '', means: 'The official government publication where changes to the law are announced.' },
+      { k: 'counterparty', term: 'Counterparty', eg: '', means: 'A company you do business with, such as a supplier or customer.' }
+    ];
+    var hot = { '-1': [], 0: ['section', 'cin', 'cant'], 1: ['section', 'inforce'], 2: ['section', 'instrument', 'inforce'], 3: ['gazette', 'counterparty', 'instrument'], 4: ['section', 'cant'] }[String(s.task)] || [];
+    var gloss = glossAll.map(function (g) {
+      var on = hot.indexOf(g.k) >= 0;
+      return Object.assign({}, g, { style: 'display: flex; flex-direction: column; gap: 4px; padding: 12px 14px; border-radius: 6px; ' + (on ? 'background: #FFFFFF; border: 1.5px solid #0C0C0D;' : 'background: transparent; border: 1px solid #E0D9CC;') });
+    });
+    var legend = ['met', 'notmet', 'pending', 'na', 'cant'].map(function (k) {
+      var means = { met: 'checked and satisfied', notmet: 'applies, act on it', pending: 'a date or fact comes later', na: 'not required here', cant: 'we need more first' }[k];
+      return { chip: self.chip(k), label: L[k], means: means };
+    });
+
+    return {
+      isHome: !inTask, isTask: inTask,
+      goHome: function () { self.setState({ task: -1, step: 1 }); },
+      homeTab: 'background: none; border: none; color: #F4EFE6; font-size: 14px; padding: 0; min-height: 44px; text-decoration: ' + (inTask ? 'none' : 'underline') + '; text-underline-offset: 6px;',
+      crumb: inTask ? '/  ' + t.title : '',
+      tasks: tasks.map(function (x, i) { return { n: x.n, tool: x.tool, title: x.title, blurb: x.blurb, open: function () { self.setState({ task: i, step: 1 }); } }; }),
+      task: task, steps: steps,
+      isStep1: s.step === 1, isStep2: s.step === 2, isStep3: s.step === 3,
+      isDraftTask: s.task === 4,
+      hasBack: s.step > 1,
+      back: function () { self.setState({ step: Math.max(1, s.step - 1) }); },
+      next: function () { if (s.step < 3) self.setState({ step: s.step + 1 }); else self.setState({ task: -1, step: 1 }); },
+      nextLabel: s.step === 1 ? 'Check it' : (s.step === 2 ? 'See the result' : 'Back to all tasks'),
+      yes: true,
+      gloss: gloss, legend: legend,
+      glossHint: inTask ? 'The terms used in this task are outlined.' : 'Plain meanings for the terms Placedon uses. Open a task and the ones it uses are outlined.',
+      venue: s.venue,
+      typeVenue: function (e) { self.setState({ venue: e.target.value, approved: false }); },
+      approveDisabled: !filled, approve: function () { self.setState({ approved: true }); },
+      approveLabel: s.approved ? '✓ Approved by you' : 'Approve',
+      approveHelp: filled ? (s.approved ? 'Approved and recorded.' : 'Nothing is blank now.') : 'Locked while a part is blank.',
+      approveStyle: 'border-radius: 4px; padding: 0 18px; font-size: 15px; font-weight: 600; min-height: 44px; ' + (filled ? 'background: #0C0C0D; color: #F4EFE6; border: 1px solid #0C0C0D;' : 'background: #E6E0D4; color: #5F5A50; border: 1px solid #CFC7B8; cursor: not-allowed;')
+    };
+  }
+}
+</script>
+</body>
+</html>

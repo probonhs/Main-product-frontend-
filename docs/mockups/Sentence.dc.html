@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Placedon, the sentence</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&amp;family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;font-family:Archivo,system-ui,sans-serif;background:#0C0C0D;color:#F4EFE6}
+a{color:#F4EFE6}a:hover{color:#C9A24B}
+button{font-family:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible{outline:2px solid #F4EFE6;outline-offset:3px}
+input{font-family:inherit}
+</style>
+</helmet>
+<div style="width: 1440px; height: 960px; background: #0C0C0D; color: #F4EFE6; display: flex; flex-direction: column; overflow: hidden;">
+
+  <header style="display: flex; align-items: center; gap: 16px; padding: 22px 56px 0;">
+    <span style="font-family: Fraunces, serif; font-size: 20px;">Placedon</span>
+    <span style="font-size: 13px; color: rgba(244,239,230,0.66);">Indian company law, with the source for every answer</span>
+    <div style="flex-grow: 1;"></div>
+    <span style="font-size: 12px; padding: 6px 10px; border: 1px dashed rgba(244,239,230,0.5); border-radius: 4px; color: rgba(244,239,230,0.8);">Sample data · not a real company</span>
+  </header>
+
+  <!-- THE SENTENCE -->
+  <section aria-label="Build your request" style="padding: 36px 56px 0;">
+    <p style="margin: 0 0 14px; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(244,239,230,0.66);">Click any underlined words to change them. That is the whole interface.</p>
+    <p style="margin: 0; font-family: Fraunces, serif; font-weight: 300; font-size: 50px; line-height: 1.3; max-width: 1300px;">
+      Show me
+      <button onClick="{{ openVerb }}" aria-expanded="{{ verbOpen }}" style="{{ verbStyle }}">{{ verbText }}</button>
+      <button onClick="{{ openSubj }}" aria-expanded="{{ subjOpen }}" style="{{ subjStyle }}">{{ subjText }}</button>
+      <span>as of</span>
+      <button onClick="{{ openDate }}" aria-expanded="{{ dateOpen }}" style="{{ dateStyle }}">{{ dateText }}</button>.
+    </p>
+    <sc-if value="{{ anyOpen }}" hint-placeholder-val="{{ false }}">
+      <div role="group" aria-label="{{ trayLabel }}" style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; padding: 16px; border: 1px solid rgba(244,239,230,0.2); border-radius: 6px; background: #151517;">
+        <span style="width: 100%; font-size: 13px; color: rgba(244,239,230,0.66);">{{ trayLabel }}</span>
+        <sc-for list="{{ tray }}" as="o" hint-placeholder-count="4">
+          <button onClick="{{ o.pick }}" style="{{ o.style }}">
+            <span style="font-size: 15px;">{{ o.label }}</span>
+            <span style="font-size: 12px; color: rgba(244,239,230,0.66);">{{ o.hint }}</span>
+          </button>
+        </sc-for>
+      </div>
+    </sc-if>
+  </section>
+
+  <!-- TIMELINE -->
+  <section aria-label="How this law has changed over time" style="padding: 28px 56px 0;">
+    <div style="position: relative; height: 70px;">
+      <div style="position: absolute; left: 0; right: 0; top: 22px; border-top: 1px solid rgba(244,239,230,0.35);"></div>
+      <sc-for list="{{ marks }}" as="m" hint-placeholder-count="4">
+        <div style="{{ m.pos }}">
+          <span style="{{ m.dot }}"></span>
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: rgba(244,239,230,0.85); white-space: nowrap;">{{ m.label }}</span>
+          <span style="font-size: 11px; color: rgba(244,239,230,0.6); white-space: nowrap;">{{ m.sub }}</span>
+        </div>
+      </sc-for>
+      <div style="{{ cursorPos }}">
+        <span style="display: block; width: 2px; height: 30px; background: #C9A24B; margin: 8px auto 0;"></span>
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #C9A24B; white-space: nowrap;">you are here</span>
+      </div>
+    </div>
+    <p style="margin: 6px 0 0; font-size: 13px; color: rgba(244,239,230,0.7);">{{ timelineNote }}</p>
+  </section>
+
+  <!-- RESULT -->
+  <section aria-label="Result" style="flex-grow: 1; min-height: 0; display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 32px; padding: 22px 56px 32px;">
+    <article style="background: #F4EFE6; color: #0C0C0D; border-radius: 4px; padding: 30px 40px; overflow-y: auto; display: flex; flex-direction: column; gap: 14px;">
+      <div style="display: flex; align-items: baseline; gap: 12px; border-bottom: 1px solid #CFC7B8; padding-bottom: 12px;">
+        <span style="font-family: Fraunces, serif; font-size: 26px;">{{ sheetTitle }}</span>
+        <div style="flex-grow: 1;"></div>
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #45423C;">as of {{ dateShort }}</span>
+      </div>
+
+      <sc-if value="{{ isAsk }}" hint-placeholder-val="{{ true }}">
+        <div style="display: flex; flex-direction: column; gap: 14px;">
+          <span style="{{ ans.chip }}">{{ ans.stateLabel }}</span>
+          <p style="margin: 0; font-family: Fraunces, serif; font-size: 30px; line-height: 1.25;">{{ ans.headline }}</p>
+          <p style="margin: 0; font-size: 16px; line-height: 1.65; max-width: 760px;">{{ ans.body }}</p>
+          <sc-if value="{{ ans.hasFigure }}" hint-placeholder-val="{{ true }}">
+            <div style="border-left: 2px solid #0C0C0D; padding: 4px 0 4px 16px;">
+              <div style="font-size: 12px; color: #45423C;">{{ ans.figLabel }}</div>
+              <div style="font-family: 'IBM Plex Mono', monospace; font-size: 24px;">{{ ans.figValue }}</div>
+              <div style="font-size: 13px; color: #45423C;">{{ ans.figBasis }}</div>
+            </div>
+          </sc-if>
+          <sc-if value="{{ ans.hasMissing }}" hint-placeholder-val="{{ false }}">
+            <div style="border: 1px dashed #5B6472; border-radius: 4px; padding: 12px 16px; font-size: 15px; line-height: 1.55;"><strong style="color: #4A5260;">? Still needed: </strong>{{ ans.missing }}</div>
+          </sc-if>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isDuties }}" hint-placeholder-val="{{ false }}">
+        <div style="display: flex; flex-direction: column;">
+          <sc-for list="{{ duties }}" as="r" hint-placeholder-count="6">
+            <div style="display: grid; grid-template-columns: 150px 100px minmax(0, 1fr); gap: 18px; padding: 14px 0; border-bottom: 1px solid #E0D9CC; align-items: start;">
+              <span style="{{ r.chip }}">{{ r.stLabel }}</span>
+              <span style="font-family: 'IBM Plex Mono', monospace; font-size: 14px; padding-top: 4px;">{{ r.sec }}</span>
+              <span style="display: flex; flex-direction: column; gap: 4px;">
+                <span style="font-size: 16px; font-weight: 600;">{{ r.duty }}</span>
+                <span style="font-size: 14px; line-height: 1.55; color: #2A2824;">{{ r.finding }}</span>
+              </span>
+            </div>
+          </sc-for>
+          <p style="margin: 14px 0 0; font-size: 13px; color: #45423C;">A “can’t tell” row is never a pass. It names what we need before we can say.</p>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isDoc }}" hint-placeholder-val="{{ false }}">
+        <div style="display: flex; flex-direction: column;">
+          <sc-for list="{{ checks }}" as="c" hint-placeholder-count="5">
+            <div style="display: grid; grid-template-columns: 190px 170px minmax(0, 1fr); gap: 18px; padding: 14px 0; border-bottom: 1px solid #E0D9CC; align-items: start;">
+              <span style="font-size: 15px; font-weight: 600;">{{ c.what }}</span>
+              <span style="{{ c.chip }}">{{ c.label }}</span>
+              <span style="font-size: 14px; line-height: 1.55; color: #2A2824;">{{ c.detail }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isWatch }}" hint-placeholder-val="{{ false }}">
+        <div style="display: flex; flex-direction: column;">
+          <sc-for list="{{ watch }}" as="w" hint-placeholder-count="4">
+            <div style="display: grid; grid-template-columns: 110px minmax(0, 1fr) 160px; gap: 18px; padding: 16px 0; border-bottom: 1px solid #E0D9CC; align-items: start;">
+              <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; padding-top: 3px;">{{ w.date }}</span>
+              <span style="display: flex; flex-direction: column; gap: 4px;">
+                <span style="font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: #45423C;">{{ w.kind }}</span>
+                <span style="font-size: 16px; font-weight: 600;">{{ w.title }}</span>
+                <span style="font-size: 14px; line-height: 1.55; color: #2A2824;">{{ w.why }}</span>
+              </span>
+              <span style="{{ w.chip }}">{{ w.label }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isDraft }}" hint-placeholder-val="{{ false }}">
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+          <div style="font-family: Fraunces, serif; font-size: 18px; line-height: 1.9; max-width: 780px;">
+            Notice is given that a meeting of the Board of Directors of
+            <span style="border-bottom: 2px solid #0C0C0D;">Sample Company Pvt Ltd</span> will be held on
+            <span style="border-bottom: 2px dotted #0C0C0D;">8 Oct 2026</span> at
+            <sc-if value="{{ venueFilled }}" hint-placeholder-val="{{ false }}"><span style="border-bottom: 2px dotted #0C0C0D;">{{ venue }}</span></sc-if>
+            <sc-if value="{{ venueBlank }}" hint-placeholder-val="{{ true }}"><span style="border: 1.5px dashed #5B6472; color: #4A5260; padding: 0 6px; font-family: Archivo, sans-serif; font-size: 15px;">[ blank: meeting place ]</span></sc-if>.
+            It is sent at least seven days ahead, as <span style="font-family: 'IBM Plex Mono', monospace; font-size: 15px; border-bottom: 2px solid #9F743B;">s.173(3)</span> requires, and falls before the latest allowed date of
+            <span style="font-family: 'IBM Plex Mono', monospace; font-size: 15px; border-bottom: 2px double #0C0C0D;">14 Oct 2026</span> under <span style="font-family: 'IBM Plex Mono', monospace; font-size: 15px; border-bottom: 2px solid #9F743B;">s.173(1)</span>.
+          </div>
+          <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap; border-top: 1px solid #E0D9CC; padding-top: 14px;">
+            <label for="venueB" style="font-size: 14px; font-weight: 600;">Fill the blank</label>
+            <input id="venueB" value="{{ venue }}" onChange="{{ typeVenue }}" placeholder="meeting place" style="border: 1px solid #CFC7B8; border-radius: 4px; padding: 10px 12px; font-size: 15px; min-height: 44px; box-sizing: border-box; width: 300px; background: #FFFFFF;">
+            <button onClick="{{ approve }}" disabled="{{ approveDisabled }}" style="{{ approveStyle }}">{{ approveLabel }}</button>
+            <span style="font-size: 13px; color: #45423C;">{{ approveHelp }}</span>
+          </div>
+        </div>
+      </sc-if>
+    </article>
+
+    <aside aria-label="Sources and key" style="display: flex; flex-direction: column; gap: 18px; overflow-y: auto;">
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        <span style="font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(244,239,230,0.66);">Where this comes from</span>
+        <sc-for list="{{ sources }}" as="src" hint-placeholder-count="2">
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 14px; line-height: 1.5; border-left: 1px solid rgba(244,239,230,0.35); padding-left: 12px;">{{ src.t }}</span>
+        </sc-for>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        <span style="font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(244,239,230,0.66);">What the marks mean</span>
+        <span style="font-size: 13px; line-height: 1.5;">✓ checked and satisfied</span>
+        <span style="font-size: 13px; line-height: 1.5;">! applies, needs action</span>
+        <span style="font-size: 13px; line-height: 1.5;">… applies, a date or fact comes later</span>
+        <span style="font-size: 13px; line-height: 1.5;">– not required here</span>
+        <span style="font-size: 13px; line-height: 1.5;">? we need more before we can say</span>
+      </div>
+      <p style="margin: 0; font-size: 13px; line-height: 1.55; color: rgba(244,239,230,0.7);">Placedon never fills a gap with a guess. When something is missing, the sheet says what it is.</p>
+    </aside>
+  </section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":960}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { verb: 'duties', subj: 0, date: 'today', open: '', venue: '', approved: false };
+  }
+  chip(kind) {
+    var base = 'display: inline-flex; align-self: flex-start; font-size: 12px; font-weight: 600; padding: 5px 9px; border-radius: 4px; white-space: nowrap; ';
+    var m = {
+      met: 'background: #0C0C0D; color: #F4EFE6; border: 1px solid #0C0C0D;',
+      notmet: 'background: #FBF3E2; color: #6E4A17; border: 1.5px solid #9F743B;',
+      pending: 'background: transparent; color: #2A2824; border: 1px dotted #2A2824;',
+      na: 'background: transparent; color: #5F5A50; border: 1px solid #CFC7B8;',
+      cant: 'background: #EEF0F2; color: #4A5260; border: 1px dashed #5B6472;'
+    };
+    return base + (m[kind] || m.na);
+  }
+  slotStyle(on) {
+    return 'background: none; border: none; padding: 0 2px; font: inherit; color: #F4EFE6; text-decoration: underline; text-decoration-style: ' + (on ? 'solid' : 'dotted') + '; text-decoration-thickness: 2px; text-underline-offset: 10px; text-decoration-color: ' + (on ? '#F4EFE6' : 'rgba(244,239,230,0.55)') + '; font-style: italic;';
+  }
+  renderVals() {
+    var s = this.state, self = this;
+    var L = { met: '✓ Met', notmet: '! Not met yet', pending: '… Not known yet', na: '– Doesn’t apply', cant: '? Can’t tell' };
+    var verbs = {
+      ask: { text: 'the answer to', hint: 'A question about the law', title: 'Answer', subjects: ['“When is our AGM due?”', '“Are we a small company?”', '“What does FEMA say about investing overseas?”'] },
+      duties: { text: 'what the law requires of', hint: 'Every duty the Act gives a company', title: 'Duties', subjects: ['Sample Company Pvt Ltd'] },
+      doc: { text: 'what has changed under', hint: 'Check a document against the law', title: 'Document check', subjects: ['the AGM notice of 01 Jun 2024', 'the draft board resolution of 14 Aug 2025'] },
+      watch: { text: 'what is new for', hint: 'Law changes, deadlines and counterparties', title: 'Watch list', subjects: ['Sample Company Pvt Ltd'] },
+      draft: { text: 'a draft of', hint: 'A document where every part shows its source', title: 'Draft', subjects: ['a notice of the next board meeting'] }
+    };
+    var dates = { today: { text: 'today', short: '26 Sep 2026', pos: 93 }, past: { text: '14 August 2025', short: '14 Aug 2025', pos: 80 } };
+    var v = verbs[s.verb];
+    var subjIdx = Math.min(s.subj, v.subjects.length - 1);
+    var d = dates[s.date];
+    var past = s.date === 'past';
+
+    var close = function (patch) { self.setState(Object.assign({ open: '' }, patch)); };
+    var opt = function (label, hint, on, pick) {
+      return { label: label, hint: hint, pick: pick, style: 'display: flex; flex-direction: column; gap: 2px; text-align: left; border-radius: 4px; padding: 10px 14px; min-height: 44px; color: #F4EFE6; ' + (on ? 'background: #2A2A2D; border: 1.5px solid #F4EFE6;' : 'background: transparent; border: 1px solid rgba(244,239,230,0.3);') };
+    };
+    var tray = [], trayLabel = '';
+    if (s.open === 'verb') {
+      trayLabel = 'What do you want to see?';
+      tray = Object.keys(verbs).map(function (k) { return opt(verbs[k].text + '…', verbs[k].hint, s.verb === k, function () { close({ verb: k, subj: 0 }); }); });
+    } else if (s.open === 'subj') {
+      trayLabel = 'About what?';
+      tray = v.subjects.map(function (t, i) { return opt(t, '', subjIdx === i, function () { close({ subj: i }); }); });
+    } else if (s.open === 'date') {
+      trayLabel = 'The law as it stood on which date?';
+      tray = [opt('today', '26 Sep 2026', !past, function () { close({ date: 'today' }); }), opt('14 August 2025', 'look back before the latest change', past, function () { close({ date: 'past' }); })];
+    }
+    var toggle = function (k) { return function () { self.setState({ open: s.open === k ? '' : k }); }; };
+
+    var marks = [
+      { at: 3, label: '2014', sub: 's.2(85) in force' },
+      { at: 55, label: 'G.S.R. 92(E)', sub: '2021 · limits revised' },
+      { at: 66, label: 'G.S.R. 700(E)', sub: '2022 · limits revised' },
+      { at: 84, label: 'G.S.R. 880(E)', sub: '2025 · not yet checked', dashed: true }
+    ].map(function (m) {
+      return { label: m.label, sub: m.sub, pos: 'position: absolute; top: 14px; left: ' + m.at + '%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 4px;',
+        dot: 'display: block; width: 14px; height: 14px; border-radius: 50%; box-sizing: border-box; ' + (m.dashed ? 'border: 1.5px dashed #F4EFE6; background: #0C0C0D;' : 'background: #F4EFE6;') };
+    });
+    var timelineNote = past
+      ? 'On 14 Aug 2025 the small-company limits came from G.S.R. 700(E). The later notification, G.S.R. 880(E), did not exist yet.'
+      : 'Today the small-company limits come from G.S.R. 880(E). Its text is not yet checked against the Gazette, so the marker is dashed.';
+
+    var SL = { answered: '■ Answered', partial: '◧ Partly answered', notheld: '□ Not held' };
+    var SC = { answered: 'met', partial: 'pending', notheld: 'cant' };
+    var qs = [
+      { st: 'answered', headline: past ? 'By 30 Sep 2025.' : 'By 30 Sep 2026.', body: past ? 'On 14 Aug 2025, the year that had just closed ended on 31 Mar 2025. The AGM had to be held within six months of that date.' : 'Your financial year ended on 31 Mar 2026. The AGM must be held within six months of the year’s end, and no more than fifteen months after the last one.', hasFigure: true, figLabel: 'Last allowed date', figValue: past ? '30 Sep 2025' : '30 Sep 2026', figBasis: 'Worked out from s.96(1).', hasMissing: false, missing: '', src: ['Companies Act, 2013 · s.96(1)'] },
+      { st: 'partial', headline: 'We can’t confirm this yet.', body: past ? 'On that date the limits came from G.S.R. 700(E). Our copy of it is waiting for a person to review it, so we show no limit.' : 'The limits were revised by G.S.R. 880(E), and that notification hasn’t been checked against the Gazette yet. We show no limit rather than a possibly wrong one.', hasFigure: false, hasMissing: true, missing: past ? 'A reviewed copy of G.S.R. 700(E).' : 'A check of G.S.R. 880(E) against the official Gazette.', src: ['Companies Act, 2013 · s.2(85)', past ? 'G.S.R. 700(E) · awaiting review' : 'G.S.R. 880(E) · not yet checked'] },
+      { st: 'notheld', headline: 'We don’t hold FEMA yet.', body: 'Placedon only answers from law it holds and has checked. Today that is the Companies Act, 2013. We won’t answer from memory.', hasFigure: false, hasMissing: true, missing: 'The Foreign Exchange Management Act, added to Placedon’s library.', src: ['Nothing cited: no answer given'] }
+    ];
+    var a = qs[s.verb === 'ask' ? subjIdx : 0];
+    var ans = Object.assign({}, a, { stateLabel: SL[a.st], chip: this.chip(SC[a.st]) });
+
+    var dutiesToday = [
+      ['notmet', 's.96(1)', 'Hold the AGM on time', 'The year ended on 31 Mar 2026, so the AGM is due by 30 Sep 2026: four days away. None is on record.'],
+      ['met', 's.173(1)', 'Hold enough board meetings', 'Three held this year. The last was 102 days ago, so the next is due by 14 Oct 2026.'],
+      ['met', 's.149(1)', 'Have enough directors', 'Two on record. A private company needs at least two.'],
+      ['cant', 's.149(3)', 'Have a director resident in India', 'Needs the days each director spent in India this year (at least one must reach 182).'],
+      ['pending', 's.137(1)', 'File the financial statements', 'Applies. The deadline counts from the AGM date, which isn’t set yet.'],
+      ['na', 's.135(1)', 'Form a CSR committee', 'Below all three CSR limits on the figures supplied.'],
+      ['cant', 's.2(85)', 'Is this a small company?', 'Depends on G.S.R. 880(E), not yet checked against the Gazette.'],
+      ['cant', 's.177', 'Form an audit committee, if required', 'Depends on Rule 6 of the board-meeting rules, 2014, waiting for review.']
+    ];
+    var dutiesPast = [
+      ['pending', 's.96(1)', 'Hold the AGM on time', 'On 14 Aug 2025 the AGM for the year ended 31 Mar 2025 was due by 30 Sep 2025. It was not yet late.'],
+      ['cant', 's.173(1)', 'Hold enough board meetings', 'Needs the dates of board meetings held up to 14 Aug 2025. This sample only has this year’s.'],
+      ['cant', 's.2(85)', 'Is this a small company?', 'On this date the limits came from G.S.R. 700(E). Our copy is waiting for review, so no limit is shown.'],
+      ['na', 's.135(1)', 'Form a CSR committee', 'Below all three CSR limits on the figures supplied for that year.']
+    ];
+    var duties = (past ? dutiesPast : dutiesToday).map(function (r) { return { chip: self.chip(r[0]), stLabel: L[r[0]], sec: r[1], duty: r[2], finding: r[3] }; });
+
+    var DL = { ok: ['✓ Verified', 'met'], unver: ['? Unverified', 'cant'], issue: ['! Potential issue', 'notmet'], stale: ['⟳ Law has changed', 'notmet'], na: ['– Not checked here', 'na'] };
+    var docSets = [
+      [['What it is', 'ok', 'A notice calling an annual general meeting.'], ['Law it relied on, then', 'ok', 's.96 was in force in this form on 01 Jun 2024.'], ['Same law, on the date you chose', 'ok', past ? 'Unchanged on 14 Aug 2025.' : 'Unchanged today.'], ['Signature', 'unver', 'No digital signature found.'], ['Minutes checks', 'na', 'These apply to minutes, not notices.']],
+      [['What it is', 'ok', 'A board resolution, not yet signed.'], ['Law it relied on, then', 'ok', 'It treats the company as small under s.2(85), using the limits of 14 Aug 2025.'], ['Same law, on the date you chose', past ? 'ok' : 'stale', past ? 'Nothing had changed yet on 14 Aug 2025.' : 'The limits were revised later by G.S.R. 880(E). Read the resolution again once that is checked.'], ['Missing information', 'issue', 'The date of the meeting that passed it is not recorded.']]
+    ];
+    var checks = docSets[s.verb === 'doc' ? subjIdx : 0].map(function (c) { return { what: c[0], label: DL[c[1]][0], chip: self.chip(DL[c[1]][1]), detail: c[2] }; });
+
+    var watch = [
+      { date: '26 Sep 2026', kind: 'Sanctions', title: 'OFAC list: no match for 3 counterparties', why: 'Checked today against the US Treasury list.', ck: 'met', label: '✓ Checked' },
+      { date: '22 Sep 2026', kind: 'Counterparty', title: 'Possible insolvency match: Supplier A Pvt Ltd', why: 'A similar name in an IBBI announcement. Compare CINs before relying on it.', ck: 'cant', label: '? Possible match' },
+      { date: '30 Sep 2026', kind: 'Deadline', title: 'AGM due in four days', why: 'Worked out from s.96(1) and your year end.', ck: 'notmet', label: '! Action needed' },
+      { date: '01 Dec 2025', kind: 'Law change', title: 'G.S.R. 880(E): small-company limits revised', why: 'Touches s.2(85) and the Board’s report duties that depend on it.', ck: 'cant', label: '? Needs checking' }
+    ].map(function (w) { return Object.assign({}, w, { chip: self.chip(w.ck) }); });
+
+    var sources = {
+      ask: a.src.map(function (t) { return { t: t }; }),
+      duties: [{ t: 'Companies Act, 2013' }, { t: past ? 'as in force 14 Aug 2025' : 'as in force 26 Sep 2026' }, { t: 'Company facts: supplied by you' }],
+      doc: [{ t: 'The document itself' }, { t: 'Companies Act, 2013 · s.96, s.2(85)' }],
+      watch: [{ t: 'e-Gazette of India' }, { t: 'IBBI public announcements' }, { t: 'OFAC sanctions list' }],
+      draft: [{ t: 's.173(1) · s.173(3)' }, { t: 'Company record' }]
+    }[s.verb];
+
+    var filled = (s.venue || '').trim().length > 0;
+    return {
+      verbText: v.text, subjText: v.subjects[subjIdx], dateText: d.text, dateShort: d.short,
+      verbOpen: s.open === 'verb' ? 'true' : 'false', subjOpen: s.open === 'subj' ? 'true' : 'false', dateOpen: s.open === 'date' ? 'true' : 'false',
+      verbStyle: this.slotStyle(s.open === 'verb'), subjStyle: this.slotStyle(s.open === 'subj'), dateStyle: this.slotStyle(s.open === 'date'),
+      openVerb: toggle('verb'), openSubj: toggle('subj'), openDate: toggle('date'),
+      anyOpen: s.open !== '', tray: tray, trayLabel: trayLabel,
+      marks: marks, timelineNote: timelineNote,
+      cursorPos: 'position: absolute; top: 0; left: ' + d.pos + '%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center;',
+      sheetTitle: v.title,
+      isAsk: s.verb === 'ask', isDuties: s.verb === 'duties', isDoc: s.verb === 'doc', isWatch: s.verb === 'watch', isDraft: s.verb === 'draft',
+      ans: ans, duties: duties, checks: checks, watch: watch, sources: sources,
+      venue: s.venue, venueFilled: filled, venueBlank: !filled,
+      typeVenue: function (e) { self.setState({ venue: e.target.value, approved: false }); },
+      approveDisabled: !filled, approve: function () { self.setState({ approved: true }); },
+      approveLabel: s.approved ? '✓ Approved by you' : 'Approve',
+      approveHelp: filled ? (s.approved ? 'Approved and recorded.' : 'Nothing is blank now.') : 'Locked while a part is blank.',
+      approveStyle: 'border-radius: 4px; padding: 0 18px; font-size: 15px; font-weight: 600; min-height: 44px; ' + (filled ? 'background: #0C0C0D; color: #F4EFE6; border: 1px solid #0C0C0D;' : 'background: #E6E0D4; color: #5F5A50; border: 1px solid #CFC7B8; cursor: not-allowed;')
+    };
+  }
+}
+</script>
+</body>
+</html>
