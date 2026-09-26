@@ -42,7 +42,9 @@ Vercel deploys `main` to placedon.com on every push, so merge only when ready. T
 - **Structure from A:** duties list + detail panel, Ask with a Sources column, date-first attention home;
   home becomes a multi-company docket.
 - **From B:** currency-strip timeline with ₹ figures, one gold "you are here" marker; as-of date control
-  only where the engine covers it, after amending PLAN_13 §9.
+  only where the engine covers it. The decision is now recorded in
+  `docs/decisions/DATE_AND_LEGAL_LANGUAGE.md`: today is the default, and
+  **Check an earlier date** is contextual, bounded and server-authorised.
 - **From C:** plain language, glossary drawer (closed by default), "How we got this" trail from real
   response fields only.
 - **Cut from pilot:** Drafts, OFAC/IBBI watch, file upload, B's sentence UI, C's wizard.
@@ -60,7 +62,8 @@ Vercel deploys `main` to placedon.com on every push, so merge only when ready. T
 1. Buyer: practising Company Secretary with many clients, or in-house legal team.
 2. Official design system: the website's tokens or the business plan's.
 3. Primary surface: Word task pane or web app.
-4. Whether to allow past as-of dates (PLAN_13 §9 amendment).
+4. Implement historical-coverage metadata in the backend before enabling the
+   agreed **Check an earlier date** control.
 5. One public sentence on AI use (API contract says no model; business plan measures ₹2.91/answer on Sonnet).
 6. The site's `AGENTS.md` is stale: it says 6 routes and that `/v1/ask` does not exist; there are 8.
 
