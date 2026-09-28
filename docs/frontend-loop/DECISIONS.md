@@ -38,3 +38,23 @@ Do not copy historical decisions here unless they are still in force. Link their
   `docs/FRONTEND_MULTI_AGENT_LOOP_PROMPT.md`.
 - **Reversal condition:** Measured delivery data shows a different routing policy improves lead time without
   increasing escaped critical defects or repeated work.
+
+## D-005 — Supported Ask before portfolio breadth
+
+- **Decision:** `/workspace` starts with question → facts → result → Sources. Portfolio waits for identity
+  and profile persistence. The council explicitly permits that index to wait for a store.
+- **Boundary:** Live workspace checks require development mode plus loopback engine/gateway hosts.
+  Production remains captured-example-only. No historical selector or document upload.
+- **Evidence:** `TRUTH_MAP.md`, `REVIEW_workspace-ask.md`. Q-001, Q-002 and Q-006 remain open; no buyer choice
+  is inferred from this implementation sequence.
+- **Reversal:** Authenticated tenant/profile contracts and practitioner evidence support a portfolio flow.
+- **Rollback:** Remove workspace routes/scoped CSS; marketing routes remain independent.
+
+## D-006 — Validate Ask at the server boundary
+
+- **Decision:** Full request/response schemas run in the gateway/provider. Browser imports only types and
+  lightweight state labels, with a defensive response-envelope check.
+- **Reason:** Client runtime schemas produced a 94,319-byte gzip chunk, exceeding 80 KiB. Server validation
+  preserves the fail-closed boundary. Revised full client output: 276,192 gzip bytes, budget PASS.
+- **Tests:** Captured Ask, gateway, unknown-state, transport and production bundle checks.
+- **Reversal:** A demonstrated client-validation need justifies a separate small validator within budget.
