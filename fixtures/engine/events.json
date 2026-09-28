@@ -1,0 +1,86 @@
+{
+  "backend_commit": "948660041b73e610e017b2036ab97848efe7a26e",
+  "capture_command": "/Users/abdulazeez/.local/share/uv/python/cpython-3.12-macos-aarch64-none/bin/python3.12 scripts/capture-engine-fixtures.py --backend /Users/abdulazeez/Desktop/Placedon-workspace/backend",
+  "captured_at": "2026-09-27T00:00:00Z",
+  "contains_personal_data": false,
+  "fixture_id": "events",
+  "request": {
+    "body": null,
+    "method": "GET",
+    "path": "/v1/company/U74999KA2021PTC145321/events?as_of=2026-09-27"
+  },
+  "request_sha256": "354b7fa27a68f9ba1e3497e456f8bd42ab922693c110f1a1102833731ac7f812",
+  "response": {
+    "as_of": "2026-09-27",
+    "cin": "U74999KA2021PTC145321",
+    "events": [
+      {
+        "at": "2026-09-27",
+        "consequence": "Companies Act 2013 s.203, held verbatim; the prescribed KMP class is a delegated rule (S-203-RULES) surfaced on the obligation row: S-203-RULES: G.S.R. 249(E), Companies (Appointment and Remuneration of Managerial Personnel) Rules, 2014 \u2014 Rule 8, the prescribed KMP class is CHAIN_TRACED",
+        "currency_state": "UNACQUIRED",
+        "id": "c040b119d5b8cbbd",
+        "kind": "LAW_CHANGE",
+        "known_at": "2026-09-27",
+        "obligation_id": "CA13-S203-KMP",
+        "output_class": "SIGNAL",
+        "source": {
+          "as_at": "2026-09-27",
+          "instrument": "S-203-RULES",
+          "sha256": null,
+          "url": null
+        },
+        "subtype": "BASIS_UNACQUIRED",
+        "title": "CA13-S203-KMP: legal basis is UNACQUIRED",
+        "verified_by": null
+      },
+      {
+        "at": "2026-09-27",
+        "consequence": "Companies Act 2013 s.188, held verbatim in corpus; the members'-approval threshold is a delegated rule (S-188-RULES) surfaced on the obligation row: S-188-RULES: Rule 15, Companies (Meetings of Board and its Powers) Rules, 2014 \u2014 the members'-approval thresholds is STAGED",
+        "currency_state": "UNACQUIRED",
+        "id": "467e38cb0ff887c8",
+        "kind": "LAW_CHANGE",
+        "known_at": "2026-09-27",
+        "obligation_id": "CA13-S188-RPT",
+        "output_class": "SIGNAL",
+        "source": {
+          "as_at": "2026-09-27",
+          "instrument": "S-188-RULES",
+          "sha256": null,
+          "url": null
+        },
+        "subtype": "BASIS_UNACQUIRED",
+        "title": "CA13-S188-RPT: legal basis is UNACQUIRED",
+        "verified_by": null
+      },
+      {
+        "at": "2026-09-27",
+        "consequence": "Companies Act 2013 s.177, held verbatim; the prescribed class (Rule 6) is a delegated rule (S-177-RULES) surfaced on the obligation row: S-177-RULES: Rule 6, Companies (Meetings of Board and its Powers) Rules, 2014 is HELD_UNREVIEWED",
+        "currency_state": "UNACQUIRED",
+        "id": "a8d3392dbbf294af",
+        "kind": "LAW_CHANGE",
+        "known_at": "2026-09-27",
+        "obligation_id": "CA13-S177-AUDIT-CTTE",
+        "output_class": "SIGNAL",
+        "source": {
+          "as_at": "2026-09-27",
+          "instrument": "S-177-RULES",
+          "sha256": null,
+          "url": null
+        },
+        "subtype": "BASIS_UNACQUIRED",
+        "title": "CA13-S177-AUDIT-CTTE: legal basis is UNACQUIRED",
+        "verified_by": null
+      }
+    ],
+    "generated_at": "2026-09-27T00:00:00Z",
+    "no_model": true,
+    "scope": "law_change_only \u2014 company-fact events require the licensed registry feed and are not served in v0; an absence here is not evidence that nothing happened to this company",
+    "since": null
+  },
+  "response_sha256": "38b929f5fb9e216b1577872561b27776bf1e33b77d6377e3e6c2d4bfd36b0d84",
+  "response_status": 200,
+  "route": "GET /v1/company/U74999KA2021PTC145321/events",
+  "sanitisation": [],
+  "schema_version": 1,
+  "verified_by": "checker.ask_contract.validate (successful Ask); node tests/engine-fixtures.mjs"
+}

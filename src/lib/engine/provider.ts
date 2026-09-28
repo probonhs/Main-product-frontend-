@@ -1,5 +1,6 @@
 import "./server-guard";
 import type { EngineResult } from "./errors";
+import type { AskRequest, AskResponse } from "./ask";
 import type {
   CompliancePack,
   CompliancePackRequest,
@@ -14,7 +15,7 @@ import type {
 
 /**
  * The engine seen by the rest of the app — one method per route the backend
- * actually serves (six, no more). Every method returns an `EngineResult`;
+ * supports. Every method returns an `EngineResult`;
  * none throw. A caller must narrow on `.ok` before a payload exists, so a
  * transport failure has no path into a data renderer and can never be shown
  * in the abstain register.
@@ -26,6 +27,7 @@ import type {
 export interface EngineProvider {
   readonly name: "mock" | "http";
   health(): Promise<EngineResult<Health>>;
+  ask(request: AskRequest): Promise<EngineResult<AskResponse>>;
   compliancePack(
     request: CompliancePackRequest,
   ): Promise<EngineResult<CompliancePack>>;

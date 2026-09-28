@@ -1,0 +1,131 @@
+{
+  "backend_commit": "948660041b73e610e017b2036ab97848efe7a26e",
+  "capture_command": "/Users/abdulazeez/.local/share/uv/python/cpython-3.12-macos-aarch64-none/bin/python3.12 scripts/capture-engine-fixtures.py --backend /Users/abdulazeez/Desktop/Placedon-workspace/backend",
+  "captured_at": "2026-09-27T00:00:00Z",
+  "contains_personal_data": false,
+  "fixture_id": "ask-resident-evidence",
+  "request": {
+    "body": {
+      "as_of": "2026-09-27",
+      "facts": {
+        "company_class": "private",
+        "evidence": {
+          "agm_dates": [
+            "2025-09-15"
+          ],
+          "board_meetings": [
+            "2025-01-10",
+            "2025-04-10",
+            "2025-07-10",
+            "2025-10-10"
+          ],
+          "calendar_year": 2025,
+          "resident_director_days": 182
+        },
+        "financial_year": "2025-26",
+        "incorporation_date": "2021-04-01"
+      },
+      "provisions": [
+        "s.149(3)"
+      ],
+      "question": "Does this company satisfy Section 149(3)?"
+    },
+    "method": "POST",
+    "path": "/v1/ask"
+  },
+  "request_sha256": "c04b51c7af25f7c5be010bef85ffb3baf2a37d88fd19b056ff216ed2b6799ca5",
+  "response": {
+    "as_of": "2026-09-27",
+    "citations": [
+      {
+        "cite": "Companies Act 2013, s.149 (Company to have Board of Directors)",
+        "defects": [],
+        "evidence_state": "CORROBORATED",
+        "ref": "ACT:COMPANIES_ACT_2013:S149",
+        "retrieved_on": [
+          "2026-08-18",
+          "2026-08-19"
+        ],
+        "source_url": "https://www.indiacode.nic.in/SectionPageContent?actid=AC_CEN_22_29_00008_201318_1517807327856&sectionID=49078",
+        "title": "Company to have Board of Directors",
+        "unusable_reason": null,
+        "usable_for_answering": true
+      }
+    ],
+    "context": {
+      "document_date": null,
+      "kind": "general"
+    },
+    "evidence_pack": {
+      "insufficient_evidence": false,
+      "missing": [],
+      "retrieval_query": "s.149(3)",
+      "route": "exact",
+      "unusable_keys": [],
+      "usable_keys": [
+        "ACT:COMPANIES_ACT_2013:S149"
+      ]
+    },
+    "facts": {
+      "company_class": {
+        "provenance": "USER_FACT",
+        "value": "private"
+      },
+      "evidence": {
+        "provenance": "USER_FACT",
+        "value": {
+          "agm_dates": [
+            "2025-09-15"
+          ],
+          "board_meetings": [
+            "2025-01-10",
+            "2025-04-10",
+            "2025-07-10",
+            "2025-10-10"
+          ],
+          "calendar_year": 2025,
+          "resident_director_days": 182
+        }
+      }
+    },
+    "generated_at": "2026-09-27T00:00:00Z",
+    "law_version": {
+      "basis": "CURRENT_CONSOLIDATION_AS_INGESTED",
+      "corpus_fetched": [
+        "2026-08-18"
+      ],
+      "point_in_time_verified": false,
+      "statement": "This pack carries the CURRENT CONSOLIDATION of the Companies Act 2013 as India Code rendered it when the corpus was ingested (2026-08-18). It is NOT a point-in-time version of the law and carries no verified commencement or amendment date. The amendment vintage of individual provisions is not uniform and not fully known: SD-002 confirms that some records carry pre-amendment wording while the same publisher's PDF carries later wording. Those provisions are marked unusable in this pack. Point-in-time reconstruction exists in this system but is UNVERIFIED against any external source, so no statement here is a statement about the law as it stood on any past date."
+    },
+    "question": "Does this company satisfy Section 149(3)?",
+    "rows": [
+      {
+        "basis": "applies to every company registered under the Act. a director was resident in India 182 days, at or above the 182-day minimum",
+        "blocked_by": null,
+        "cited_spans": [],
+        "duty": "Have at least one director resident in India for 182 days",
+        "missing_facts": [],
+        "obligation_id": "CA13-S149-3-RESIDENT",
+        "provision": "Companies Act 2013, s.149(3)",
+        "state": "APPLIES_SATISFIED"
+      }
+    ],
+    "schema": "placedon.ask/0",
+    "scope": {
+      "held": [
+        "Companies Act, 2013"
+      ],
+      "sentence": "1 of 9 in-scope bodies of law are held"
+    },
+    "state": "answered",
+    "turn_id": "t_c7577f44c764",
+    "uses_model": false,
+    "what_it_is_not": "This is not a certificate of compliance and not legal advice. It covers 15 obligations, not the whole Companies Act, against a corpus that holds the Act but almost none of the subordinate rules \u2014 so some rows refuse rather than answer, and name the instrument they are waiting on. It generates no resolution, notice, or other operative document. No lawyer has reviewed it. It can say the analysis did not contradict itself; it cannot say nothing is wrong."
+  },
+  "response_sha256": "e1617ed55eb209ee5dcc300aa9ffa4045cec9ffbeedd70381b1db3952ba81016",
+  "response_status": 200,
+  "route": "POST /v1/ask",
+  "sanitisation": [],
+  "schema_version": 1,
+  "verified_by": "checker.ask_contract.validate (successful Ask); node tests/engine-fixtures.mjs"
+}

@@ -1,0 +1,27 @@
+{
+  "backend_commit": "948660041b73e610e017b2036ab97848efe7a26e",
+  "capture_command": "/Users/abdulazeez/.local/share/uv/python/cpython-3.12-macos-aarch64-none/bin/python3.12 scripts/capture-engine-fixtures.py --backend /Users/abdulazeez/Desktop/Placedon-workspace/backend",
+  "captured_at": "2026-09-27T00:00:00Z",
+  "contains_personal_data": false,
+  "fixture_id": "instrument-impact",
+  "request": {
+    "body": null,
+    "method": "GET",
+    "path": "/v1/instruments/880/affected"
+  },
+  "request_sha256": "7bdf6a9a9de477c279777178af8cf5a965ce5e53a215aa1722a67334e6d4dd01",
+  "response": {
+    "generated_at": "2026-09-27T00:00:00Z",
+    "instrument": "880",
+    "no_model": true,
+    "obligations": [
+      "CA13-S2-85-SMALL"
+    ]
+  },
+  "response_sha256": "dc13398bb3ef92ab91ad46107d478761bb70e6a0b68fe29f23a3f8da3c63d863",
+  "response_status": 200,
+  "route": "GET /v1/instruments/880/affected",
+  "sanitisation": [],
+  "schema_version": 1,
+  "verified_by": "checker.ask_contract.validate (successful Ask); node tests/engine-fixtures.mjs"
+}

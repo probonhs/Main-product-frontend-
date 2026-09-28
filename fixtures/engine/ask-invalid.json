@@ -1,0 +1,26 @@
+{
+  "backend_commit": "948660041b73e610e017b2036ab97848efe7a26e",
+  "capture_command": "/Users/abdulazeez/.local/share/uv/python/cpython-3.12-macos-aarch64-none/bin/python3.12 scripts/capture-engine-fixtures.py --backend /Users/abdulazeez/Desktop/Placedon-workspace/backend",
+  "captured_at": "2026-09-27T00:00:00Z",
+  "contains_personal_data": false,
+  "fixture_id": "ask-invalid",
+  "request": {
+    "body": {
+      "as_of": "2026-09-27",
+      "question": ""
+    },
+    "method": "POST",
+    "path": "/v1/ask"
+  },
+  "request_sha256": "794238cba1ad408d23bb7843a2dacb5970dc8b12c3e2ab64b6fb3b15bdc660bf",
+  "response": {
+    "detail": "'question' is empty",
+    "error": "bad_request"
+  },
+  "response_sha256": "e8ae652d79ded86b9f5d3007cec6ff98e5a55fa6a51459c9f63839aaab4431e3",
+  "response_status": 400,
+  "route": "POST /v1/ask",
+  "sanitisation": [],
+  "schema_version": 1,
+  "verified_by": "checker.ask_contract.validate (successful Ask); node tests/engine-fixtures.mjs"
+}

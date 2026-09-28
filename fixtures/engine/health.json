@@ -1,0 +1,26 @@
+{
+  "backend_commit": "948660041b73e610e017b2036ab97848efe7a26e",
+  "capture_command": "/Users/abdulazeez/.local/share/uv/python/cpython-3.12-macos-aarch64-none/bin/python3.12 scripts/capture-engine-fixtures.py --backend /Users/abdulazeez/Desktop/Placedon-workspace/backend",
+  "captured_at": "2026-09-27T00:00:00Z",
+  "contains_personal_data": false,
+  "fixture_id": "health",
+  "request": {
+    "body": null,
+    "method": "GET",
+    "path": "/v1/health"
+  },
+  "request_sha256": "d63c90d797bf980b49fcaa00191e66f616b2755283bfd8032e19bfc3eb75985d",
+  "response": {
+    "benchmark_version": "v3",
+    "checker_commit": "948660041b73e610e017b2036ab97848efe7a26e",
+    "corpus_version": "sha256:6809b8c83c436cc37c8bc9964128dd20",
+    "no_model": true,
+    "status": "ok"
+  },
+  "response_sha256": "867286d0852aba96ee133e2ee542edcdda779cbdcbad67028a3a3f3a63093475",
+  "response_status": 200,
+  "route": "GET /v1/health",
+  "sanitisation": [],
+  "schema_version": 1,
+  "verified_by": "checker.ask_contract.validate (successful Ask); node tests/engine-fixtures.mjs"
+}

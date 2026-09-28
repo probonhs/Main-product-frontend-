@@ -2,6 +2,7 @@ import "./server-guard";
 import { z } from "zod";
 import { engineFail, engineOk, type EngineResult } from "./errors";
 import type { EngineProvider } from "./provider";
+import { askRequestSchema, askResponseSchema, type AskRequest, type AskResponse } from "./ask";
 import {
   ENGINE_ROUTES,
   cinSchema,
@@ -85,7 +86,7 @@ export interface HttpProviderOptions {
   readonly timeoutMs?: number;
   readonly fetcher?: typeof fetch;
 }
-/** Wire adapter for the six routes the engine actually serves. Returns, never throws. */
+/** Wire adapter for supported engine routes. Returns, never throws. */
 export class HttpEngineProvider implements EngineProvider {
   readonly name = "http" as const;
   private readonly origin: string;
@@ -189,6 +190,14 @@ export class HttpEngineProvider implements EngineProvider {
     const response = await this.request(route, route);
     if (!response.ok) return response;
     return parseBody(healthSchema, route, response.data);
+  }
+  async ask(request: AskRequest): Promise<EngineResult<AskResponse>> {
+    const route = ENGINE_ROUTES.ask;
+    const body = askRequestSchema.safeParse(request);
+    if (!body.success) return invalidRequest(route, body.error);
+    const response = await this.request(route, route, body.data);
+    if (!response.ok) return response;
+    return parseBody(askResponseSchema, route, response.data);
   }
   async compliancePack(
     request: CompliancePackRequest,

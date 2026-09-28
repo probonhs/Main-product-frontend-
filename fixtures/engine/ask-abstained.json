@@ -1,0 +1,72 @@
+{
+  "backend_commit": "948660041b73e610e017b2036ab97848efe7a26e",
+  "capture_command": "/Users/abdulazeez/.local/share/uv/python/cpython-3.12-macos-aarch64-none/bin/python3.12 scripts/capture-engine-fixtures.py --backend /Users/abdulazeez/Desktop/Placedon-workspace/backend",
+  "captured_at": "2026-09-27T00:00:00Z",
+  "contains_personal_data": false,
+  "fixture_id": "ask-abstained",
+  "request": {
+    "body": {
+      "as_of": "2026-09-27",
+      "provisions": [
+        "rule 2(1)(t)"
+      ],
+      "question": "What does rule 2(1)(t) prescribe?"
+    },
+    "method": "POST",
+    "path": "/v1/ask"
+  },
+  "request_sha256": "d668aec383940eb2c0a20617546fe3c6485b76c048afac5736d9bddd4c7e6367",
+  "response": {
+    "as_of": "2026-09-27",
+    "confirmed": [],
+    "context": {
+      "document_date": null,
+      "kind": "general"
+    },
+    "evidence_pack": {
+      "insufficient_evidence": true,
+      "missing": [
+        "RULE:COMPANIES_MEETINGS_BOARD_POWERS_2014:R2 (Definitions) was cited and DOES exist, but is not admitted for model use: UNREVIEWED. Its text is unknown to you.",
+        "No provision was retrieved at all. This pack is empty."
+      ],
+      "retrieval_query": "rule 2(1)(t)",
+      "route": "abstain",
+      "unusable_keys": [],
+      "usable_keys": []
+    },
+    "generated_at": "2026-09-27T00:00:00Z",
+    "law_version": {
+      "basis": "CURRENT_CONSOLIDATION_AS_INGESTED",
+      "corpus_fetched": [],
+      "point_in_time_verified": false,
+      "statement": "This pack carries the CURRENT CONSOLIDATION of the Companies Act 2013 as India Code rendered it when the corpus was ingested (an unrecorded date). It is NOT a point-in-time version of the law and carries no verified commencement or amendment date. The amendment vintage of individual provisions is not uniform and not fully known: SD-002 confirms that some records carry pre-amendment wording while the same publisher's PDF carries later wording. Those provisions are marked unusable in this pack. Point-in-time reconstruction exists in this system but is UNVERIFIED against any external source, so no statement here is a statement about the law as it stood on any past date."
+    },
+    "not_confirmed": [
+      {
+        "detail": "RULE:COMPANIES_MEETINGS_BOARD_POWERS_2014:R2 (Definitions) was cited and DOES exist, but is not admitted for model use: UNREVIEWED. Its text is unknown to you.",
+        "kind": "pack_missing"
+      },
+      {
+        "detail": "No provision was retrieved at all. This pack is empty.",
+        "kind": "pack_missing"
+      }
+    ],
+    "question": "What does rule 2(1)(t) prescribe?",
+    "schema": "placedon.ask/0",
+    "scope": {
+      "held": [
+        "Companies Act, 2013"
+      ],
+      "sentence": "1 of 9 in-scope bodies of law are held"
+    },
+    "state": "partial",
+    "turn_id": "t_88db4b4f075a",
+    "uses_model": false
+  },
+  "response_sha256": "d4078c2ea341d8b88535fefe3f0a2df9b6e61f805692db55bf532146cbddeb7d",
+  "response_status": 200,
+  "route": "POST /v1/ask",
+  "sanitisation": [],
+  "schema_version": 1,
+  "verified_by": "checker.ask_contract.validate (successful Ask); node tests/engine-fixtures.mjs"
+}

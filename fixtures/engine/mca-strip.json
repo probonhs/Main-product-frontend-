@@ -1,0 +1,65 @@
+{
+  "backend_commit": "948660041b73e610e017b2036ab97848efe7a26e",
+  "capture_command": "/Users/abdulazeez/.local/share/uv/python/cpython-3.12-macos-aarch64-none/bin/python3.12 scripts/capture-engine-fixtures.py --backend /Users/abdulazeez/Desktop/Placedon-workspace/backend",
+  "captured_at": "2026-09-27T00:00:00Z",
+  "contains_personal_data": false,
+  "fixture_id": "mca-strip",
+  "request": {
+    "body": {
+      "as_of": "2026-09-27"
+    },
+    "method": "POST",
+    "path": "/v1/mca-strip"
+  },
+  "request_sha256": "62b351000a868c8c1db414e51e11f964442ba348aa7d1c1cb97a52f267cbfcb9",
+  "response": {
+    "as_of": "2026-09-27",
+    "chips": [],
+    "cins": [],
+    "does_not_establish": [
+      "that a warranty is breached -- the register shows a conflict, not a conclusion",
+      "that a figure is current -- every chip carries how far back an unfiled event could reach, and in which direction",
+      "that the registry record is primary evidence -- it is graded SECONDARY, and a hash proves our custody, not what MCA said"
+    ],
+    "evidence_grade": "SECONDARY",
+    "findings": [],
+    "generated_at": "2026-09-27T00:00:00Z",
+    "headline": "no check ran \u2014 3 could not, for want of a subject or a register",
+    "no_model": true,
+    "not_run": [
+      "capital_headroom: ROLE_ABSENT \u2014 no party is identified as the ISSUER, and the document names 0 companies. Identify the ISSUER before running capital_headroom.",
+      "charge_warranty: ROLE_ABSENT \u2014 no party is identified as the TARGET, and the document names 0 companies. Identify the TARGET before running charge_warranty.",
+      "din_reliance: ROLE_ABSENT \u2014 no party is identified as the EXECUTING_ENTITY, and the document names 0 companies. Identify the EXECUTING_ENTITY before running din_reliance."
+    ],
+    "severity": "INFORMATIONAL",
+    "subjects": {
+      "capital_headroom": {
+        "candidates": [],
+        "cin": null,
+        "reason": "no party is identified as the ISSUER, and the document names 0 companies. Identify the ISSUER before running capital_headroom.",
+        "role": "ISSUER",
+        "verdict": "ROLE_ABSENT"
+      },
+      "charge_warranty": {
+        "candidates": [],
+        "cin": null,
+        "reason": "no party is identified as the TARGET, and the document names 0 companies. Identify the TARGET before running charge_warranty.",
+        "role": "TARGET",
+        "verdict": "ROLE_ABSENT"
+      },
+      "din_reliance": {
+        "candidates": [],
+        "cin": null,
+        "reason": "no party is identified as the EXECUTING_ENTITY, and the document names 0 companies. Identify the EXECUTING_ENTITY before running din_reliance.",
+        "role": "EXECUTING_ENTITY",
+        "verdict": "ROLE_ABSENT"
+      }
+    }
+  },
+  "response_sha256": "fd0a2883af8fdd46d130f50c3a19c15137293bb03f6a742d38d50bfc4a5614d9",
+  "response_status": 200,
+  "route": "POST /v1/mca-strip",
+  "sanitisation": [],
+  "schema_version": 1,
+  "verified_by": "checker.ask_contract.validate (successful Ask); node tests/engine-fixtures.mjs"
+}

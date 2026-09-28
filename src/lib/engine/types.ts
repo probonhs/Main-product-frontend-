@@ -1,11 +1,12 @@
 import { z } from "zod";
 /**
  * Wire contract for the Placedon legal engine, verified against `checker/api.py`
- * (bubblebee1408/placedon-law-backend @ f2ebcb3). Exactly six routes exist.
- * `/v1/company/{cin}/standing` and `/v1/ask` DO NOT EXIST — never add them here.
+ * Eight routes exist; company standing is not a served capability.
  */
 export const ENGINE_ROUTES = {
   health: "/v1/health",
+  ask: "/v1/ask",
+  mcaStrip: "/v1/mca-strip",
   compliancePack: "/v1/compliance-pack",
   documentCheck: "/v1/document-check",
   events: "/v1/company/{cin}/events",
@@ -193,7 +194,7 @@ export const provenanceSchema = z.union([
 export type Provenance = z.infer<typeof provenanceSchema>;
 /**
  * DRIFT 1 — `/v1/compliance-pack` is the one route that does NOT carry `no_model`.
- * The other five do. Do not add it here and do not read it off a pack.
+ * Other routes declare model usage separately. Do not read it off a pack.
  */
 export const compliancePackSchema = z.object({
   company_class: z.string(),

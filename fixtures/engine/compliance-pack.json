@@ -1,0 +1,332 @@
+{
+  "backend_commit": "948660041b73e610e017b2036ab97848efe7a26e",
+  "capture_command": "/Users/abdulazeez/.local/share/uv/python/cpython-3.12-macos-aarch64-none/bin/python3.12 scripts/capture-engine-fixtures.py --backend /Users/abdulazeez/Desktop/Placedon-workspace/backend",
+  "captured_at": "2026-09-27T00:00:00Z",
+  "contains_personal_data": false,
+  "fixture_id": "compliance-pack",
+  "request": {
+    "body": {
+      "as_of": "2026-09-27",
+      "company_class": "private",
+      "financial_year": "2025-26",
+      "incorporation_date": "2019-06-01",
+      "paid_up_capital_rupees": 120000000,
+      "turnover_rupees": 800000000
+    },
+    "method": "POST",
+    "path": "/v1/compliance-pack"
+  },
+  "request_sha256": "0b889aefb95a6ba718c41f02eb8a1c48bc2fa663a62fc9bcbab8bc6cca34d2f0",
+  "response": {
+    "as_of": "2026-09-27",
+    "cin": null,
+    "company_class": "private",
+    "financial_year": "2025-26",
+    "generated_at": "2026-09-27T00:00:00Z",
+    "law_currency_watch": [
+      {
+        "detail": "Companies Act 2013 s.177, held verbatim; the prescribed class (Rule 6) is a delegated rule (S-177-RULES) surfaced on the obligation row: S-177-RULES: Rule 6, Companies (Meetings of Board and its Powers) Rules, 2014 is HELD_UNREVIEWED",
+        "instrument": "S-177-RULES",
+        "obligation_id": "CA13-S177-AUDIT-CTTE",
+        "status": "UNACQUIRED"
+      },
+      {
+        "detail": "Companies Act 2013 s.188, held verbatim in corpus; the members'-approval threshold is a delegated rule (S-188-RULES) surfaced on the obligation row: S-188-RULES: Rule 15, Companies (Meetings of Board and its Powers) Rules, 2014 \u2014 the members'-approval thresholds is STAGED",
+        "instrument": "S-188-RULES",
+        "obligation_id": "CA13-S188-RPT",
+        "status": "UNACQUIRED"
+      },
+      {
+        "detail": "Companies Act 2013 s.203, held verbatim; the prescribed KMP class is a delegated rule (S-203-RULES) surfaced on the obligation row: S-203-RULES: G.S.R. 249(E), Companies (Appointment and Remuneration of Managerial Personnel) Rules, 2014 \u2014 Rule 8, the prescribed KMP class is CHAIN_TRACED",
+        "instrument": "S-203-RULES",
+        "obligation_id": "CA13-S203-KMP",
+        "status": "UNACQUIRED"
+      }
+    ],
+    "provenance": {
+      "benchmark_version": "v3",
+      "checker_commit": "948660041b73e610e017b2036ab97848efe7a26e",
+      "corpus_version": "sha256:6809b8c83c436cc37c8bc9964128dd20",
+      "law_as_of": "2026-09-27",
+      "working_tree_dirty": false
+    },
+    "rows": [
+      {
+        "basis": "s.96(1) reaches every company other than an OPC; no AGM dates were supplied",
+        "blocked_by": null,
+        "cited_spans": [
+          {
+            "path": "96(1)/proviso[1]",
+            "resolved": true,
+            "sha256": "sha256:ba745b3bf307391f75d09d2aa62f62d2a229de67fad951dd37f6a3c2697a0009"
+          }
+        ],
+        "duty": "Hold an annual general meeting, and within the statutory gap",
+        "missing_facts": [
+          "date of the last AGM",
+          "date of this AGM",
+          "date of closing of the financial year",
+          "date of closing of the first financial year, for a company holding its first AGM"
+        ],
+        "obligation_id": "CA13-S96-AGM",
+        "provision": "Companies Act 2013, s.96(1)",
+        "state": "APPLIES_UNDETERMINED"
+      },
+      {
+        "basis": "not a one-person company, so s.173 applies in full; no board meeting dates were supplied",
+        "blocked_by": null,
+        "cited_spans": [],
+        "duty": "Hold the minimum number of board meetings, correctly spaced",
+        "missing_facts": [
+          "dates of every board meeting in the year"
+        ],
+        "obligation_id": "CA13-S173-BOARD",
+        "provision": "Companies Act 2013, s.173(1)",
+        "state": "APPLIES_UNDETERMINED"
+      },
+      {
+        "basis": "applies to every company registered under the Act; the number of directors is not on the profile",
+        "blocked_by": null,
+        "cited_spans": [],
+        "duty": "Have enough directors, and not more than the maximum",
+        "missing_facts": [
+          "number of directors",
+          "whether a special resolution was passed, if there are more than fifteen"
+        ],
+        "obligation_id": "CA13-S149-BOARD-SIZE",
+        "provision": "Companies Act 2013, s.149(1)",
+        "state": "APPLIES_UNDETERMINED"
+      },
+      {
+        "basis": "applies to every company registered under the Act; no director's days-in-India were supplied; s.149(3) needs at least one director present 182 days in the year",
+        "blocked_by": null,
+        "cited_spans": [],
+        "duty": "Have at least one director resident in India for 182 days",
+        "missing_facts": [
+          "days in India this financial year of the most-present director",
+          "whether the company was incorporated during this financial year"
+        ],
+        "obligation_id": "CA13-S149-3-RESIDENT",
+        "provision": "Companies Act 2013, s.149(3)",
+        "state": "APPLIES_UNDETERMINED"
+      },
+      {
+        "basis": "applies to every company registered under the Act; the thirty days run from the AGM, and no AGM date was given",
+        "blocked_by": null,
+        "cited_spans": [],
+        "duty": "File the financial statements with the Registrar in time",
+        "missing_facts": [
+          "date of the annual general meeting",
+          "date the financial statements were filed"
+        ],
+        "obligation_id": "CA13-S137-AOC4",
+        "provision": "Companies Act 2013, s.137(1)",
+        "state": "APPLIES_UNDETERMINED"
+      },
+      {
+        "basis": "applies to every company registered under the Act; the sixty days run from the AGM, or from the date one should have been held; neither is established",
+        "blocked_by": null,
+        "cited_spans": [],
+        "duty": "File the annual return with the Registrar in time",
+        "missing_facts": [
+          "date of the annual general meeting, or the date one should have been held",
+          "date the annual return was filed"
+        ],
+        "obligation_id": "CA13-S92-RETURN",
+        "provision": "Companies Act 2013, s.92(4)",
+        "state": "APPLIES_UNDETERMINED"
+      },
+      {
+        "basis": "no known figure reaches its s.135(1) threshold, but net_worth, net_profit are unknown -- any one could cross, so applicability cannot be ruled out",
+        "blocked_by": null,
+        "cited_spans": [],
+        "duty": "Constitute a CSR committee, if the company crosses a CSR threshold",
+        "missing_facts": [
+          "net worth, turnover or net profit for the immediately preceding financial year",
+          "number of directors, and whether one is independent"
+        ],
+        "obligation_id": "CA13-S135-CSR",
+        "provision": "Companies Act 2013, s.135(1)",
+        "state": "CANNOT_DETERMINE"
+      },
+      {
+        "basis": "a limb exceeds its limit, so not a small company",
+        "blocked_by": null,
+        "cited_spans": [
+          {
+            "path": "2(85)(i)",
+            "resolved": true,
+            "sha256": "sha256:8b24937ce6b9f3c3baeff9a2eca6c225f9ffb16c4af98b60ee6fc2816407e294"
+          },
+          {
+            "path": "2(85)(ii)",
+            "resolved": true,
+            "sha256": "sha256:f7a340b68b234b4e182e2c90688c1ae4c0764468c371cf24fa7dfdeefda11ead"
+          }
+        ],
+        "duty": "Establish whether the company is a small company",
+        "missing_facts": [],
+        "obligation_id": "CA13-S2-85-SMALL",
+        "provision": "Companies Act 2013, s.2(85)",
+        "state": "DOES_NOT_APPLY"
+      },
+      {
+        "basis": "applies to every company registered under the Act; no loans supplied: give the company's loans, guarantees and securities, with the director/relative graph, to assess s.185",
+        "blocked_by": null,
+        "cited_spans": [],
+        "duty": "Ensure no loan/guarantee/security is given to a director or connected person",
+        "missing_facts": [
+          "the company's loans, guarantees and securities, and the director/relative/partner graph, to assess against s.185"
+        ],
+        "obligation_id": "CA13-S185-LOANS-DIRECTORS",
+        "provision": "Companies Act 2013, s.185",
+        "state": "APPLIES_UNDETERMINED"
+      },
+      {
+        "basis": "applies to every company registered under the Act; no loans/investments supplied: give the company's loans, guarantees, securities and acquisitions to test the s.186(2) limit",
+        "blocked_by": null,
+        "cited_spans": [],
+        "duty": "Keep loans/investments within the s.186(2) limit, or authorise the excess",
+        "missing_facts": [
+          "the company's loans, guarantees, securities and acquisitions, with paid-up capital, free reserves and securities premium"
+        ],
+        "obligation_id": "CA13-S186-LOAN-INVESTMENT",
+        "provision": "Companies Act 2013, s.186",
+        "state": "APPLIES_UNDETERMINED"
+      },
+      {
+        "basis": "applies to every company registered under the Act; no related-party transactions supplied: give the company's contracts of the s.188(1) types to assess",
+        "blocked_by": null,
+        "cited_spans": [],
+        "duty": "Obtain the required approvals for related-party transactions",
+        "missing_facts": [
+          "the company's contracts of the s.188(1) types with related parties, and the s.2(76) relationship graph"
+        ],
+        "obligation_id": "CA13-S188-RPT",
+        "provision": "Companies Act 2013, s.188",
+        "state": "APPLIES_UNDETERMINED"
+      },
+      {
+        "basis": "not a listed public company: whether an Audit Committee is required turns on the prescribed class under Rule 6 of the Companies (Meetings of Board and its Powers) Rules, 2014, held but not reviewed (S-177-RULES)",
+        "blocked_by": "S-177-RULES",
+        "cited_spans": [],
+        "duty": "Constitute an Audit Committee, if required",
+        "missing_facts": [
+          "listing status; and, for the prescribed class, Rule 6 of the Board Powers Rules (paid-up capital / turnover / outstanding-loan thresholds), which must be reviewed"
+        ],
+        "obligation_id": "CA13-S177-AUDIT-CTTE",
+        "provision": "Companies Act 2013, s.177",
+        "state": "CANNOT_DETERMINE"
+      },
+      {
+        "basis": "the whole-time KMP requirement applies to a prescribed class of companies; that class is set by the Companies (Appointment and Remuneration of Managerial Personnel) Rules, 2014, not held or reviewed (S-203-RULES)",
+        "blocked_by": "S-203-RULES",
+        "cited_spans": [],
+        "duty": "Appoint whole-time key managerial personnel, if in the prescribed class",
+        "missing_facts": [
+          "the Companies (Appointment and Remuneration of Managerial Personnel) Rules, 2014 (the prescribed KMP class), which this system does not hold"
+        ],
+        "obligation_id": "CA13-S203-KMP",
+        "provision": "Companies Act 2013, s.203",
+        "state": "CANNOT_DETERMINE"
+      },
+      {
+        "basis": "applies to every company registered under the Act; no borrowings supplied: give the company's proposed and existing borrowings, with paid-up capital, free reserves and securities premium, to test the s.180(1)(c) limit",
+        "blocked_by": null,
+        "cited_spans": [],
+        "duty": "Keep borrowings within the s.180(1)(c) limit, or authorise the excess",
+        "missing_facts": [
+          "the company's proposed and existing borrowings, with paid-up share capital, free reserves and securities premium"
+        ],
+        "obligation_id": "CA13-S180-BORROWING-LIMIT",
+        "provision": "Companies Act 2013, s.180(1)(c)",
+        "state": "APPLIES_UNDETERMINED"
+      },
+      {
+        "basis": "applies to every company registered under the Act; no director contracts supplied: give the (director, counterparty) pairs for the company's contracts, with the entity graph, to assess s.184(2)",
+        "blocked_by": null,
+        "cited_spans": [],
+        "duty": "Ensure an interested director discloses and abstains",
+        "missing_facts": [
+          "the (director, counterparty) pairs for the company's contracts, with the s.184 interest graph"
+        ],
+        "obligation_id": "CA13-S184-DIRECTOR-INTEREST",
+        "provision": "Companies Act 2013, s.184",
+        "state": "APPLIES_UNDETERMINED"
+      }
+    ],
+    "summary": {
+      "cannot_determine": 3,
+      "not_applicable": 1,
+      "not_satisfied": 0,
+      "satisfied": 0,
+      "undetermined": 11
+    },
+    "unverified": [
+      {
+        "obligation_id": "CA13-S96-AGM",
+        "to_settle": "date of the last AGM; date of this AGM; date of closing of the financial year; date of closing of the first financial year, for a company holding its first AGM"
+      },
+      {
+        "obligation_id": "CA13-S173-BOARD",
+        "to_settle": "dates of every board meeting in the year"
+      },
+      {
+        "obligation_id": "CA13-S149-BOARD-SIZE",
+        "to_settle": "number of directors; whether a special resolution was passed, if there are more than fifteen"
+      },
+      {
+        "obligation_id": "CA13-S149-3-RESIDENT",
+        "to_settle": "days in India this financial year of the most-present director; whether the company was incorporated during this financial year"
+      },
+      {
+        "obligation_id": "CA13-S137-AOC4",
+        "to_settle": "date of the annual general meeting; date the financial statements were filed"
+      },
+      {
+        "obligation_id": "CA13-S92-RETURN",
+        "to_settle": "date of the annual general meeting, or the date one should have been held; date the annual return was filed"
+      },
+      {
+        "obligation_id": "CA13-S135-CSR",
+        "to_settle": "net worth, turnover or net profit for the immediately preceding financial year; number of directors, and whether one is independent"
+      },
+      {
+        "obligation_id": "CA13-S185-LOANS-DIRECTORS",
+        "to_settle": "the company's loans, guarantees and securities, and the director/relative/partner graph, to assess against s.185"
+      },
+      {
+        "obligation_id": "CA13-S186-LOAN-INVESTMENT",
+        "to_settle": "the company's loans, guarantees, securities and acquisitions, with paid-up capital, free reserves and securities premium"
+      },
+      {
+        "obligation_id": "CA13-S188-RPT",
+        "to_settle": "the company's contracts of the s.188(1) types with related parties, and the s.2(76) relationship graph"
+      },
+      {
+        "obligation_id": "CA13-S177-AUDIT-CTTE",
+        "to_settle": "listing status; and, for the prescribed class, Rule 6 of the Board Powers Rules (paid-up capital / turnover / outstanding-loan thresholds), which must be reviewed"
+      },
+      {
+        "obligation_id": "CA13-S203-KMP",
+        "to_settle": "the Companies (Appointment and Remuneration of Managerial Personnel) Rules, 2014 (the prescribed KMP class), which this system does not hold"
+      },
+      {
+        "obligation_id": "CA13-S180-BORROWING-LIMIT",
+        "to_settle": "the company's proposed and existing borrowings, with paid-up share capital, free reserves and securities premium"
+      },
+      {
+        "obligation_id": "CA13-S184-DIRECTOR-INTEREST",
+        "to_settle": "the (director, counterparty) pairs for the company's contracts, with the s.184 interest graph"
+      }
+    ],
+    "what_it_is_not": "This is not a certificate of compliance and not legal advice. It covers 15 obligations, not the whole Companies Act, against a corpus that holds the Act but almost none of the subordinate rules \u2014 so some rows refuse rather than answer, and name the instrument they are waiting on. It generates no resolution, notice, or other operative document. No lawyer has reviewed it. It can say the analysis did not contradict itself; it cannot say nothing is wrong.",
+    "what_this_is": "A record of this company's position on the obligations below, as of the stated date, with the provision behind each line and an explicit list of what could not be verified. Every line is a provision, a fact supplied, or arithmetic on the two."
+  },
+  "response_sha256": "ef19c539552d531bf4e50bea1d08e60d43e54520488390256978dd507dbe28de",
+  "response_status": 200,
+  "route": "POST /v1/compliance-pack",
+  "sanitisation": [],
+  "schema_version": 1,
+  "verified_by": "checker.ask_contract.validate (successful Ask); node tests/engine-fixtures.mjs"
+}

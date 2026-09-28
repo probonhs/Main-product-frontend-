@@ -1,5 +1,6 @@
 import "./server-guard";
-import { engineOk, type EngineResult } from "./errors";
+import { engineOk, engineFail, type EngineResult } from "./errors";
+import type { AskRequest, AskResponse } from "./ask";
 import type { EngineProvider } from "./provider";
 import {
   compliancePackSchema,
@@ -271,6 +272,10 @@ function health(): Health {
 /** Fixture-backed engine. Returns, never throws; matches the wire contract exactly. */
 export class MockEngineProvider implements EngineProvider {
   readonly name = "mock" as const;
+  async ask(request: AskRequest): Promise<EngineResult<AskResponse>> {
+    void request;
+    return engineFail({ kind: "bad_request", route: "/v1/ask", message: "Ask is unsupported by the mock provider. Use captured fixtures or the HTTP engine." });
+  }
 
   async health(): Promise<EngineResult<Health>> {
     return engineOk(health());
