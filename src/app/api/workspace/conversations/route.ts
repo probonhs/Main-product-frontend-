@@ -1,10 +1,10 @@
-import { callConversation, conversationCommand, conversationConfiguration } from "@/lib/engine/conversations";
+import { callConversation, conversationCommand, conversationConfiguration, ConversationServiceError } from "@/lib/engine/conversations";
 
 export const runtime = "nodejs";
 const headers = { "Cache-Control": "no-store", "X-Content-Type-Options": "nosniff" };
 export async function POST(request: Request) {
   const url = new URL(request.url);
-  const fail = (message: string, status: number) => Response.json({ ok: false, error: { message } }, { status, headers });
+  const fail = (message: string, status: number, code = "REQUEST_NOT_COMPLETED") => Response.json({ ok: false, error: { message, code } }, { status, headers });
   if (!conversationConfiguration() || !["localhost", "127.0.0.1", "[::1]"].includes(url.hostname)) return fail("Saved conversations are unavailable in this deployment.", 403);
   if (request.headers.get("origin") !== url.origin || request.headers.get("sec-fetch-site") === "cross-site") return fail("Open this request from the local workspace.", 403);
   if (!request.headers.get("content-type")?.startsWith("application/json")) return fail("Send a JSON request.", 415);
@@ -19,6 +19,7 @@ export async function POST(request: Request) {
     return Response.json({ ok: true, data }, { headers });
   } catch (error) {
     if (error instanceof SyntaxError) return fail("The request could not be read.", 400);
-    return fail(error instanceof Error ? error.message : "The conversation could not be loaded.", 502);
+    if (error instanceof ConversationServiceError) return fail(error.message, error.httpStatus, error.code);
+    return fail("The conversation could not be loaded. Refresh saved work before sending again.", 502);
   }
 }

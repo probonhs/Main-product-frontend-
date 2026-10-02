@@ -11,6 +11,7 @@ Items need evidence or a human choice. Continue independent work; do not answer 
 | Q-005 | What feedback destination, consent and retention/deletion policy are approved? | Founder; narrow backend support | Real feedback and privacy controls | No integrated sink/deletion service here; choose minimum pilot policy. |
 | Q-006 | Which product deployment project/domain/owner and rollback process will we use? | Founder/engineering | Production release | Separate from website Vercel; immutable revision and founder approval. |
 | Q-007 | Is connected synthetic local setup available at the pinned latest backend SHA? | Teammate | Live v2 acceptance | Store/worker/migrations, lawyer/admin test principal, private credential delivery. |
+| Q-008 | Can citation lookup select the originating message when IDs repeat? | Teammate, narrow fix | Later colliding source inspection | Current handler returns first c1; frontend rejects wrong reply. Add message-scoped lookup + regression and correct stale screen fields. |
 
 Git workflow scope is an operational access condition, not a product decision. Record the actual push
 failure if it occurs; never drop workflow history or claim remote publication from a local commit.

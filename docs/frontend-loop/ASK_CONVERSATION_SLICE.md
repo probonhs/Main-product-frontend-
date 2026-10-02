@@ -58,3 +58,7 @@ path selection, unknown inputs, schema mismatches and credential redaction.
 
 Live end-to-end operation and connected browser acceptance remain pending gateway configuration.
 Do not mark those gates passed from the offline tests. Production identity and deployment remain Q-001/Q-006.
+
+Phase 1 follow-up: `PHASE_1_COMPATIBILITY.md` adds typed auth/role/errors, latest critic trace fields and
+request correlation. Source inspection now includes originating message ID locally and rejects wrong-reply
+citations; backend c1 collisions still require Q-008. This updates the original slice without claiming live GO.

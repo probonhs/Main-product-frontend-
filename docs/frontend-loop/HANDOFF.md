@@ -4,6 +4,11 @@ Repository: `probonhs/Main-product-frontend-`
 Branch: `codex/frontend-handoff`; inspect `git log -5 --oneline` for actual HEAD before continuing.
 Current entry: `docs/START_HERE.md`. Execute `docs/FIVE_PHASE_FRONTEND_LOOP_PROMPT.md`, not the full chat.
 
+Preservation commits: implementation `fc47985`, organization/prompt `fc47616` (plus four earlier unpublished
+commits). Push REJECTED: OAuth token lacks `workflow` scope for `.github/workflows/frontend-quality.yml`.
+No remote branch/PR exists from this attempt. Refresh permission with `gh auth refresh -h github.com -s workflow`,
+then `git push -u probonhs HEAD:refs/heads/codex/frontend-handoff`. Preserve CI/history; no bypass.
+
 ## Completed and preserved
 
 Engine-pinned fixtures/client; approved assistant workspace; independent Ask and captured states;
@@ -40,10 +45,13 @@ commit and record its SHA/blocker. Confirm remote HEAD before saying it is publi
 
 ## Next action
 
-Finish current organization/backup first, then Phase 1: inspect current backend response/role/screen mapping,
-add focused compatibility and failure-state proof, and progress independent frontend work. Do not choose paid
-identity or data-processing permissions. The teammate request is in `docs/product/TEAM_HANDOFF.md`; no message
-has been sent. Founder owns major frontend implementation and final review.
+Organization and a bounded Phase 1 move are now preserved. See PHASE_1_COMPATIBILITY.md: typed auth/error
+states, critic/null-cost trace, request/record correlation and fail-closed message-bound sources. Source IDs
+repeat upstream, so later colliding sources remain unavailable until Q-008. Attachments stay disabled.
+Expanded contracts, TypeScript, lint, loop checks, webpack build and budget PASS (399,238 gzip bytes).
+No connected, full browser, CI or production approval. Finish approved synthetic source/persistence/role and
+Brave acceptance next; do not choose paid identity/data permissions. Teammate request is in TEAM_HANDOFF.md;
+no message has been sent. Founder owns major frontend implementation and final review.
 
 Use Brave only for browser checks. The dev server may already run on 127.0.0.1:3300; inspect before restarting.
 No live v2 credential/store is configured here. Earlier legacy backend setup is not proof of v2 persistence.

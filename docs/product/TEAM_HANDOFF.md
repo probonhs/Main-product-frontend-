@@ -35,6 +35,14 @@ backend revision and frontend impact. Request the smallest backend patch; indepe
 Do not ask for Vault, live MCA integration, historical reconstruction, new model training or a generic
 backend rewrite just to complete this frontend handoff.
 
+## One concrete backend blocker found in Phase 1
+
+Q-008: `citation.get` currently finds the first c1 in a conversation, although c1 repeats in later replies.
+Please scope lookup to the originating `message_id` (preserving the source re-check and tenant boundary),
+add a two-reply/same-ID regression, and reconcile the stale citation fields in `screens.py`. The frontend
+already rejects mismatches with no quote displayed. This narrow fix is more urgent than new feature work.
+No request has been sent; the founder can include this in the message below.
+
 ## Copy-ready message to teammate
 
 You’ve already built the backend backbone and a useful frontend prototype. I want to take ownership of the
@@ -52,6 +60,8 @@ flag it so we can separately scope the smallest backend fix; this is not a reque
 - Explain how the existing users/roles/invites connect to browser login, tenant and actor, and what is still missing.
 - Share one tested Ask → source → reload example, including refusal/error behaviour. After I connect the frontend,
   I’d like one focused contract review from you.
+- One specific source blocker surfaced: c1 repeats across replies, but citation lookup returns the first match.
+  Please add message-scoped lookup and a two-reply regression. I’ve made the frontend reject wrong-reply sources.
 
 I’ll handle the frontend work and send you specific, reproducible backend blockers only when necessary.
 Please keep backend fixes in separate PRs with the commit, contract change and verification. We can reuse your

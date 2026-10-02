@@ -104,3 +104,14 @@ Do not copy historical decisions here unless they are still in force. Link their
   responses before replacing the existing adapter pin. Code presence is not connected acceptance.
 - **Evidence:** START_HERE.md, product/FEATURE_API_GAPS.md, product/TEAM_HANDOFF.md, design/README.md.
 - **Reversal:** A current user instruction or verified contract/practitioner finding warrants a new decision.
+
+## D-010 — Message-bound source inspection, not first-match trust
+
+- **Evidence:** Backend `889ba54` assigns reply-local c1 IDs; citation.get returns the first match across a thread.
+- **Decision:** Require originating message ID in the local BFF operation, read the stored expected citation,
+  and reject any response message/field mismatch without displaying a quote. Preserve source re-verification.
+- **Boundary:** This prevents misattribution; it does not repair availability for later colliding citations.
+  Q-008 requests a narrow backend selector/regression. No backend files were changed.
+- **Verification:** Expanded tests and independent audit response round; PHASE_1_COMPATIBILITY.md.
+- **Reversal:** Verified message-scoped upstream lookup removes the redundant thread read only after regression
+  evidence preserves identity/quote binding. No presumed legal truth or availability from a majority vote.

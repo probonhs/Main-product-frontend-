@@ -4,6 +4,8 @@
   "capturedOn": "2026-10-02",
   "method": "Static AST of gateway/verbs.py plus the inspected rest_path derivation. Inputs only; not runtime verification or response schemas.",
   "frontendIntegratedAgainst": "127ef70a1187273707dd7e19aa9a6c7e0dc61220",
+  "compatibilityInspectedAgainst": "889ba548083ea67c8bd72b552a2bcf6d68cdf70b",
+  "acceptance": "Offline guarded conversation/trace/source compatibility only. Connected acceptance pending; message-scoped upstream citation lookup needed.",
   "verbs": [
     {
       "verb": "ask",

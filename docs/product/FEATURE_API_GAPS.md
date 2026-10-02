@@ -51,6 +51,11 @@ screen names. The [29-verb input inventory](API_INPUT_INVENTORY.json) includes e
 required inputs. It also records the separate GET binary downloads:
 `/v2/drafts/{draft_id}/export.docx` and `/v2/review_tables/{grid_id}/export.csv`.
 
+Phase 1 now requires a local `messageId` for source inspection and verifies the returned citation against
+that stored reply. The upstream route still receives only conversation/citation IDs. Repeated c1 IDs across
+replies can resolve to the first reply: the frontend rejects the mismatch (409, no quote) until Q-008 is fixed.
+This is a safe guard, not proof that later citations can be inspected successfully.
+
 ## Latest backend changes to reconcile first
 
 Since `127ef70`, backend main added a long-lived worker, failure categories, critic recording/citation pruning,
@@ -62,6 +67,11 @@ or upload documents. Do not introduce extra owner/reviewer roles without a new a
 PLANNED. User persistence/password hashing does not establish a complete browser login/session/reset service;
 those HTTP endpoints were not found in the inspected app mounting. Confirm the intended identity boundary
 before implementing or asking for new endpoints. No latest-backend runtime suite was executed in this handoff.
+
+The screen map's citation display names are stale versus the handler: actual response is nested `citation`,
+`message_id`, `reverified`, `reverified_note`, `note`. Follow handler fields, not the prose/display map alone.
+`documents.upload` does not establish durable extracted-text storage; keep attachments gated until that
+contract is proven. See `docs/frontend-loop/PHASE_1_COMPATIBILITY.md` for the audit and guarded changes.
 
 Calibration/nonconformity is not an accuracy percentage. Critic absent/null means not recorded, not disabled.
 Cost null/UNPRICED is not ₹0. A refusal or missing evidence is not a network failure. Preserve these distinctions.
