@@ -8,6 +8,10 @@ date, and **abstains** when it cannot verify. It is a **witness, not a tool.**
 For product work, read `docs/FINAL_FRONTEND_DEVELOPMENT_PROMPT.md`. These are the non-negotiables that must
 hold on **every** change.
 
+Current handoff: `docs/START_HERE.md`. Founder-owned execution: `docs/FIVE_PHASE_FRONTEND_LOOP_PROMPT.md`.
+Safe WIP checkpoints on review branches are allowed without claiming GO. Founder approval is required for
+merge/release. Preserve the website and teammate donor work.
+
 ## Brand — do not drift
 - **Colour is near-monochrome.** Base = near-black `#0C0C0D` + warm cream `#F4EFE6` (the "white") +
   a neutral warm-grey scale. **Accent = Brass Gold `#C9A24B`, ≤10% of any screen, ONE accent element
@@ -68,6 +72,9 @@ hold on **every** change.
   `catch { return abstention }`.
   ⚠ The engine is plain HTTP on `127.0.0.1:8020`, unauthenticated, no CORS. It is **server-only** —
   never import a provider into a `"use client"` module (it would inline the token into the public bundle).
+- The eight routes above describe the legacy deterministic engine, not the whole newer backend. Authenticated
+  v2 verbs/roles are mapped in `docs/product/FEATURE_API_GAPS.md`; inspect current code before integration.
+  Existing conversations remain development/loopback-only until production session/principal mapping exists.
 - Forms (waitlist/pilot): server-side validation (zod), honeypot, pluggable sink via env, recorded
   consent, no secrets in the repo, `.env.example` maintained. **Fail closed** — never render a
   fabricated legal figure when data is missing; show the abstain state.

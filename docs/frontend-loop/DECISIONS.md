@@ -58,3 +58,49 @@ Do not copy historical decisions here unless they are still in force. Link their
   preserves the fail-closed boundary. Revised full client output: 276,192 gzip bytes, budget PASS.
 - **Tests:** Captured Ask, gateway, unknown-state, transport and production bundle checks.
 - **Reversal:** A demonstrated client-validation need justifies a separate small validator within budget.
+
+## D-007 — Familiar assistant workspace (30 September 2026)
+
+- **Decision:** The user rejected the statutory-register presentation as alien and requested UX familiar
+  from Harvey, Spellbook and Claude. Replace the masthead/landing page with compact navigation, immediate
+  Ask entry, a question composer, progressively disclosed provisions/company facts, and on-demand Sources.
+- **Authority:** Direct current user feedback supersedes D-001's visual shell and the older brief's
+  anti-chatbot wording. Evidence/state/date requirements are unchanged.
+- **Boundary:** One independent check at a time; no conversation memory, saved chats, uploads, drafting,
+  or pretend portfolio. Samples remain labelled captured examples. Production remains sample-only.
+- **References:** Harvey's [May 2025 interface update](https://www.harvey.ai/blog/the-brief-may-2025),
+  [Spellbook overview](https://help.spellbook.legal/en/articles/9926203-spellbook-overview), and
+  [Claude getting started](https://academy.claude.com/tutorials/getting-started-with-claude).
+  These informed patterns, not a claim that authenticated competitor products were tested.
+- **Review:** One bounded CSS implementation agent and one render-test/Devil's Advocate reviewer;
+  no repeat of the full council. Browser and release gates remain separate from implementation.
+
+## D-008 — Backend-owned Ask conversations (2 October 2026)
+
+- **Authority:** User approved Ask → evidence → follow-up → reopen as the next development slice.
+- **Decision:** Add a typed adapter for the backend's conversation and citation verbs at revision
+  `127ef70`; use real stored envelopes, not reconstructed conversation history or browser persistence.
+- **Boundary:** Development and loopback only, one configured server credential/operator. Production
+  identity remains open. Unconfigured deployments retain captured examples and independent checks.
+- **Follow-ups:** Shared thread does not imply inferred context; the research route requires explicit
+  relevant facts in each question. Attachments are not connected on this slice.
+- **Evidence:** `ASK_CONVERSATION_SLICE.md`, `tests/conversations.mjs`.
+
+## D-009 — Founder-owned five-phase implementation and checkpoints (2 October 2026)
+
+- **Authority:** User requests organized GitHub preservation, major frontend ownership, a smaller teammate
+  backend handoff, autonomous routine decisions, pre-limit saves and founder final review.
+- **Decision:** Use `docs/FIVE_PHASE_FRONTEND_LOOP_PROMPT.md`; keep `/workspace` as the current implementation
+  entry, not an unapproved `/app` migration. Phase order: groundwork/access → Ask → documents/review → advanced
+  supported workflows → pilot acceptance. Preserve the approved hybrid starting appearance.
+- **Git:** Safe WIP checkpoints may be committed/pushed to product review branches before all gates pass.
+  This explicitly supersedes commit-only-after-GO for backups. WIP is not readiness, founder acceptance or release.
+  No automatic merge, deployment, destructive Git or unsafe data publication.
+- **Ownership:** Founder owns UI/integration/testing; teammate reuses existing backend work and resolves narrow
+  reproducible blockers. No teammate messaging authorized by this document alone.
+- **Limits:** Checkpoint before reported usage/context limits and after coherent slices; unknown quotas remain
+  unknown. No guarantee of saving after hard cutoff or automatic cross-provider switching.
+- **Backend:** Latest fetched `889ba54` adds users/roles, screen contracts and downloads; reconcile actual
+  responses before replacing the existing adapter pin. Code presence is not connected acceptance.
+- **Evidence:** START_HERE.md, product/FEATURE_API_GAPS.md, product/TEAM_HANDOFF.md, design/README.md.
+- **Reversal:** A current user instruction or verified contract/practitioner finding warrants a new decision.

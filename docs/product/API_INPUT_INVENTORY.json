@@ -1,0 +1,727 @@
+{
+  "backendRepository": "bubblebee1408/placedon-law-backend",
+  "backendCommit": "889ba548083ea67c8bd72b552a2bcf6d68cdf70b",
+  "capturedOn": "2026-10-02",
+  "method": "Static AST of gateway/verbs.py plus the inspected rest_path derivation. Inputs only; not runtime verification or response schemas.",
+  "frontendIntegratedAgainst": "127ef70a1187273707dd7e19aa9a6c7e0dc61220",
+  "verbs": [
+    {
+      "verb": "ask",
+      "method": "POST",
+      "path": "/v2/ask",
+      "inputs": [
+        {
+          "name": "question",
+          "type": "STRING",
+          "required": true,
+          "in_path": false
+        },
+        {
+          "name": "available",
+          "type": "ARRAY",
+          "required": false,
+          "in_path": false
+        },
+        {
+          "name": "company_facts",
+          "type": "ARRAY",
+          "required": false,
+          "in_path": false
+        },
+        {
+          "name": "critic",
+          "type": "STRING",
+          "required": false,
+          "in_path": false
+        },
+        {
+          "name": "decompose",
+          "type": "STRING",
+          "required": false,
+          "in_path": false
+        }
+      ]
+    },
+    {
+      "verb": "review_contract",
+      "method": "POST",
+      "path": "/v2/review-contract",
+      "inputs": [
+        {
+          "name": "text",
+          "type": "STRING",
+          "required": true,
+          "in_path": false
+        },
+        {
+          "name": "name",
+          "type": "STRING",
+          "required": false,
+          "in_path": false
+        },
+        {
+          "name": "playbook",
+          "type": "STRING",
+          "required": false,
+          "in_path": false
+        },
+        {
+          "name": "test_data",
+          "type": "STRING",
+          "required": false,
+          "in_path": false
+        }
+      ]
+    },
+    {
+      "verb": "runs.get",
+      "method": "GET",
+      "path": "/v2/runs/{run_id}",
+      "inputs": [
+        {
+          "name": "run_id",
+          "type": "STRING",
+          "required": true,
+          "in_path": true
+        }
+      ]
+    },
+    {
+      "verb": "runs.trace",
+      "method": "GET",
+      "path": "/v2/runs/{run_id}/trace",
+      "inputs": [
+        {
+          "name": "run_id",
+          "type": "STRING",
+          "required": true,
+          "in_path": true
+        }
+      ]
+    },
+    {
+      "verb": "review_document",
+      "method": "POST",
+      "path": "/v2/review-document",
+      "inputs": [
+        {
+          "name": "text",
+          "type": "STRING",
+          "required": true,
+          "in_path": false
+        },
+        {
+          "name": "name",
+          "type": "STRING",
+          "required": false,
+          "in_path": false
+        },
+        {
+          "name": "meeting_kind",
+          "type": "STRING",
+          "required": false,
+          "in_path": false
+        },
+        {
+          "name": "meeting_date",
+          "type": "STRING",
+          "required": false,
+          "in_path": false
+        },
+        {
+          "name": "entry_date",
+          "type": "STRING",
+          "required": false,
+          "in_path": false
+        }
+      ]
+    },
+    {
+      "verb": "runs.approve",
+      "method": "POST",
+      "path": "/v2/runs/approve/{run_id}",
+      "inputs": [
+        {
+          "name": "run_id",
+          "type": "STRING",
+          "required": true,
+          "in_path": true
+        },
+        {
+          "name": "item_ref",
+          "type": "STRING",
+          "required": true,
+          "in_path": false
+        },
+        {
+          "name": "reason",
+          "type": "STRING",
+          "required": true,
+          "in_path": false
+        },
+        {
+          "name": "quoted_span",
+          "type": "STRING",
+          "required": true,
+          "in_path": false
+        },
+        {
+          "name": "quote_viewed",
+          "type": "BOOLEAN",
+          "required": false,
+          "in_path": false
+        }
+      ]
+    },
+    {
+      "verb": "runs.reject",
+      "method": "POST",
+      "path": "/v2/runs/reject/{run_id}",
+      "inputs": [
+        {
+          "name": "run_id",
+          "type": "STRING",
+          "required": true,
+          "in_path": true
+        },
+        {
+          "name": "item_ref",
+          "type": "STRING",
+          "required": true,
+          "in_path": false
+        },
+        {
+          "name": "reason",
+          "type": "STRING",
+          "required": true,
+          "in_path": false
+        },
+        {
+          "name": "quoted_span",
+          "type": "STRING",
+          "required": true,
+          "in_path": false
+        },
+        {
+          "name": "quote_viewed",
+          "type": "BOOLEAN",
+          "required": false,
+          "in_path": false
+        }
+      ]
+    },
+    {
+      "verb": "runs.submit",
+      "method": "POST",
+      "path": "/v2/runs/submit",
+      "inputs": [
+        {
+          "name": "intent",
+          "type": "STRING",
+          "required": true,
+          "in_path": false
+        },
+        {
+          "name": "args",
+          "type": "OBJECT",
+          "required": false,
+          "in_path": false
+        }
+      ]
+    },
+    {
+      "verb": "runs.cancel",
+      "method": "POST",
+      "path": "/v2/runs/cancel/{run_id}",
+      "inputs": [
+        {
+          "name": "run_id",
+          "type": "STRING",
+          "required": true,
+          "in_path": true
+        }
+      ]
+    },
+    {
+      "verb": "events.assess",
+      "method": "POST",
+      "path": "/v2/events/assess",
+      "inputs": [
+        {
+          "name": "event",
+          "type": "STRING",
+          "required": true,
+          "in_path": false
+        },
+        {
+          "name": "facts",
+          "type": "OBJECT",
+          "required": false,
+          "in_path": false
+        },
+        {
+          "name": "company_facts",
+          "type": "ARRAY",
+          "required": false,
+          "in_path": false
+        }
+      ]
+    },
+    {
+      "verb": "sources.list",
+      "method": "POST",
+      "path": "/v2/sources/list",
+      "inputs": []
+    },
+    {
+      "verb": "sources.search",
+      "method": "POST",
+      "path": "/v2/sources/search",
+      "inputs": [
+        {
+          "name": "query",
+          "type": "STRING",
+          "required": true,
+          "in_path": false
+        },
+        {
+          "name": "tiers",
+          "type": "ARRAY",
+          "required": false,
+          "in_path": false
+        },
+        {
+          "name": "as_of",
+          "type": "STRING",
+          "required": false,
+          "in_path": false
+        }
+      ]
+    },
+    {
+      "verb": "company_facts.extract",
+      "method": "POST",
+      "path": "/v2/company-facts/extract",
+      "inputs": [
+        {
+          "name": "text",
+          "type": "STRING",
+          "required": true,
+          "in_path": false
+        },
+        {
+          "name": "uploaded_on",
+          "type": "STRING",
+          "required": true,
+          "in_path": false
+        }
+      ]
+    },
+    {
+      "verb": "intake.classify",
+      "method": "POST",
+      "path": "/v2/intake/classify",
+      "inputs": [
+        {
+          "name": "message",
+          "type": "STRING",
+          "required": false,
+          "in_path": false
+        },
+        {
+          "name": "files",
+          "type": "ARRAY",
+          "required": false,
+          "in_path": false
+        },
+        {
+          "name": "facts",
+          "type": "OBJECT",
+          "required": false,
+          "in_path": false
+        }
+      ]
+    },
+    {
+      "verb": "conversation.send",
+      "method": "POST",
+      "path": "/v2/conversation/send",
+      "inputs": [
+        {
+          "name": "conversation_id",
+          "type": "STRING",
+          "required": false,
+          "in_path": false
+        },
+        {
+          "name": "text",
+          "type": "STRING",
+          "required": false,
+          "in_path": false
+        },
+        {
+          "name": "file_ids",
+          "type": "ARRAY",
+          "required": false,
+          "in_path": false
+        },
+        {
+          "name": "as_of",
+          "type": "STRING",
+          "required": false,
+          "in_path": false
+        },
+        {
+          "name": "sources",
+          "type": "ARRAY",
+          "required": false,
+          "in_path": false
+        },
+        {
+          "name": "task_override",
+          "type": "STRING",
+          "required": false,
+          "in_path": false
+        },
+        {
+          "name": "event",
+          "type": "STRING",
+          "required": false,
+          "in_path": false
+        },
+        {
+          "name": "facts",
+          "type": "OBJECT",
+          "required": false,
+          "in_path": false
+        },
+        {
+          "name": "test_data",
+          "type": "STRING",
+          "required": false,
+          "in_path": false
+        },
+        {
+          "name": "prose",
+          "type": "ARRAY",
+          "required": false,
+          "in_path": false
+        }
+      ]
+    },
+    {
+      "verb": "conversation.list",
+      "method": "POST",
+      "path": "/v2/conversation/list",
+      "inputs": [
+        {
+          "name": "limit",
+          "type": "STRING",
+          "required": false,
+          "in_path": false
+        }
+      ]
+    },
+    {
+      "verb": "conversation.get",
+      "method": "GET",
+      "path": "/v2/conversation/{conversation_id}",
+      "inputs": [
+        {
+          "name": "conversation_id",
+          "type": "STRING",
+          "required": true,
+          "in_path": true
+        }
+      ]
+    },
+    {
+      "verb": "citation.get",
+      "method": "POST",
+      "path": "/v2/citation",
+      "inputs": [
+        {
+          "name": "citation_id",
+          "type": "STRING",
+          "required": true,
+          "in_path": false
+        },
+        {
+          "name": "conversation_id",
+          "type": "STRING",
+          "required": true,
+          "in_path": false
+        }
+      ]
+    },
+    {
+      "verb": "review_table.create",
+      "method": "POST",
+      "path": "/v2/review-table/create",
+      "inputs": [
+        {
+          "name": "name",
+          "type": "STRING",
+          "required": true,
+          "in_path": false
+        },
+        {
+          "name": "document_ids",
+          "type": "ARRAY",
+          "required": true,
+          "in_path": false
+        },
+        {
+          "name": "columns",
+          "type": "ARRAY",
+          "required": true,
+          "in_path": false
+        },
+        {
+          "name": "grid_id",
+          "type": "STRING",
+          "required": false,
+          "in_path": false
+        }
+      ]
+    },
+    {
+      "verb": "review_table.status",
+      "method": "POST",
+      "path": "/v2/review-table/status",
+      "inputs": [
+        {
+          "name": "grid_id",
+          "type": "STRING",
+          "required": true,
+          "in_path": false
+        }
+      ]
+    },
+    {
+      "verb": "review_table.export",
+      "method": "POST",
+      "path": "/v2/review-table/export",
+      "inputs": [
+        {
+          "name": "grid_id",
+          "type": "STRING",
+          "required": true,
+          "in_path": false
+        }
+      ]
+    },
+    {
+      "verb": "draft.create",
+      "method": "POST",
+      "path": "/v2/draft/create",
+      "inputs": [
+        {
+          "name": "title",
+          "type": "STRING",
+          "required": true,
+          "in_path": false
+        },
+        {
+          "name": "body",
+          "type": "STRING",
+          "required": false,
+          "in_path": false
+        },
+        {
+          "name": "slots",
+          "type": "ARRAY",
+          "required": false,
+          "in_path": false
+        },
+        {
+          "name": "citations",
+          "type": "ARRAY",
+          "required": false,
+          "in_path": false
+        },
+        {
+          "name": "kind",
+          "type": "STRING",
+          "required": false,
+          "in_path": false
+        },
+        {
+          "name": "draft_id",
+          "type": "STRING",
+          "required": false,
+          "in_path": false
+        }
+      ]
+    },
+    {
+      "verb": "draft.revise",
+      "method": "POST",
+      "path": "/v2/draft/revise",
+      "inputs": [
+        {
+          "name": "draft_id",
+          "type": "STRING",
+          "required": true,
+          "in_path": false
+        },
+        {
+          "name": "title",
+          "type": "STRING",
+          "required": false,
+          "in_path": false
+        },
+        {
+          "name": "body",
+          "type": "STRING",
+          "required": false,
+          "in_path": false
+        },
+        {
+          "name": "slots",
+          "type": "ARRAY",
+          "required": false,
+          "in_path": false
+        },
+        {
+          "name": "citations",
+          "type": "ARRAY",
+          "required": false,
+          "in_path": false
+        },
+        {
+          "name": "approved_by",
+          "type": "STRING",
+          "required": false,
+          "in_path": false
+        }
+      ]
+    },
+    {
+      "verb": "draft.status",
+      "method": "POST",
+      "path": "/v2/draft/status",
+      "inputs": [
+        {
+          "name": "draft_id",
+          "type": "STRING",
+          "required": true,
+          "in_path": false
+        }
+      ]
+    },
+    {
+      "verb": "draft.versions",
+      "method": "POST",
+      "path": "/v2/draft/versions",
+      "inputs": [
+        {
+          "name": "draft_id",
+          "type": "STRING",
+          "required": true,
+          "in_path": false
+        }
+      ]
+    },
+    {
+      "verb": "draft.diff",
+      "method": "POST",
+      "path": "/v2/draft/diff",
+      "inputs": [
+        {
+          "name": "draft_id",
+          "type": "STRING",
+          "required": true,
+          "in_path": false
+        },
+        {
+          "name": "from_version",
+          "type": "STRING",
+          "required": false,
+          "in_path": false
+        },
+        {
+          "name": "to_version",
+          "type": "STRING",
+          "required": false,
+          "in_path": false
+        }
+      ]
+    },
+    {
+      "verb": "draft.export",
+      "method": "POST",
+      "path": "/v2/draft/export",
+      "inputs": [
+        {
+          "name": "draft_id",
+          "type": "STRING",
+          "required": true,
+          "in_path": false
+        },
+        {
+          "name": "version",
+          "type": "STRING",
+          "required": false,
+          "in_path": false
+        },
+        {
+          "name": "format",
+          "type": "STRING",
+          "required": false,
+          "in_path": false
+        }
+      ]
+    },
+    {
+      "verb": "review_table.cancel",
+      "method": "POST",
+      "path": "/v2/review-table/cancel",
+      "inputs": [
+        {
+          "name": "grid_id",
+          "type": "STRING",
+          "required": true,
+          "in_path": false
+        }
+      ]
+    },
+    {
+      "verb": "documents.upload",
+      "method": "POST",
+      "path": "/v2/documents/upload",
+      "inputs": [
+        {
+          "name": "text",
+          "type": "STRING",
+          "required": false,
+          "in_path": false
+        },
+        {
+          "name": "name",
+          "type": "STRING",
+          "required": false,
+          "in_path": false
+        },
+        {
+          "name": "cannot_read",
+          "type": "STRING",
+          "required": false,
+          "in_path": false
+        }
+      ]
+    }
+  ],
+  "binaryRoutes": [
+    {
+      "method": "GET",
+      "path": "/v2/drafts/{draft_id}/export.docx",
+      "verb": "draft.export"
+    },
+    {
+      "method": "GET",
+      "path": "/v2/review_tables/{grid_id}/export.csv",
+      "verb": "review_table.export"
+    }
+  ]
+}

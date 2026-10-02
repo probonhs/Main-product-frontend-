@@ -1,5 +1,10 @@
 # Placedon frontend — portable development loop
 
+Current entry: `docs/FIVE_PHASE_FRONTEND_LOOP_PROMPT.md` adds ownership, delivery phases, pre-limit
+checkpoints and founder final-review authority. This file supplies its detailed review policy, not a second
+competing prompt. The user's safe WIP checkpoint authorization supersedes “commit only after GO” for
+review-branch backups; it does not authorize merge, release or unsafe publication.
+
 Use after `docs/FINAL_FRONTEND_DEVELOPMENT_PROMPT.md`. The brief defines the product; this file defines how
 work is selected, reviewed, verified, committed and handed between Codex, Claude, Astra or another capable
 agent. `frontend-loop.config.json` is authoritative for machine-enforced resource limits.

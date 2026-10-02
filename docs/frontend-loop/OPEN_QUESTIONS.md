@@ -1,12 +1,16 @@
-# Frontend loop open questions
+# Open questions and decisions needed
 
-Items here require evidence or a human decision. Do not silently answer them in code.
+Items need evidence or a human choice. Continue independent work; do not answer these silently in code.
 
-| ID | Question | Owner | Blocks | Evidence needed | Status |
-|---|---|---|---|---|---|
-| Q-001 | Which production identity and gateway will authenticate the logged-in app? | Founder/backend | Live API integration | Gateway and tenancy contract | OPEN |
-| Q-002 | Which real practitioner group enters the first pilot? | Founder/research | Final prioritisation and usability validation | Named pilot participant(s) | OPEN |
-| Q-003 | What is the approved public sentence on language-model use? | Founder/legal | Trust copy | One reconciled statement matching production architecture | OPEN |
-| Q-004 | When will historical-coverage metadata exist? | Backend | Earlier-date control | Typed response contract and tests | OPEN |
-| Q-005 | What feedback destination and consent record will the pilot use? | Founder/backend | Feedback control | Storage/privacy decision | OPEN |
-| Q-006 | Which project, domain, environments and owner will deploy the logged-in product? | Founder/engineering | Production deployment | Hosting and rollback ownership | OPEN |
+| ID | Question | Owner | Blocks | Current fact / next evidence |
+|---|---|---|---|---|
+| Q-001 | Which human login/session method and principal provisioning/revocation mapping will we use? | Founder decision; teammate contract support | Production multi-user access | Backend `889ba54` has actors/invites and viewer/lawyer/admin checks. Confirm missing HTTP/session boundary; do not rebuild existing roles. |
+| Q-002 | Which real practitioners and first organisation enter the pilot? | Founder | Practitioner acceptance | Simulated personas do not count; named participants needed. |
+| Q-003 | What approved public statement describes model use and permitted client-data processing? | Founder/legal | Trust copy and real document processing | Use backend trace/configuration; no invented provider, region or confidence. |
+| Q-004 | When will bounded historical provision/text coverage exist? | Backend | Earlier-date control only | Today-only remains default; requires tested coverage and point-in-time text. |
+| Q-005 | What feedback destination, consent and retention/deletion policy are approved? | Founder; narrow backend support | Real feedback and privacy controls | No integrated sink/deletion service here; choose minimum pilot policy. |
+| Q-006 | Which product deployment project/domain/owner and rollback process will we use? | Founder/engineering | Production release | Separate from website Vercel; immutable revision and founder approval. |
+| Q-007 | Is connected synthetic local setup available at the pinned latest backend SHA? | Teammate | Live v2 acceptance | Store/worker/migrations, lawyer/admin test principal, private credential delivery. |
+
+Git workflow scope is an operational access condition, not a product decision. Record the actual push
+failure if it occurs; never drop workflow history or claim remote publication from a local commit.

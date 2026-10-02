@@ -1,28 +1,31 @@
 # Frontend loop state
 
-Milestone: 1 COMPLETE — 13 captures, truth map and typed Ask client, commit `8a41d4f`
-Current move: `/workspace` shell and Ask → result → Sources → revise
-Status: VERIFYING — full browser acceptance is not complete
-Branch: site/footer-icons-features-council
-Base commit: `b84c910`
-Latest loop commit: `8a41d4f` (engine-pinned fixtures and validated Ask client)
-Working tree state: product UI remains uncommitted pending browser acceptance; preserve it.
-Files intentionally changed: `.env.example`, `next.config.ts`, package test wiring, workspace analytics
-  exclusion, `src/app/workspace/`, `src/app/api/workspace/`, `src/lib/engine/workspace.ts`,
-  `src/lib/workspace-samples.ts`, gateway/render tests and loop records.
-Tests last run: 773 fixture assertions / 13 captures; 7 Ask captures plus provider/schema checks;
-  452 gateway assertions / 47 cases; existing 38 contracts; runner 8 assertions; loop validation,
-  TypeScript, ESLint, production build PASS (25 routes); client budget PASS (18 chunks, 276,192 gzip bytes).
-  Capture reproduction: 13 byte-identical fixtures, no writes. See VERIFY_workspace-ask.md.
-Backend commit inspected: `9486600`; core API 86/86, Ask 127/127, obligations 114/114,
-  prescribed-thresholds 86/86, assistant-contract 37/37 and goldset 5/5 passed; six environment/dependency or
-  Gazette-rendering suites remain to classify
-Decisions in force: `docs/decisions/DATE_AND_LEGAL_LANGUAGE.md`; `docs/council/FINAL_DECISION_FRONTEND.md`;
-  D-004 automatic effort and token routing
-Open blockers: GitHub token still lacks workflow scope. Browser control became unreliable during remaining
-  viewport checks; attempted blank captures do not count as passes. Production identity, portfolio
-  persistence, practitioner testing and deployment remain gated.
-Next safe action: finish Brave viewport, missing-fact correction, keyboard/source-return, zoom, contrast,
-  reduced-motion and analytics/network checks, then commit the UI after GO. Do not repeat the old council.
-Ignored `.env.local` contains only loopback engine origin. Do not stage it. Push only to `probonhs`, not origin.
-Updated by: Codex, 28 September 2026
+Updated 2 October 2026. Current authority: `docs/START_HERE.md` and the five-phase loop prompt.
+
+- Product repository: `probonhs/Main-product-frontend-`; review branch: `codex/frontend-handoff`.
+- Current work: preserve/organize/commit/push all scoped frontend work, then begin unblocked Phase 1 groundwork.
+- Appearance: user selected the Starting view of the hybrid cream workspace; snapshots saved in `docs/design/`.
+- Implementation: independent Ask → result → Sources; local backend-owned conversation list/send/reopen,
+  citation re-verification and trace. Connected/browser/production acceptance remain incomplete.
+- Backend: fixtures pinned to `9486600`; conversation adapter pinned to `127ef70`.
+  Latest fetched main `889ba54` adds roles, screen contracts, worker and downloads; compatibility work pending.
+- Donor: website PR #2 remains OPEN; head `8461a06`. Preserve useful contracts/extraction/review/run patterns;
+  do not merge the whole branch or copy the shared-passcode identity.
+- Current slice verification: typecheck, lint, offline contracts, webpack production build (27 routes) and
+  bundle budget (49 chunks / 399,026 gzip bytes) re-run 2 October: PASS. See VERIFY_handoff-2026-10-02.md.
+  Full responsive/keyboard/privacy and live gateway acceptance are NOT RUN, not inferred from HTML.
+- Gateway: no v2 URL/key currently configured. No principal/credentials created and no paid model call made.
+- Git: four earlier local commits follow product `b84c910`; implementation preserved in `fc47985`.
+  Organization/prompt records are being prepared as a separate commit.
+  Publish only to `probonhs`; never to the public website's `origin`.
+- Access: GitHub authentication works; current CLI token has repo/read:org/gist, not workflow scope.
+  Existing new CI workflow may block publication; record actual push result, never drop/bypass it.
+- Runtime: development server was running on 127.0.0.1:3300. Check before starting another process.
+- Review status: NEEDS_VERIFICATION, not pilot GO. Founder authorizes safe WIP checkpoint commits.
+- Ownership: founder builds frontend; teammate supplies local backend setup/contract clarification/narrow fixes.
+- Founder-only choices: identity/session approach, data processing, retention, pilot scope and release.
+- Next unblocked move after the backup attempt: reconcile latest envelopes/roles/trace fields and add focused compatibility
+  tests; preserve the approved UI. Do not restart the old council.
+  Retain/report any local checkpoint if publication is blocked; continue independent safe groundwork.
+
+Detailed evidence: ASK_CONVERSATION_SLICE.md, VERIFY_workspace-ask.md, product/FEATURE_API_GAPS.md.

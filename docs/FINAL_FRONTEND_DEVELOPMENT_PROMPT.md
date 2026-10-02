@@ -1,7 +1,8 @@
 # Placedon main product frontend — development brief
 
 Use this brief for the logged-in product application. Use
-`docs/FRONTEND_MULTI_AGENT_LOOP_PROMPT.md` for execution, review, Git and model handoff. Detailed fixture,
+`docs/FIVE_PHASE_FRONTEND_LOOP_PROMPT.md` for current execution, ownership, review, Git and model handoff.
+`docs/FRONTEND_MULTI_AGENT_LOOP_PROMPT.md` supplies detailed review policy. Detailed fixture,
 quality and runner rules live under `docs/frontend-loop/`; do not duplicate them in agent context unless the
 current move needs them.
 
@@ -66,7 +67,13 @@ instrument history and technical provenance.
 
 ## 3. Product direction and pilot scope
 
-Use the agreed **engine-true docket**:
+Current scope/status: `docs/START_HERE.md` and `docs/product/FEATURE_API_GAPS.md`. Later document/contract
+review, tables and drafts are allowed only against verified v2 contracts and processing permissions. The
+old council's cut list applied to its earlier pilot; it does not prove newer backend verbs are absent.
+
+Use the agreed **engine-true docket** for capability and evidence structure. The user's 30 September
+feedback supersedes its statutory-register visual shell: the current Ask surface uses a familiar
+assistant workspace (compact sidebar, question composer, answer and on-demand Sources; D-007).
 
 - portfolio docket, company drill-down, duties master-detail and Ask with Sources;
 - a per-provision currency strip and one gold “you are here” marker only when real lineage supports them;
@@ -167,10 +174,14 @@ Optimise for comprehension and calibrated trust, not engagement:
 - preserve reading position when an answer or Sources opens.
 
 Use the existing central tokens: near-black ink, warm-cream paper, restrained warm greys, Brass Gold as the
-single accent and cool grey only for abstention/unknown. The visual metaphor is a well-kept matter file or
-statutory register—not a chatbot, generic analytics dashboard or legal cliché. Prefer typography, borders and
+single accent and cool grey only for abstention/unknown. Use familiar assistant interactions, informed by
+Harvey, Spellbook and Claude, without implying their unsupported features or copying their identity.
+Keep the legal record readable within that shell. Prefer typography, borders and
 alignment to cards and shadows; corners stay at or below 6px. Avoid decorative gradients, glassmorphism,
 sparkles, stock art, excessive pills and ornamental gavels/scales/columns.
+
+The approved starting direction uses black primary controls/icons with the official mark and Placedon
+wordmark. `docs/design/placedon-hybrid-direction.html` records appearance, not legal response fixtures.
 
 Required reusable semantics include legal and instrument references, answer/obligation/technical states,
 figure block, verbatim block, source record, coverage boundary, missing-input action, accessible currency

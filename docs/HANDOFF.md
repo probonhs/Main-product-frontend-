@@ -1,5 +1,9 @@
 # Placedon — handoff (state as of 26 Sep 2026)
 
+Historical snapshot only. Current continuation starts at `docs/START_HERE.md` and
+`docs/frontend-loop/HANDOFF.md`. Repository access, routes, decisions and backend capabilities below may
+have changed. Do not execute its old push instructions without checking current authorization/state.
+
 For final product-frontend implementation, use
 `docs/FINAL_FRONTEND_DEVELOPMENT_PROMPT.md`. It supersedes the older Astra master prompt for the
 logged-in application. The public marketing site remains a separate surface.

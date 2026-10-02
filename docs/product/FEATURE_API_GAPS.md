@@ -1,0 +1,80 @@
+# Feature, API and gap map
+
+Inspected 2 October 2026. Backend latest fetched main: `889ba548083ea67c8bd72b552a2bcf6d68cdf70b`.
+Frontend conversations currently target `127ef70a1187273707dd7e19aa9a6c7e0dc61220`; original deterministic
+fixtures target `9486600`. Code existence, connected acceptance and production readiness are separate statuses.
+
+## Request boundary
+
+`Browser → same-origin Next server → authenticated gateway → tenant-scoped store / worker / permitted model → validated response → UI`
+
+Today the server uses one local operator key, never a key supplied by the browser. Production must verify a
+human session and map it to the correct tenant, actor and role. Tenant IDs in client input are not authority.
+The browser never picks a model or decides legal applicability. Research follow-ups do not imply inferred
+company facts or conversational reasoning memory; each question needs its own relevant context.
+
+## Supported work versus unfinished UI
+
+| User job | Real backend operations | Frontend now | Gap / owner |
+|---|---|---|---|
+| Start, follow up, reopen | `conversation.list/get/send` | Local-only adapter and UI; offline tests pass | Founder: reconcile latest responses, connected persistence test, role/error UX. Teammate: reproducible local store + appropriate principal. |
+| Inspect an answer's basis | `citation.get`, `runs.trace` | Citation re-check and trace panel | Founder: expose newly returned critic metadata; browser focus and stale-source acceptance. |
+| Check supplied company facts | legacy `/v1/ask`, `/v1/compliance-pack`; `company_facts.extract` | Independent structured Ask; captured examples | Founder: confirmed-context UI. Extracted facts are supplied, not verified, and do not steer v2 research. No live MCA21 claim. |
+| Sign in / invite / remove access | Actor/role/invite persistence; `gateway/roles.py`, `passwords.py` | No production identity/session UI | Founder builds frontend auth/session adapter after decision. Teammate confirms principal provisioning/revocation and missing server endpoints only. |
+| Watch a durable run | `runs.submit/get/trace/cancel` | Trace only; manual refresh, stop waiting | Founder: bounded polling, terminal states, true cancellation. Aborting a browser request is not cancelling the run. |
+| Attach/read a document | `documents.upload` | Attach visibly unavailable | Founder: donor extraction integration, limits, unreadable-file states. Backend records extracted text/reason; it is not a PDF/OCR parser. |
+| Review corporate documents | `review_document`, `runs.approve/reject` | Not integrated; donor PR has useful workflow | Founder: quote + reason gate, role-specific actions, audit result. |
+| Review a contract | `review_contract`, review decisions | Not integrated; donor PR has prototype | Founder: party/context, approved playbook, standards versus law, source and review gate. Region policy must permit client content. |
+| Compare many documents | `review_table.create/status/cancel/export` | Not integrated | Founder: table states, spend/unknown cost, partial failures, cancellation, safe CSV. |
+| Draft/revise/export | `draft.create/revise/status/versions/diff/export` | Not integrated | Founder: verified support, blocking slots, version/diff, approval boundary, authenticated DOCX. Do not assume drafts must originate from a run unless the contract says so. |
+| Browse available sources | `sources.list/search` | Answer-specific sources only | Founder: held/client/external scope and terms/refusal display. External listing is not permission to fetch. |
+| See law changes | `/v1/company/{cin}/events`, instrument impact; `events.assess` | Older product surfaces; not canonical workspace | Founder: scope-correct integration. Legacy CIN does not filter events; no company-alert promise. |
+| Portfolio / stored company matters | No verified profile/portfolio store contract in this handoff | Not built | Defer UI dependent on persistence; request a narrow backend contract only if pilot needs it. |
+| Earlier-date check | No approved bounded provision/text coverage contract | Intentionally absent | Keep today-only. One contextual date only after tested coverage and point-in-time text exist. |
+| Feedback / retention / deletion | No integrated end-user contract here | Limitations page only | Founder selects policy/destination; teammate implements narrowly specified backend gap, not generic infrastructure. |
+
+## Exact integrated v2 calls
+
+All browser operations go to POST `/api/workspace/conversations`; the server dispatches:
+
+| Action | Upstream | Current request |
+|---|---|---|
+| List | POST `/v2/conversation/list` | `limit: "50"` |
+| Reopen | GET `/v2/conversation/{conversation_id}` | UUID path only |
+| Send | POST `/v2/conversation/send` | `text`, optional `conversation_id`, `task_override: "RESEARCH_QUESTION"` |
+| Source | POST `/v2/citation` | `conversation_id`, `citation_id` |
+| Trace | GET `/v2/runs/{run_id}/trace` | UUID path only |
+
+`citation.get` is **not** `/v2/citation/get`. Approval is POST `/v2/runs/approve/{run_id}`,
+rejection `/v2/runs/reject/{run_id}`, cancellation `/v2/runs/cancel/{run_id}`. Do not guess REST paths from
+screen names. The [29-verb input inventory](API_INPUT_INVENTORY.json) includes exact generated paths and
+required inputs. It also records the separate GET binary downloads:
+`/v2/drafts/{draft_id}/export.docx` and `/v2/review_tables/{grid_id}/export.csv`.
+
+## Latest backend changes to reconcile first
+
+Since `127ef70`, backend main added a long-lived worker, failure categories, critic recording/citation pruning,
+calibration records, `gateway/screens.py`, binary downloads, actor/invitation persistence and roles.
+Roles are **viewer, lawyer, admin**, checked per verb. A default viewer principal cannot send conversations
+or upload documents. Do not introduce extra owner/reviewer roles without a new agreed contract.
+
+`screens.py` is useful checked mapping, not proof that a frontend screen exists. Its vault entry is explicitly
+PLANNED. User persistence/password hashing does not establish a complete browser login/session/reset service;
+those HTTP endpoints were not found in the inspected app mounting. Confirm the intended identity boundary
+before implementing or asking for new endpoints. No latest-backend runtime suite was executed in this handoff.
+
+Calibration/nonconformity is not an accuracy percentage. Critic absent/null means not recorded, not disabled.
+Cost null/UNPRICED is not ₹0. A refusal or missing evidence is not a network failure. Preserve these distinctions.
+
+## Model and data policy
+
+Backend code/configuration chooses deterministic versus model work and permitted deployment. Development
+agents (Astra, Claude, etc.) are not automatically product inference providers. Use returned trace values;
+never promise a provider, cost, region or confidence from frontend defaults. No client documents may be sent
+to reviewers or paid inference in this development loop without an approved processing path and budget.
+
+## Integration order
+
+Follow the five phases in `docs/FIVE_PHASE_FRONTEND_LOOP_PROMPT.md`. Ask stays first. Identity and contract
+reconciliation unblock connected acceptance; document review follows; tables/drafts are later gated slices.
+Keep unsupported navigation absent or explicitly contextual, not a collection of fake active controls.

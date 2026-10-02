@@ -27,3 +27,8 @@ consent and cross-route navigation. Confirm production sample-only behaviour in 
 no-store, size/origin/date guards and technical-error invariants already have offline gateway coverage.
 
 No full-product, pilot or production approval follows from these checks.
+
+Additional offline rendering gate: `node tests/workspace-render.mjs` passes 67 assertions across the four
+sample records and nested resident evidence. It checks actual state/date/figure/source rendering, legal
+reference markup, absence of confidence claims and live/sample form boundaries. Static HTML is not browser
+interaction proof. The test is wired into the uncommitted package script alongside gateway tests.
