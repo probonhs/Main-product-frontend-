@@ -10,6 +10,21 @@ const nextConfig: NextConfig = {
    * (e.g. Azure) by setting BUILD_STANDALONE=1.
    */
   output: process.env.BUILD_STANDALONE ? "standalone" : undefined,
+  outputFileTracingIncludes: {
+    "/workspace": ["./fixtures/engine/ask-*.json"],
+    "/api/workspace/ask": ["./fixtures/engine/ask-*.json"],
+    "/workspace/ask": ["./fixtures/engine/ask-*.json"],
+  },
+  async headers() {
+    return [{
+      source: "/workspace/:path*",
+      headers: [
+        { key: "Referrer-Policy", value: "no-referrer" },
+        { key: "X-Content-Type-Options", value: "nosniff" },
+        { key: "Content-Security-Policy", value: `default-src 'self'; script-src 'self' 'unsafe-inline'${process.env.NODE_ENV === "development" ? " 'unsafe-eval'" : ""}; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'${process.env.NODE_ENV === "development" ? " ws: wss:" : ""}; frame-ancestors 'none'; form-action 'self'; base-uri 'self'; object-src 'none'` },
+      ],
+    }];
+  },
 };
 
 export default nextConfig;

@@ -3,13 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev -p 3300",
+    "dev": "next dev --hostname 127.0.0.1 -p 3300",
     "build": "next build",
     "start": "next start",
     "start:local": "next start -p 3300",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
-    "test:contracts": "node tests/contracts.mjs",
+    "test:contracts": "node tests/contracts.mjs && node tests/engine-fixtures.mjs && node tests/ask-contracts.mjs && node tests/workspace-gateway.mjs && node tests/workspace-render.mjs && node tests/conversations.mjs",
     "test:loop": "node tests/frontend-loop-runner.mjs",
     "loop:validate": "node scripts/frontend-loop.mjs validate",
     "performance:budget": "node scripts/check-client-budget.mjs"

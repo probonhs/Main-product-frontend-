@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useSyncExternalStore } from "react";
+import { usePathname } from "next/navigation";
 
 /**
  * Consent-gated Google Analytics 4 + cookie-consent banner.
@@ -47,11 +48,16 @@ function setConsent(value: "granted" | "denied") {
 }
 
 export function Analytics() {
+  const pathname = usePathname();
+  const privateWorkspace = pathname === "/workspace" || pathname.startsWith("/workspace/");
   const raw = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
   const consent =
     raw === "granted" ? "granted" : raw === "denied" ? "denied" : null;
 
   useEffect(() => {
+    // Also disable a tag previously loaded on a marketing page during client navigation.
+    (window as unknown as Record<string, unknown>)[`ga-disable-${GA_ID}`] = privateWorkspace;
+    if (privateWorkspace) return;
     if (consent !== "granted" || !GA_ID) return;
     const host = window.location.hostname;
     if (host === "localhost" || host === "127.0.0.1") return;
@@ -67,9 +73,9 @@ export function Analytics() {
     init.id = "ga4-init";
     init.textContent = `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}window.gtag=gtag;gtag('js',new Date());gtag('config','${GA_ID}');`;
     document.head.appendChild(init);
-  }, [consent]);
+  }, [consent, privateWorkspace]);
 
-  if (consent !== null) return null;
+  if (privateWorkspace || consent !== null) return null;
 
   return (
     <div className="consent-banner" role="dialog" aria-label="Cookie choice">
