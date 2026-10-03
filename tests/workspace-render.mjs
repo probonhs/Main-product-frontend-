@@ -153,6 +153,11 @@ try {
   const blankLive = blank(true);
   const blankSample = blank(false);
   for (const [mode, html] of [["live", blankLive], ["sample", blankSample]]) {
+    includes(html, "Start with your question.", `${mode}: neutral welcome`);
+    excludes(html, "Ask about the <em>Companies Act", `${mode}: no statute-specific welcome`);
+    closedDetails(html, 'class="ws-details"(?=><summary>About this check)', `${mode}: check context is disclosed on demand`);
+    closedDetails(html, 'id="ws-sample-results"', `${mode}: samples are secondary`);
+    includes(html, "not your saved conversations", `${mode}: samples are not fake history`);
     excludes(html, "A result with its basis", `${mode}: no empty result placeholder`);
     excludes(html, 'id="ws-source-heading"', `${mode}: no empty Sources region`);
     excludes(html, 'class="ws-chat-answer"', `${mode}: no empty answer bubble`);
@@ -216,6 +221,7 @@ try {
 
   // Structural regressions only: these checks do not replace browser focus/reflow acceptance.
   const layout = readFileSync(new URL("src/app/workspace/layout.tsx", root), "utf8");
+  for (const text of ["Product preview", "Preview workspace", "ws-sidebar-note", "ws-sidebar-examples", "WORKSPACE_SAMPLES", "gateway connection"]) excludes(layout, text, "Shell: removed development/demo chrome");
   includes(layout, 'href="#workspace-content"', "Shell: local skip link bypasses workspace navigation");
   includes(layout, 'id="workspace-content" tabIndex={-1}', "Shell: skip target accepts focus");
   assert.ok(layout.indexOf('href="#workspace-content"') < layout.indexOf("<aside"));

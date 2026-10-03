@@ -15,7 +15,7 @@ export const initialPreparation: PreparationState = {
   draft: { name: "", text: "", review: "corporate_document", source: "entered" },
   prepared: null, changed: false, requestId: null, error: "", errorField: null,
 };
-type Event =
+export type PreparationEvent =
   | { type: "edit"; patch: Partial<Pick<DocumentDraft, "name" | "text" | "review">> }
   | { type: "read"; requestId: number }
   | { type: "read_done"; requestId: number; name: string; text: string }
@@ -37,7 +37,7 @@ export function preparationError(draft: DocumentDraft) {
   return "";
 }
 
-export function preparationReducer(state: PreparationState, event: Event): PreparationState {
+export function preparationReducer(state: PreparationState, event: PreparationEvent): PreparationState {
   switch (event.type) {
     case "edit": {
       const error = event.patch.text === undefined ? "" : localTextLimitError(event.patch.text);

@@ -198,3 +198,16 @@ Do not copy historical decisions here unless they are still in force. Link their
 - **Review:** PHASE_3_LOCAL_PREPARATION.md; independent R2 corrections to truncation/field association accepted.
   Browser/mounted/live gates remain NOT RUN. Roll back or narrow the local reader if completeness/privacy
   tests show altered, exposed or misleading text. Founder retains processing/retention/release decisions.
+
+## D-017 — Document-first intake and remove development chrome (4 October 2026)
+
+- **Authority:** Founder’s seven browser comments: remove the main local-preparation and sidebar preview
+  notices; add document before review/naming; remove statute-specific welcome; question sidebar Examples.
+- **Decision:** File/paste first, name and review choice only after text is present. Explanatory storage copy
+  stays closed; short availability qualifiers remain where action is offered. Preserve the cream/ink shell.
+  Remove shared demo navigation; offer labelled sample results secondarily on Ask, never as saved history.
+- **Boundary:** Neutral welcome does not broaden actual legal coverage or remove Act names from sources.
+  Local selection is not upload. Review stays disabled until verified integration/processing; no fake success.
+- **Review:** PHASE_3_INTAKE_REFINEMENT.md; independent R2 late-disclosure finding corrected. Static/code/build
+  evidence passes; Brave/mounted/full acceptance is not claimed. Revisit if real users confuse preparation
+  with review or connected capabilities change; do not restore development scaffolding to the final shell.

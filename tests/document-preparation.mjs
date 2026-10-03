@@ -25,7 +25,7 @@ const previousFetch = globalThis.fetch;
 globalThis.fetch = () => { throw new Error("No network is permitted in local preparation tests"); };
 try {
   const { MAX_LOCAL_TEXT_BYTES, MAX_LOCAL_TEXT_CHARACTERS, initialPreparation, preparationReducer: reduce, preparationError, readLocalText, localTextLimitError } = await import("../src/lib/engine/document-preparation.ts");
-  const { DocumentWorkspace, PreparedDocument } = await import("../src/app/workspace/documents/document-workspace.tsx");
+  const { DocumentWorkspace, DocumentReviewSetup, PreparedDocument } = await import("../src/app/workspace/documents/document-workspace.tsx");
   eq(MAX_LOCAL_TEXT_BYTES, 262144); eq(MAX_LOCAL_TEXT_CHARACTERS, 200000);
   eq(reduce(initialPreparation, { type: "prepare" }).prepared, null);
   ok(reduce(initialPreparation, { type: "prepare" }).error);
@@ -41,7 +41,9 @@ try {
       eq(edited.prepared, original); eq(edited.changed, true); eq(edited.requestId, null);
       const html = renderToStaticMarkup(React.createElement(PreparedDocument, { state: edited }));
       ok(html.includes("Previous preparation")); ok(html.includes("Prepared text — not reviewed"));
-      ok(html.includes("Not uploaded")); ok(html.includes("Review not connected"));
+      ok(html.includes("Not uploaded")); ok(html.includes("Start review"));
+      ok(html.includes('disabled="" aria-describedby="document-review-gate"'));
+      ok(html.includes("Review submission is currently unavailable"));
       eq(html.includes("<script>"), false); ok(html.includes('tabindex="0"'));
       const replaced = reduce(edited, { type: "prepare" }); eq(replaced.prepared, edited.draft); eq(replaced.changed, false);
     }
@@ -95,13 +97,31 @@ try {
   const failure = await readLocalText({ name: "failure.txt", size: 10, arrayBuffer: async () => { throw new Error("private test error detail"); } });
   eq(failure.ok, false); eq(JSON.stringify(failure).includes("private test error detail"), false);
   const html = renderToStaticMarkup(React.createElement(DocumentWorkspace));
-  for (const text of ["Local preparation only", "not connected yet", "Document text or excerpt", "Read a text file locally", "What do you want checked?", "Contract against a playbook", "Corporate document"]) ok(html.includes(text));
+  for (const text of ["Add a document", "Choose file", "Or paste document text", "Nothing is uploaded", "Supported files &amp; storage"]) ok(html.includes(text));
+  ok(html.slice(html.indexOf('id="document-intake-note"'), html.indexOf("</form>")).includes("Review submission is currently unavailable"));
+  for (const text of ["Local preparation only", "ws-banner", "Document text or excerpt", "Choose a review", 'id="document-name"', 'name="review-kind"', "Prepare for review"]) eq(html.includes(text), false);
+  ok(html.indexOf('id="document-add-file"') < html.indexOf("Supported files &amp; storage"));
+  const storageTag = html.match(/<details[^>]*><summary>Supported files &amp; storage/);
+  ok(storageTag); eq(/\sopen(?:\s|=|>)/.test(storageTag[0]), false);
+  for (const review of ["corporate_document", "contract"]) {
+    const state = reduce(initialPreparation, { type: "edit", patch: { text: "Synthetic working text", name: "Test copy", review } });
+    const setup = renderToStaticMarkup(React.createElement(DocumentReviewSetup, { state, dispatch() {} }));
+    for (const text of ["Document name", "Test copy", "Choose a review", "Corporate document", "Contract against a playbook", "not a statement of law", "Choose an intended review. Review submission is currently unavailable."]) ok(setup.includes(text));
+    eq((setup.match(/checked=""/g) || []).length, 1);
+    const named = reduce(state, { type: "edit", patch: { name: "Renamed copy" } });
+    eq(named.draft.text, state.draft.text); eq(named.draft.review, review);
+    const prepared = reduce(named, { type: "prepare" });
+    eq(prepared.prepared.name, "Renamed copy"); eq(prepared.prepared.review, review);
+  }
   eq(html.includes("Prepared text — not reviewed"), false); eq(html.includes("method="), false);
   eq(html.includes("maxLength="), false); eq(html.includes("maxlength="), false);
   const component = readFileSync(new URL("src/app/workspace/documents/document-workspace.tsx", root), "utf8");
   ok(component.includes("event.preventDefault(); dispatch({ type: \"reject_input\""));
   ok(component.includes('id="document-error"')); ok(component.includes('aria-invalid={state.errorField === "text"'));
   ok(component.includes('aria-invalid={state.errorField === "file"')); ok(component.includes('aria-invalid={state.errorField === "name"'));
+  ok(component.includes('{hasText && <DocumentReviewSetup'));
+  ok(component.includes('{pasting && <div className="ws-field">'));
+  ok(component.includes('type="button" aria-invalid={state.errorField === "file"'));
   eq(renderToStaticMarkup(React.createElement(PreparedDocument, { state: initialPreparation })), "");
   for (const path of ["src/lib/engine/document-preparation.ts", "src/app/workspace/documents/document-workspace.tsx"]) {
     const source = readFileSync(new URL(path, root), "utf8");

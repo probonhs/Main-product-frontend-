@@ -1,10 +1,11 @@
 # Placedon frontend — start here
 
-Updated 3 October 2026. This is the current product handoff, not a claim of production readiness.
+Updated 4 October 2026. This is the current product handoff, not a claim of production readiness.
 
-GitHub preservation succeeded on `codex/frontend-handoff` through `e9d6b40`; main remains unchanged.
+GitHub preservation succeeded on `codex/frontend-handoff` through `395560e`; main remains unchanged.
 Phase 2 run updates are documented in [bounded updates](frontend-loop/PHASE_2_RUN_UPDATES.md).
-Current Phase 3 checkpoint: [local document preparation](frontend-loop/PHASE_3_LOCAL_PREPARATION.md);
+Current Phase 3 checkpoint: [document-first intake refinement](frontend-loop/PHASE_3_INTAKE_REFINEMENT.md),
+following [local document preparation](frontend-loop/PHASE_3_LOCAL_PREPARATION.md);
 inspect Git for its current publication SHA. It is not full phase or live acceptance.
 Founder reviewed and approved work through `5343e98` on 3 October 2026 (D-012); pending verification gates remain open.
 Current sequence (D-013): build/commit the main frontend phases first; sign-in, live connections and remaining
@@ -38,8 +39,8 @@ delete branches or close someone else's PR to make the history look cleaner.
   Implementation exists; live acceptance awaits a configured gateway/store. No browser-stored history.
 - User-started bounded run updates, message-owned status projection and explicit uncertain-send recovery;
   no blind resend or implied server cancellation. Mounted/live acceptance and durable retry Q-009 remain.
-- Local text preparation at `/workspace/documents`: paste/read UTF-8 text, inspect a separate snapshot and
-  choose the intended review. No upload, storage or review result; PHASE_3_LOCAL_PREPARATION.md and Q-010.
+- Document-first preparation at `/workspace/documents`: paste/read UTF-8 text, then name/choose review and
+  inspect a separate snapshot. No upload, storage or review result; PHASE_3_INTAKE_REFINEMENT.md and Q-010.
 - Typed validation, backend-pinned fixtures, contract/render tests, privacy controls and a bounded review runner.
 
 The latest user choice settles the starting appearance. It does not approve every future screen or waive

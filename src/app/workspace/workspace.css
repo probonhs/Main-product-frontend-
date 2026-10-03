@@ -59,12 +59,6 @@
 .workspace .ws-nav a { display: flex; align-items: center; min-height: 44px; padding: 10px 12px; border: 1px solid transparent; border-radius: 5px; color: var(--grey); font-size: 13px; font-weight: 500; text-decoration: none; }
 .workspace .ws-nav a:hover { background: var(--cream); color: var(--ink); }
 .workspace .ws-nav a[aria-current="page"] { background: var(--cream); border-color: var(--rule); color: var(--ink); font-weight: 600; }
-.workspace .ws-sidebar-examples { border-top: 1px solid var(--rule); padding-top: 8px; font-size: 12px; }
-.workspace .ws-sidebar-examples > summary { min-height: 44px; padding: 12px 10px; font-weight: 600; cursor: pointer; }
-.workspace .ws-sidebar-examples a { display: flex; align-items: center; min-height: 44px; padding: 8px 10px; border-radius: 4px; color: var(--grey); text-decoration: none; }
-.workspace .ws-sidebar-examples a:hover { background: var(--cream); color: var(--ink); }
-.workspace .ws-sidebar-note { margin-top: auto; padding: 12px 10px 0; border-top: 1px solid var(--rule); color: var(--grey); font-size: 12px; }
-.workspace .ws-sidebar-note a { display: inline-flex; align-items: center; min-height: 44px; text-decoration: underline; text-underline-offset: 3px; }
 .workspace .ws-content { display: flex; flex-direction: column; min-width: 0; }
 .workspace .ws-topbar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 4px 16px; min-height: 64px; padding: 12px var(--ws-gutter); border-bottom: 1px solid var(--rule); font-size: 13px; }
 .workspace .ws-topbar :where(h1, h2) { font-family: var(--font-body), Inter, sans-serif; font-size: 14px; font-weight: 600; line-height: 1.5; letter-spacing: 0; }
@@ -149,8 +143,15 @@
   .workspace .ws-conversation-grid:has(.ws-evidence-panel) { grid-template-columns: minmax(0, 1fr) minmax(280px, .65fr); align-items: start; }
 }
 /* Local document preparation is never presented as an uploaded or reviewed record. */
+.workspace .ws-document-intake { display: grid; justify-items: center; gap: 8px; padding: 24px 12px; text-align: center; }
+.workspace .ws-document-intake > svg { margin-bottom: 4px; }
+.workspace .ws-document-intake > strong { font-size: 16px; font-weight: 500; }
+.workspace .ws-document-intake > .ws-muted { font-size: 12px; }
+.workspace .ws-document-setup { display: grid; gap: 20px; padding-top: 20px; border-top: 1px solid var(--rule); }
 .workspace .ws-document-choice { border: 0; padding: 0; margin: 0; }
-.workspace .ws-document-choice legend { font-size: 13px; font-weight: 600; }
+.workspace .ws-document-choice legend { font-size: 13px; font-weight: 600; margin-bottom: 8px; }
+.workspace .ws-document-choice label { align-items: start; padding: 12px; margin-bottom: 8px; border: 1px solid var(--rule); border-radius: 4px; }
+.workspace .ws-document-choice label:has(input:checked) { border-color: var(--ink); background: var(--cream); }
 .workspace .ws-document-choice small { display: block; font-size: 12px; }
 .workspace .ws-document-choice input { align-self: start; margin-top: 4px; }
 .workspace .ws-document-input { min-height: 200px; }
@@ -236,11 +237,6 @@
   .workspace .ws-brand { padding-inline: 4px; font-size: 22px; }
   .workspace .ws-nav { grid-column: 1 / -1; grid-row: 2; flex-direction: row; flex-wrap: wrap; gap: 4px; }
   .workspace .ws-nav a { padding: 9px 10px; font-size: 12px; }
-  .workspace .ws-sidebar-examples { grid-column: 2; grid-row: 1; border: 0; padding: 0; }
-  .workspace .ws-sidebar-examples[open] { grid-column: 1 / -1; grid-row: 3; }
-  .workspace .ws-sidebar-examples > summary { padding: 11px 6px; }
-  .workspace .ws-sidebar-examples[open] a { display: inline-flex; max-width: 100%; margin-right: 8px; }
-  .workspace .ws-sidebar-note { grid-column: 1 / -1; margin: 0; padding: 4px; border: 0; font-size: 12px; }
   .workspace .ws-topbar { min-height: 48px; padding-block: 8px; font-size: 12px; }
   .workspace .ws-primary, .workspace .ws-primary.ws-chat { margin-block: 20px; }
   .workspace .ws-welcome { padding-block: 4px; }
@@ -254,7 +250,7 @@
 }
 @media (prefers-contrast: more) {
   .workspace { --rule: var(--grey); }
-  .workspace :is(.ws-muted, .ws-mode-note, .ws-meta, .ws-sidebar-note) { color: var(--ink); }
+  .workspace :is(.ws-muted, .ws-mode-note, .ws-meta) { color: var(--ink); }
 }
 @media (prefers-reduced-motion: reduce) {
   .workspace *, .workspace *::before, .workspace *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }

@@ -1,4 +1,4 @@
-# Frontend handoff — 3 October 2026
+# Frontend handoff — 4 October 2026
 
 Repository: `probonhs/Main-product-frontend-`
 Branch: `codex/frontend-handoff`; inspect `git log -5 --oneline` for actual HEAD before continuing.
@@ -8,6 +8,19 @@ Founder subsequently reviewed and approved all work through `5343e98` and reques
 Implementation was already committed/published; this approval is recorded without changing release gates.
 
 ## Current sequence and build checkpoints
+
+Latest user-feedback slice: D-017, baseline `395560e`; PHASE_3_INTAKE_REFINEMENT.md. Documents now starts with
+file/paste, then name/review choice. Removed global preview/gateway/sidebar Examples chrome and statute-specific
+Ask welcome; samples remain labelled under a closed secondary disclosure. Short unavailable-review qualifiers
+remain before intake and review choice. No extraction/upload/storage/review integration added. Existing read/
+snapshot/rejection safety preserved. Independent reviewer Sagan's late-disclosure finding corrected.
+Typecheck/quiet lint/full offline contracts/loop/webpack build PASS; focused document 284/Ask 276 assertions;
+28 routes;50 chunks/407,164 gzip bytes. Three localhost HTTP200 revised-render checks pass. Brave exact app path
+timed out; no mounted/visual/full acceptance claimed. Start-of-turn usage3%/14%, superseding previous stop note.
+Next: bounded Brave check if available, measured bundle sharing (2,436-byte headroom), pinned review-result UI.
+Inspect Git for publication SHA; no merge/deploy. Existing server PID60252 on3300, no new config/credentials.
+
+The following checkpoint is historical and its resource stop is superseded by today's fresh usage check.
 
 Latest slice: Phase 3 local document preparation, D-016, baseline `e9d6b40`. New `/workspace/documents`
 route and navigation; paste/read strict UTF-8 .txt, name/review choice, explicitly prepared unchanged snapshot.

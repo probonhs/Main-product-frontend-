@@ -174,15 +174,19 @@ export function AskWorkspace({ liveEnabled, initialRecord }: { liveEnabled: bool
     void submit(body);
   }
   function revise() {
-    if (record?.mode === "sample" || !liveEnabled) { document.getElementById("ws-examples")?.focus(); return; }
+    if (record?.mode === "sample" || !liveEnabled) {
+      const samples = document.getElementById("ws-sample-results") as HTMLDetailsElement | null;
+      if (samples) { samples.open = true; samples.querySelector("summary")?.focus(); }
+      return;
+    }
     const details = document.getElementById("ws-company-facts") as HTMLDetailsElement | null;
     if (details) { details.open = true; details.querySelector("summary")?.focus(); }
   }
   return <div className={`ws-primary ws-chat${record ? " ws-chat-has-answer" : ""}`}>
-    <div className="ws-welcome"><h1 className="ws-heading">{record ? "Ask Placedon" : "What are you working on?"}</h1><p className="ws-intro">Ask about the <em>Companies Act, 2013</em>. See the legal basis and what still needs checking.</p></div>
+    <div className="ws-welcome"><h1 className="ws-heading">{record ? "Ask Placedon" : "What are you working on?"}</h1><p className="ws-intro">Start with your question. See the legal basis, the sources and what still needs checking.</p></div>
     {notice && <div className="ws-record-notice" role="status"><strong>{notice.title}</strong><p>{notice.detail}</p></div>}
     {record && <ResultRecord key={text(object(record.data).turn_id)} record={record} revise={revise} previous={!!notice} />}
-    <p className="ws-mode-note">{liveEnabled ? "Local checks configured. Sending a new question submits your question and facts to the local engine, not a saved chat." : "Sample mode. These captured examples show how Placedon checks a question. They do not analyse your company."}{liveEnabled && record?.mode === "sample" && " The answer above is a captured example, not a new local check."}</p>
+    <details className="ws-details"><summary>About this check</summary><p className="ws-mode-note">{liveEnabled ? "Local checks configured. Sending a new question submits your question and facts to the local engine, not a saved chat." : "Sample mode. These captured examples show how Placedon checks a question. They do not analyse your company."}{liveEnabled && record?.mode === "sample" && " The answer above is a captured example, not a new local check."}<a className="ws-link" href="/workspace/limitations">See supported scope</a></p></details>
     {liveEnabled && <form ref={form} className="ws-form" onSubmit={runLive} onChange={(event) => {
       editDraft();
       setContextCount(Array.from(new FormData(event.currentTarget)).filter(([name, value]) => name !== "question" && String(value).trim()).length);
@@ -210,7 +214,7 @@ export function AskWorkspace({ liveEnabled, initialRecord }: { liveEnabled: bool
       </div></details></div>
       <div className="ws-actions"><span className="ws-muted">Today’s check · No conversation memory</span><button className="ws-button" disabled={busy}>{busy ? "Checking…" : "Ask Placedon"}<ArrowUp size={18} aria-hidden="true" /></button></div>
     </form>}
-    <section className="ws-example-section" aria-labelledby="ws-examples"><div className="ws-example-heading"><h2 id="ws-examples" tabIndex={-1}>Try an example</h2><span className="ws-muted">Captured engine results</span></div><div className="ws-samples">{WORKSPACE_SAMPLES.map((sample) => <button key={sample.id} className="ws-secondary" disabled={busy} onClick={() => void submit({ sampleId: sample.id })}>{sample.title}</button>)}</div></section>
+    <details className="ws-details" id="ws-sample-results"><summary>See sample results</summary><p className="ws-muted">Captured checks with sample facts, not your saved conversations.</p><div className="ws-samples">{WORKSPACE_SAMPLES.map((sample) => <button key={sample.id} className="ws-secondary" disabled={busy} onClick={() => void submit({ sampleId: sample.id })}>{sample.title}</button>)}</div></details>
     <p className="ws-muted" role="status" aria-live="polite">{busy ? "Checking the record…" : notice ? "No new result for your draft. The earlier record remains available." : record ? `Record ready: ${askLabel(record.data)}.` : ""}</p>
     {error && <div role="alert" className="ws-error"><h2>Check not completed</h2><p>{error}</p><p>No new legal conclusion was returned. Your question and facts are preserved.{record && " The record above belongs to an earlier check or captured example."}</p></div>}
   </div>;
