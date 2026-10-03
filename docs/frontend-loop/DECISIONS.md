@@ -211,3 +211,15 @@ Do not copy historical decisions here unless they are still in force. Link their
 - **Review:** PHASE_3_INTAKE_REFINEMENT.md; independent R2 late-disclosure finding corrected. Static/code/build
   evidence passes; Brave/mounted/full acceptance is not claimed. Revisit if real users confuse preparation
   with review or connected capabilities change; do not restore development scaffolding to the final shell.
+
+## D-018 — Chat-first Ask and conversation interaction (4 October 2026)
+
+- **Authority:** Founder asks to keep UX similar to Anthropic/OpenAI chatbot interfaces.
+- **Decision:** Centred start/composer, message-style question/reply, compact context and on-demand Sources;
+  draft-only starter questions and Enter/Shift+Enter behavior shared across both Ask surfaces. Preserve brand.
+- **Boundary:** Chat appearance does not add memory to independent Ask. Samples remain captured examples,
+  unavailable sending/attachments remain gated, and backend-owned saved conversations keep recovery/source guards.
+  No provider integration, fake streaming, auto-send suggestions or unapproved model spending.
+- **Review:** CHAT_INTERFACE_REFINEMENT.md; independent R2 IME/held-Enter findings fixed. Bounded Brave
+  interactions pass after refreshing the verified preview runtime; full responsive/live acceptance pending.
+  Revisit keyboard behavior if actual input-method testing finds premature sends. No automatic release.

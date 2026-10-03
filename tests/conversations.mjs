@@ -23,10 +23,15 @@ const saved = { mode: process.env.NODE_ENV, origin: process.env.GATEWAY_URL, key
 try {
   const { conversationConfiguration, conversationCommand, envelopeSchema, threadSchema, traceSchema, runStatusSchema, callConversation } = await import("../src/lib/engine/conversations.ts");
   const { followRunUpdates, runDescription, RUN_UPDATE_LIMIT, RUN_UPDATE_INTERVAL_MS, RUN_UPDATE_WINDOW_MS } = await import("../src/lib/engine/run-updates.ts");
-  const { PendingReply, recoveryWasRead, draftAfterSubmission, refreshKeepsEvidence } = await import("../src/app/workspace/conversations/conversation-workspace.tsx");
+  const { ConversationWorkspace, PendingReply, recoveryWasRead, draftAfterSubmission, refreshKeepsEvidence } = await import("../src/app/workspace/conversations/conversation-workspace.tsx");
   const { RunDetails } = await import("../src/app/workspace/conversations/run-details.tsx");
   const { POST } = await import("../src/app/api/workspace/conversations/route.ts");
   const uuid = "11111111-1111-4111-8111-111111111111";
+  const chatHtml = renderToStaticMarkup(React.createElement(ConversationWorkspace, { enabled: true }));
+  for (const text of ['class="ws-form ws-composer"', 'aria-label="Send question"', 'for="conversation-question"', 'aria-label="Suggested questions"', "Shift + Enter for a new line", "does not infer them from earlier messages", "Attachments unavailable"]) assert.ok(chatHtml.includes(text));
+  const unconfiguredChat = renderToStaticMarkup(React.createElement(ConversationWorkspace, { enabled: false }));
+  assert.ok(unconfiguredChat.includes("Saved conversations are not connected"));
+  assert.equal(unconfiguredChat.includes('id="conversation-question"'), false);
   const step = { capability: "Test step", status: "DONE", model: null, provider: null, region: null, cost_inr: null, cost_note: null };
   const oldTrace = traceSchema.parse({ run_id: uuid, steps: [step] });
   assert.equal(oldTrace.critic_enabled, undefined);

@@ -4,7 +4,9 @@ Updated 4 October 2026. Current authority: `docs/START_HERE.md` and the five-pha
 
 - Product repository: `probonhs/Main-product-frontend-`; review branch: `codex/frontend-handoff`.
 - Execution: Phase 3 frontend preparation, under the founder's frontend-first sequencing override (D-013).
-- Current work: document-first intake and shared workspace cleanup built (D-017),
+- Current work: chat-first Ask/conversation refinement built (D-018), CHAT_INTERFACE_REFINEMENT.md.
+  Centred composer/start, draft-only suggestions, compact context and guarded Enter/newline behavior.
+  Document-first intake and shared workspace cleanup remain built (D-017),
   PHASE_3_INTAKE_REFINEMENT.md. Local Documents snapshot remains built (D-016), not upload/review integration;
   PHASE_3_LOCAL_PREPARATION.md. Bounded message-owned run updates and explicit uncertain-send recovery built (D-015);
   PHASE_2_RUN_UPDATES.md. Retained independent-Ask evidence (D-014) remains preserved.
@@ -22,24 +24,26 @@ Updated 4 October 2026. Current authority: `docs/START_HERE.md` and the five-pha
 - Donor: website PR #2 remains OPEN; head `8461a06`. Preserve useful contracts/extraction/review/run patterns;
   do not merge the whole branch or copy the shared-passcode identity.
 - Current slice verification: typecheck, quiet lint, full offline contracts/loop checks, webpack production
-  build (28 routes), diff checks and budget PASS: 50 chunks / 407,164 gzip bytes (cap unchanged).
-  Local preparation assertions: 284; Ask assertions: 276. Independent R2 late review-disclosure finding
-  corrected before checkpoint. Localhost HTTP render PASS on three revised routes after authorized read-only check.
-  New-state mounted and Brave checks NOT RUN: installed Brave app path timed out. No alternate browser.
+  build (28 routes), diff checks and budget PASS: 50 chunks / 407,792 gzip bytes (cap unchanged).
+  Local preparation assertions: 284; Ask/key assertions: 316. Independent R2 IME/held-Enter findings fixed.
+  Bounded Brave start/draft/Shift+Enter/context/captured reply/Sources checks PASS after refreshing task runtime.
+  Full mounted/live/IME/held-key/responsive campaign and saved screenshot remain pending; browser control
+  interrupted during page-only capture. Prior document-intake HTTP checks remain evidence, not browser acceptance.
   Subsequent independent-Ask responsive/keyboard evidence is recorded in VERIFY_phase1-brave-2026-10-03.md.
   Full privacy/accessibility and live gateway acceptance remain unverified, not inferred from HTML.
 - Gateway: no v2 URL/key currently configured. No principal/credentials created and no paid model call made.
-- Git: baseline `395560e` and its predecessor work are published on `probonhs/codex/frontend-handoff`; remote SHA
+- Git: baseline `68da9d5` and its predecessor work are published on `probonhs/codex/frontend-handoff`; remote SHA
   was verified. Workflow scope was authorized by the user; the earlier push blocker is resolved.
   No PR/merge/deployment created. Publish only to `probonhs`, never the website's `origin`.
   This Phase 3 checkpoint follows that baseline; inspect Git for the current HEAD/publication state.
-- Runtime: development server was running on 127.0.0.1:3300. Check before starting another process.
+- Runtime: project script restarted development server on 127.0.0.1:3300, PID46363/session19460.
+  Previous host-mismatched runtime had dev-resource403/HMR failures; interactions recovered without security changes.
 - Review status: founder approved the reviewed work through `5343e98` on 3 October 2026 (D-012).
   Remaining gates are NEEDS_VERIFICATION, not pilot GO. No merge/deployment authorized by this approval.
 - Ownership: founder builds frontend; teammate supplies local backend setup/contract clarification/narrow fixes.
 - Founder-only choices: identity/session approach, data processing, retention, pilot scope and release.
-- Resource checkpoint: start-of-turn usage 3% five-hour, 14% weekly (4 October); previous 82% is historical.
-  Do not assume automatic provider switching. Client cap has ~2.4KiB headroom; preserve existing limits.
+- Resource checkpoint: latest slice-boundary usage 32% five-hour, 19% weekly (4 October); old 82% is historical.
+  Do not assume automatic provider switching. Client cap has 1,808 bytes headroom; preserve existing limits.
 - Next move: measured client sharing/budget headroom, then Phase 3 review-result/quote-and-reason UI against
   pinned contracts. Q-010 gates upload→review content/storage; no live upload or PDF/DOCX support yet.
   Do not stop independent frontend work for explicitly deferred acceptance. Run updates are built,
@@ -48,5 +52,5 @@ Updated 4 October 2026. Current authority: `docs/START_HERE.md` and the five-pha
   remaining accessibility/error-state/browser/CI acceptance before release. None is marked passed.
   Preserve the UI, source guard and local checkpoints; do not repeat the old council or unchanged push failure.
 
-Detailed evidence: PHASE_3_INTAKE_REFINEMENT.md, PHASE_3_LOCAL_PREPARATION.md, PHASE_2_RUN_UPDATES.md, PHASE_2_RETAINED_EVIDENCE.md, VERIFY_phase1-brave-2026-10-03.md, PHASE_1_SHELL_ACCEPTANCE.md, ASK_CONVERSATION_SLICE.md, PHASE_1_COMPATIBILITY.md, VERIFY_handoff-2026-10-02.md,
+Detailed evidence: CHAT_INTERFACE_REFINEMENT.md, PHASE_3_INTAKE_REFINEMENT.md, PHASE_3_LOCAL_PREPARATION.md, PHASE_2_RUN_UPDATES.md, PHASE_2_RETAINED_EVIDENCE.md, VERIFY_phase1-brave-2026-10-03.md, PHASE_1_SHELL_ACCEPTANCE.md, ASK_CONVERSATION_SLICE.md, PHASE_1_COMPATIBILITY.md, VERIFY_handoff-2026-10-02.md,
 and `docs/product/FEATURE_API_GAPS.md`.

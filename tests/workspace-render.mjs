@@ -131,7 +131,9 @@ try {
   includes(residentHtml, "agm dates: 2025-09-15", "Resident: nested AGM date");
   includes(residentHtml, 'class="section-reference"', "Resident: section legal markup");
 
-  excludes(answeredHtml, "<form", "Sample-only mode excludes live form");
+  includes(answeredHtml, 'class="ws-form ws-composer"', "Sample-only mode keeps a familiar draft composer");
+  includes(answeredHtml, "Sending is unavailable.", "Sample-only mode does not imply live sending");
+  includes(answeredHtml, 'aria-describedby="ws-send-note" disabled=""', "Sample-only sending stays disabled");
   excludes(answeredHtml, 'name="resident_director_days"', "Sample-only mode excludes live evidence controls");
   includes(answeredHtml, "Sample mode.", "Sample-only mode explains limitation");
   const liveHtml = render(answered, true);
@@ -146,16 +148,16 @@ try {
   includes(liveHtml, "captured example, not a new local check", "Sample answer remains labelled with live composer");
   includes(liveHtml, "not a saved chat", "Live mode disclaims persistence");
   closedDetails(liveHtml, 'id="ws-company-facts"', "Live context disclosure");
-  includes(liveHtml, "Add provisions &amp; company facts", "Live context groups provisions and facts");
+  includes(liveHtml, "Add context", "Live context groups provisions and facts behind a compact control");
   includes(liveHtml, 'name="provisions"', "Live context includes provision control");
-  includes(liveHtml, '<label for="ws-question">Your question</label>', "Live composer keeps a familiar stable label after result");
+  includes(liveHtml, '<label class="ws-sr-only" for="ws-question">Your question</label>', "Live composer keeps an accessible stable label after result");
   includes(liveHtml, 'id="ws-question" name="question"', "Live composer textarea linked to label");
   const blankLive = blank(true);
   const blankSample = blank(false);
   for (const [mode, html] of [["live", blankLive], ["sample", blankSample]]) {
     includes(html, "Start with your question.", `${mode}: neutral welcome`);
     excludes(html, "Ask about the <em>Companies Act", `${mode}: no statute-specific welcome`);
-    closedDetails(html, 'class="ws-details"(?=><summary>About this check)', `${mode}: check context is disclosed on demand`);
+    closedDetails(html, 'class="ws-details ws-chat-info"(?=><summary>About this check)', `${mode}: check context is disclosed on demand`);
     closedDetails(html, 'id="ws-sample-results"', `${mode}: samples are secondary`);
     includes(html, "not your saved conversations", `${mode}: samples are not fake history`);
     excludes(html, "A result with its basis", `${mode}: no empty result placeholder`);
@@ -164,10 +166,28 @@ try {
     excludes(html.toLowerCase(), "conversation history", `${mode}: no history claim`);
     excludes(html.toLowerCase(), "remember your", `${mode}: no memory claim`);
   }
-  includes(blankLive, '<label for="ws-question">Your question</label>', "Blank composer question labelled");
+  includes(blankLive, '<label class="ws-sr-only" for="ws-question">Your question</label>', "Blank composer question labelled");
   includes(blankLive, 'id="ws-question" name="question"', "Blank composer textarea linked to label");
   closedDetails(blankLive, 'id="ws-company-facts"', "Blank context disclosure");
-  excludes(blankSample, "<form", "Blank sample mode has no live composer");
+  includes(blankSample, 'class="ws-form ws-composer"', "Blank sample mode can draft without submitting");
+  includes(blankSample, "Sending is unavailable.", "Blank sample mode explains disabled sending");
+  includes(blankLive, "Each question is checked independently.", "Chat appearance does not invent independent-Ask memory");
+  for (const html of [blankLive, blankSample]) {
+    includes(html, 'aria-label="Suggested questions"', "Visible suggestions are drafts, not captured answers");
+    includes(html, 'aria-label="Send question"', "Icon send control has an accessible name");
+    includes(html, "Shift + Enter for a new line", "Keyboard behavior is explained");
+    includes(html, 'placeholder="Ask Placedon…"', "Chat composer placeholder");
+  }
+  const { CHAT_STARTERS, chatEnterAction } = await import("../src/lib/chat-input.ts");
+  const key = { key: "Enter", keyCode: 13, shiftKey: false, altKey: false, repeat: false, isComposing: false };
+  assert.equal(chatEnterAction(key), "send"); assertions++;
+  assert.equal(chatEnterAction({ ...key, repeat: true }), "consume"); assertions++;
+  for (const patch of [{ shiftKey: true }, { altKey: true }, { isComposing: true }, { keyCode: 229 }, { key: "a" }, { key: "Process" }, { shiftKey: true, repeat: true }]) { assert.equal(chatEnterAction({ ...key, ...patch }), "edit"); assertions++; }
+  for (const path of ["src/app/workspace/ask/ask-workspace.tsx", "src/app/workspace/conversations/conversation-workspace.tsx"]) {
+    const source = readFileSync(new URL(path, root), "utf8");
+    for (const text of ['if (action !== "edit") { event.preventDefault();', 'if (action === "send"', "event.nativeEvent.keyCode", "onCompositionStart", "onCompositionEnd", "event.nativeEvent.isComposing || composing.current"]) includes(source, text, "Both composers guard composition and consume held Enter without resending or draft edits");
+  }
+  for (const starter of CHAT_STARTERS) { includes(blankLive, starter.label, "Starter draft label"); assert.ok(starter.question.length < 2000); assertions++; }
 
   function same(actual, expected, label) { assert.equal(actual, expected, label); assertions++; }
   for (const id of expectations.keys()) {
@@ -215,6 +235,11 @@ try {
   same(emptyEdited.record, null, "Blank draft has no fabricated previous result");
   same(retainedAskNotice(emptyEdited), null, "Blank draft has no fabricated evidence notice");
   const askSource = readFileSync(new URL("src/app/workspace/ask/ask-workspace.tsx", root), "utf8");
+  includes(askSource, "if (!liveEnabled || busy) return", "Submit path refuses unavailable/busy mode independently of disabled button");
+  const starterStart = askSource.indexOf('{!record && <div className="ws-prompt-suggestions"');
+  const starterHandler = askSource.slice(starterStart, askSource.indexOf('</div>}', starterStart));
+  includes(starterHandler, "setQuestion(starter.question)", "Suggestions fill the draft");
+  excludes(starterHandler, "submit(", "Suggestions never submit automatically");
   excludes(askSource, "setRecord(null)", "Draft/request path never discards returned record");
   includes(askSource, "if (!request.signal.aborted) dispatch", "Canceled transport completion is guarded before reducer");
   excludes(askSource.slice(askSource.indexOf("function editDraft()"), askSource.indexOf("function clearContext()")), "submit(", "Editing does not automatically resend");

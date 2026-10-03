@@ -2,7 +2,9 @@
 
 Updated 4 October 2026. This is the current product handoff, not a claim of production readiness.
 
-GitHub preservation succeeded on `codex/frontend-handoff` through `395560e`; main remains unchanged.
+GitHub preservation succeeded on `codex/frontend-handoff` through `68da9d5`; main remains unchanged.
+Latest user refinement: [chat-first interaction](frontend-loop/CHAT_INTERFACE_REFINEMENT.md), D-018;
+bounded Brave interaction evidence, not full responsive or connected acceptance.
 Phase 2 run updates are documented in [bounded updates](frontend-loop/PHASE_2_RUN_UPDATES.md).
 Current Phase 3 checkpoint: [document-first intake refinement](frontend-loop/PHASE_3_INTAKE_REFINEMENT.md),
 following [local document preparation](frontend-loop/PHASE_3_LOCAL_PREPARATION.md);

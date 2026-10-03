@@ -37,6 +37,7 @@
 .workspace :where([tabindex="-1"], .ws-field, [aria-invalid="true"]) { scroll-margin-block: 24px; }
 .workspace ::selection { background: var(--ink); color: var(--cream); }
 .workspace [hidden] { display: none !important; }
+.workspace .ws-sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
 .workspace .ws-skip-link { position: fixed; top: 8px; left: 8px; z-index: 100; transform: translateY(calc(-100% - 16px)); padding: 10px 14px; min-height: 44px; background: var(--ink); color: var(--cream); border: 1px solid var(--cream); border-radius: 4px; text-decoration: underline; }
 .workspace .ws-skip-link:focus { transform: none; outline-color: var(--ink); }
 
@@ -69,6 +70,19 @@
 .workspace .ws-welcome :where(h1, .ws-heading) { max-width: 25ch; font-family: var(--font-display), Fraunces, Georgia, serif; font-size: clamp(30px, 3vw, 36px); line-height: 1.2; }
 .workspace .ws-welcome p { max-width: 62ch; color: var(--grey); }
 .workspace .ws-chat-has-answer .ws-welcome .ws-heading { font-size: 26px; }
+.workspace .ws-content:has(> :is(.ws-chat, .ws-conversation)) > .ws-topbar { display: none; }
+.workspace .ws-chat:not(.ws-chat-has-answer), .workspace .ws-conversation-start { flex: 1; justify-content: center; padding-block: 32px; }
+.workspace .ws-chat:not(.ws-chat-has-answer) .ws-welcome, .workspace .ws-conversation-start .ws-conversation-head { text-align: center; margin: 0; }
+.workspace .ws-chat:not(.ws-chat-has-answer) .ws-welcome > *, .workspace .ws-conversation-start .ws-conversation-head > div { margin-inline: auto; }
+.workspace .ws-conversation-start .ws-conversation-head > button { display: none; }
+.workspace .ws-conversation-start .ws-heading { margin-inline: auto; }
+.workspace .ws-chat .ws-chat-info, .workspace .ws-chat #ws-sample-results { margin-block: 0; font-size: 12px; }
+.workspace .ws-chat-secondary { display: flex; justify-content: center; flex-wrap: wrap; gap: 0 20px; }
+.workspace .ws-chat-secondary > .ws-details { border: 0; }
+.workspace .ws-chat-secondary:has(details[open]) { display: block; }
+.workspace .ws-chat-hint { color: var(--grey); font-size: 11px; text-align: center; }
+.workspace .ws-prompt-suggestions { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px; }
+.workspace .ws-prompt-suggestions .ws-secondary { font-size: 12px; font-weight: 400; }
 .workspace .ws-heading { font-family: var(--font-display), Fraunces, Georgia, serif; font-size: clamp(30px, 3vw, 36px); line-height: 1.2; letter-spacing: -0.02em; font-weight: 450; font-variation-settings: "opsz" 34, "SOFT" 0, "WONK" 0; }
 .workspace .ws-intro { max-width: 68ch; color: var(--grey); font-size: 14px; }
 .workspace .ws-kicker { color: var(--grey); font-size: 12px; font-weight: 500; }
@@ -87,6 +101,13 @@
 /* Composer: the question remains the primary control; context stays disclosed. */
 .workspace .ws-form { display: grid; gap: 12px; padding: 16px; border: 1px solid var(--rule); border-radius: 6px; background: var(--paper); }
 .workspace .ws-form:focus-within { border-color: var(--grey); }
+.workspace .ws-composer { gap: 8px; }
+.workspace .ws-chat .ws-composer { grid-template-columns: minmax(0, 1fr) auto; align-items: end; }
+.workspace .ws-chat .ws-composer > :is(.ws-field, .ws-mode-note), .workspace .ws-chat .ws-composer-context:has(details[open]) { grid-column: 1 / -1; }
+.workspace .ws-composer .ws-textarea { min-height: 88px; border: 0; background: transparent; padding: 4px 0; }
+.workspace .ws-composer .ws-send { flex: 0 0 44px; padding: 9px; width: 44px; height: 44px; }
+.workspace .ws-composer-context .ws-details > summary { width: fit-content; }
+.workspace .ws-composer .ws-conversation-tools { margin-top: 0; border: 0; gap: 6px 14px; }
 .workspace .ws-fields { display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px 16px; }
 .workspace .ws-field { display: grid; align-content: start; gap: 6px; min-width: 0; }
 .workspace .ws-field > label { font-size: 13px; font-weight: 500; }
@@ -98,7 +119,7 @@
 .workspace :is(.ws-input, .ws-textarea)::placeholder { color: var(--grey); opacity: 1; }
 .workspace .ws-composer-context { min-width: 0; font-size: 13px; }
 .workspace .ws-composer-context h2 { font-family: var(--font-body), Inter, sans-serif; font-size: 15px; font-weight: 600; letter-spacing: 0; }
-.workspace .ws-composer-context .ws-details { margin: 0; border-top: 1px solid var(--rule); border-bottom: 0; }
+.workspace .ws-composer-context .ws-details { margin: 0; border: 0; }
 .workspace .ws-composer-context .ws-details > :not(summary) { margin-bottom: 14px; }
 .workspace :is(.ws-input, .ws-select, .ws-textarea)[aria-invalid="true"] { border: 2px solid var(--ink); background: var(--cream); }
 .workspace [aria-invalid="true"]:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
@@ -160,6 +181,7 @@
 .workspace .ws-document-text pre { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; font: 14px/1.7 Georgia, "Times New Roman", serif; }
 .workspace .ws-chat-answer { min-width: 0; }
 .workspace .ws-question-bubble { width: fit-content; max-width: 88%; margin: 0 0 22px auto; padding: 12px 16px; background: var(--paper); border-radius: 6px; font-size: 14px; }
+.workspace .ws-question-bubble p { white-space: pre-wrap; }
 .workspace .ws-grid { display: grid; grid-template-columns: minmax(0, 1fr); align-items: start; gap: 16px; min-width: 0; }
 .workspace .ws-grid > * { min-width: 0; max-width: 100%; }
 .workspace .ws-result { min-width: 0; padding: 0; }

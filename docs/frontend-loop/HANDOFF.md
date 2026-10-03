@@ -9,6 +9,19 @@ Implementation was already committed/published; this approval is recorded withou
 
 ## Current sequence and build checkpoints
 
+Latest: D-018 chat-first refinement, baseline68da9d5; CHAT_INTERFACE_REFINEMENT.md. Centred starting composer,
+draft-only suggestions, compact context and on-demand sources; shared Enter/Shift+Enter with IME and held-key
+guards. Independent checks still do not share memory; unconfigured draft cannot send. No API/backend/auth
+changes. Erdos R2 keyboard findings fixed/rechecked. Final quiet lint/contracts/loop/webpack+TypeScript gates PASS;
+316 Ask/key assertions, 284 local-document checks, 28 routes/50 chunks/407,792 gzip bytes. Bounded Brave
+start/draft/newline/context/captured partial answer/Sources PASS after verified preview refresh; no live send.
+Full responsive/IME/held-key/live/CI acceptance remains. Browser control interrupted during saved page-only
+screenshot attempt; no new screenshot committed. Runtime now PID46363/session19460 on127.0.0.1:3300 using
+existing npm dev script, not oldPID60252. Usage32%/19%; budget1,808-byte headroom. Inspect Git for publication.
+Next: complete bounded visual snapshot/responsive check when available, measured client sharing, review-result UI.
+
+Earlier checkpoints below are preserved history; latest runtime/resource/test counts above supersede them.
+
 Latest user-feedback slice: D-017, baseline `395560e`; PHASE_3_INTAKE_REFINEMENT.md. Documents now starts with
 file/paste, then name/review choice. Removed global preview/gateway/sidebar Examples chrome and statute-specific
 Ask welcome; samples remain labelled under a closed secondary disclosure. Short unavailable-review qualifiers
