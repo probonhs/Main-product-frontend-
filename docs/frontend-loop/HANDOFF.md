@@ -22,8 +22,19 @@ TypeScript/lint/full contracts/loop/build/budget PASS; 256 reducer/render assert
 49 chunks / 400,076 gzip bytes. Bounded Brave draft/context/Sources checks at 320/1920px pass; zero Ask
 requests observed while editing. Screenshot saved; temporary device override and disposable QA draft removed.
 
-Next build slice: inspect pinned run/task contracts and implement bounded updates without fake stages or
-blind resend. No live backend/auth configuration needed merely to build the honest, gated frontend.
+Subsequent Phase 2 run-update slice is built (D-015); baseline `918bab3`. See PHASE_2_RUN_UPDATES.md.
+Message-bound GET status projection; user-started three checks/five-second gaps/60-second abort window;
+six backend reads or seven with terminal reply refresh. Only validated saved envelope becomes an answer.
+Uncertain sends require refreshed work and explicit acknowledgment; a known thread must be read, not merely
+listed. Same-thread inspected evidence and edited drafts remain. Stop waiting never cancels server work.
+Independent R2 reviewer Banach accepted corrections to read budget, recovery guard and evidence retention.
+Typecheck/quiet lint/full contracts/loop/webpack build/budget PASS: 27 routes, 49 chunks / 401,816 gzip bytes.
+Brave new-state check NOT RUN (no window/ambiguous app/explicit installed path timeout). No screenshot,
+mounted React, live persistence or full acceptance claim. Q-009 keeps durable retry/idempotency open.
+
+Next independent build slice: Phase 3 extraction/attachment UI preparation against pinned backend contracts
+and processing gates. No credential setup, paid calls or fake upload success to make a frontend preview work.
+Inspect actual Git HEAD/publication state; this checkpoint follows the published `918bab3` baseline.
 
 Post-build checklist (still required before pilot/release):
 
@@ -77,7 +88,7 @@ labelled WIP. No automatic merge/deploy. Do not stage `.env.local`, provider con
 unrelated changes. Do not omit the existing CI workflow to bypass token scope. If push fails, retain the
 commit and record its SHA/blocker. Confirm remote HEAD before saying it is published.
 
-## Next action
+## Historical Phase 1 next action (superseded by D-013 and the Phase 2 checkpoint above)
 
 User selected Phase 1. The workspace-local skip link now bypasses repeated navigation, and opening Sources
 in independent Ask no longer narrows/recenters the answer. Sources stays in flow below 1800px; beyond that

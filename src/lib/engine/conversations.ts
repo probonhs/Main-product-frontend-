@@ -55,12 +55,23 @@ export type Thread = z.infer<typeof threadSchema>;
 export type Envelope = z.infer<typeof envelopeSchema>;
 export type Citation = z.infer<typeof verifiedCitationSchema>;
 export type Trace = z.infer<typeof traceSchema>;
+// runs.get is a process record, not an answer envelope. Strip result, failure detail,
+// propositions and any other internal fields before returning it to the browser.
+export const runStatusSchema = z.object({
+  id,
+  status: z.enum(["PLANNED", "RUNNING", "AWAITING_HUMAN", "ANSWERED", "PARTIAL", "REFUSED", "FAILED"]),
+  refusal_code: z.enum(["NO_BUDGET", "NO_MODEL", "UNKNOWN_INTENT", "OUT_OF_SCOPE_LAW", "NOT_APPROVED", "CANCELLED", "CORRECTIONS_EXHAUSTED", "NO_EVIDENCE", "NOTHING_TRACED"]).nullable(),
+}).superRefine((value, ctx) => {
+  if ((value.status === "REFUSED") !== (value.refusal_code !== null)) ctx.addIssue({ code: "custom", message: "Run refusal linkage is invalid" });
+});
+export type RunStatus = z.infer<typeof runStatusSchema>;
 export const conversationCommand = z.discriminatedUnion("action", [
   z.object({ action: z.literal("list") }).strict(),
   z.object({ action: z.literal("get"), conversationId: id }).strict(),
   z.object({ action: z.literal("send"), conversationId: id.optional(), text: z.string().trim().min(1).max(2000) }).strict(),
   z.object({ action: z.literal("citation"), conversationId: id, messageId: id, citationId: z.string().min(1).max(200) }).strict(),
   z.object({ action: z.literal("trace"), runId: id }).strict(),
+  z.object({ action: z.literal("run"), conversationId: id, messageId: id, runId: id }).strict(),
 ]);
 type Command = z.infer<typeof conversationCommand>;
 
@@ -92,7 +103,7 @@ export function conversationConfiguration() {
 export async function callConversation(command: Command, signal?: AbortSignal): Promise<unknown> {
   const config = conversationConfiguration();
   if (!config) throw new ConversationServiceError("NOT_CONFIGURED", 503, "Saved conversations are not connected. Configure the local authenticated gateway to use this workflow.");
-  const timeout = AbortSignal.timeout(120_000);
+  const timeout = AbortSignal.timeout(command.action === "run" ? 15_000 : 120_000);
   const combined = signal ? AbortSignal.any([signal, timeout]) : timeout;
   let path: string, schema: z.ZodType, body: unknown;
   let method = "POST";
@@ -110,6 +121,12 @@ export async function callConversation(command: Command, signal?: AbortSignal): 
       path = "/v2/citation"; schema = verifiedCitationSchema; body = { citation_id: command.citationId, conversation_id: command.conversationId }; break;
     }
     case "trace": path = `/v2/runs/${encodeURIComponent(command.runId)}/trace`; schema = traceSchema; method = "GET"; break;
+    case "run": {
+      const thread = await callConversation({ action: "get", conversationId: command.conversationId }, combined) as Thread;
+      const message = thread.messages.find(item => item.message_id === command.messageId && item.role === "assistant");
+      if (!message || message.run_id !== command.runId) throw new ConversationServiceError("RUN_NOT_FOUND", 404, "No matching run is recorded for this reply. Refresh the conversation.");
+      path = `/v2/runs/${encodeURIComponent(command.runId)}`; schema = runStatusSchema; method = "GET"; break;
+    }
   }
   try {
     const response = await fetch(new URL(path, config.origin), { method, headers: { Authorization: `Bearer ${config.key}`, ...(body ? { "Content-Type": "application/json" } : {}) }, body: body ? JSON.stringify(body) : undefined, cache: "no-store", redirect: "error", signal: combined });
@@ -123,13 +140,14 @@ export async function callConversation(command: Command, signal?: AbortSignal): 
     const chunks: Uint8Array[] = []; let size = 0;
     while (true) { const part = await reader.read(); if (part.done) break; size += part.value.byteLength; if (size > 2_000_000) { await reader.cancel(); throw new Error("too large"); } chunks.push(part.value); }
     const data: unknown = JSON.parse(Buffer.concat(chunks).toString("utf8"));
-    if (data && typeof data === "object" && "status" in data && data.status === "REFUSED") throw new ConversationServiceError("WORKFLOW_UNAVAILABLE", 422, "The gateway could not start this workflow. No legal answer was returned.");
+    if (data && typeof data === "object" && "status" in data && data.status === "REFUSED" && !(command.action === "run" && "id" in data)) throw new ConversationServiceError("WORKFLOW_UNAVAILABLE", 422, "The gateway could not start this workflow. No legal answer was returned.");
     const parsed = schema.safeParse(data);
     if (!parsed.success) throw new ConversationServiceError("INVALID_RESPONSE", 502, "The service returned an unsupported record. No result was displayed. Refresh saved work before sending again.");
     const mismatch = () => new ConversationServiceError("RECORD_MISMATCH", 502, "The service returned a different saved record. Nothing from that response was displayed.");
     if (command.action === "get" && (parsed.data as Thread).conversation.conversation_id !== command.conversationId) throw mismatch();
     if (command.action === "send" && command.conversationId && (parsed.data as z.infer<typeof sendSchema>).conversation_id !== command.conversationId) throw mismatch();
     if (command.action === "trace" && (parsed.data as Trace).run_id !== command.runId) throw mismatch();
+    if (command.action === "run" && (parsed.data as RunStatus).id !== command.runId) throw mismatch();
     if (command.action === "citation") {
       const result = parsed.data as Citation;
       const fields = ["id", "instrument", "provision", "source", "fetched_at", "sha256", "quote", "in_force_from"] as const;

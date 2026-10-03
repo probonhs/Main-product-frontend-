@@ -16,6 +16,7 @@ open for integration/release, not reasons to stop independent frontend implement
 | Q-006 | Which product deployment project/domain/owner and rollback process will we use? | Founder/engineering | Production release | Separate from website Vercel; immutable revision and founder approval. |
 | Q-007 | Is connected synthetic local setup available at the pinned latest backend SHA? | Teammate | Live v2 acceptance | Store/worker/migrations, lawyer/admin test principal, private credential delivery. |
 | Q-008 | Can citation lookup select the originating message when IDs repeat? | Teammate, narrow fix | Later colliding source inspection | Current handler returns first c1; frontend rejects wrong reply. Add message-scoped lookup + regression and correct stale screen fields. |
+| Q-009 | What durable idempotency/recovery contract identifies a conversation submission after its response is lost? | Teammate contract clarification | Post-build duplicate-send acceptance | No client-generated submission key is verified in inspected send handler. Frontend pauses/refreshes/requires explicit acknowledgment, but this is page-memory only and not a duplicate-prevention guarantee across reload or unknown returned identity. |
 
 Git workflow scope is an operational access condition, not a product decision. Record the actual push
 failure if it occurs; never drop workflow history or claim remote publication from a local commit.

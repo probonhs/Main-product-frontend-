@@ -9,6 +9,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 const root = new URL("../", import.meta.url);
 const hooks = registerHooks({
   resolve(specifier, context, next) {
+    if (specifier === "next/link") return next("next/link.js", context);
     const base = specifier.startsWith("@/") ? new URL(`src/${specifier.slice(2)}`, root) : specifier.startsWith(".") && /\.tsx?$/.test(context.parentURL ?? "") ? new URL(specifier, context.parentURL) : null;
     if (base) for (const extension of [".ts", ".tsx"]) { const candidate = new URL(base.href + extension); if (existsSync(fileURLToPath(candidate))) return { url: candidate.href, shortCircuit: true }; }
     return next(specifier, context);
@@ -20,7 +21,9 @@ const hooks = registerHooks({
 });
 const saved = { mode: process.env.NODE_ENV, origin: process.env.GATEWAY_URL, key: process.env.PLACEDON_GATEWAY_KEY, fetch: globalThis.fetch };
 try {
-  const { conversationConfiguration, conversationCommand, envelopeSchema, threadSchema, traceSchema, callConversation } = await import("../src/lib/engine/conversations.ts");
+  const { conversationConfiguration, conversationCommand, envelopeSchema, threadSchema, traceSchema, runStatusSchema, callConversation } = await import("../src/lib/engine/conversations.ts");
+  const { followRunUpdates, runDescription, RUN_UPDATE_LIMIT, RUN_UPDATE_INTERVAL_MS, RUN_UPDATE_WINDOW_MS } = await import("../src/lib/engine/run-updates.ts");
+  const { PendingReply, recoveryWasRead, draftAfterSubmission, refreshKeepsEvidence } = await import("../src/app/workspace/conversations/conversation-workspace.tsx");
   const { RunDetails } = await import("../src/app/workspace/conversations/run-details.tsx");
   const { POST } = await import("../src/app/api/workspace/conversations/route.ts");
   const uuid = "11111111-1111-4111-8111-111111111111";
@@ -122,7 +125,101 @@ try {
   assert.equal((await POST(request({ action: "send", conversationId: uuid, text: "Test" }))).status, 502);
   globalThis.fetch = async () => Response.json({ run_id: otherId, steps: [] });
   assert.equal((await POST(request({ action: "trace", runId: uuid }))).status, 502);
+  // Synthetic PROCESS states only: no fabricated legal answers or model calls.
+  const planned = { id: uuid, status: "PLANNED", refusal_code: null };
+  assert.equal(RUN_UPDATE_LIMIT, 3); assert.equal(RUN_UPDATE_INTERVAL_MS, 5000); assert.equal(RUN_UPDATE_WINDOW_MS, 60000);
+  assert.equal(recoveryWasRead(uuid, undefined), false);
+  assert.equal(recoveryWasRead(uuid, otherId), false);
+  assert.equal(recoveryWasRead(uuid, uuid), true);
+  assert.equal(recoveryWasRead(undefined, undefined), true); // explicit list review only, not rejection proof
+  assert.equal(draftAfterSubmission("Submitted draft", "Submitted draft"), "");
+  assert.equal(draftAfterSubmission("Edited while waiting", "Submitted draft"), "Edited while waiting");
+  assert.equal(refreshKeepsEvidence(uuid, uuid), true);
+  assert.equal(refreshKeepsEvidence(uuid, undefined), true);
+  assert.equal(refreshKeepsEvidence(uuid, otherId), false);
+  const runRequest = { action: "run", conversationId: uuid, messageId: otherId, runId: uuid };
+  const pendingThread = { conversation, messages: [{ ...message, message_id: otherId, run_id: uuid }] };
+  for (const status of ["PLANNED", "RUNNING", "AWAITING_HUMAN", "ANSWERED", "PARTIAL", "REFUSED", "FAILED"]) {
+    const run = { ...planned, status, refusal_code: status === "REFUSED" ? "NO_EVIDENCE" : null };
+    assert.equal(runStatusSchema.safeParse(run).success, true);
+    const projected = runStatusSchema.parse({ ...run, result: { answer: "private internal result" }, failure_reason: "private reason", propositions: [{ status: "VERIFIED" }], intent: "research_question" });
+    assert.deepEqual(projected, run);
+    for (const busy of [true, false]) {
+      const html = renderToStaticMarkup(React.createElement(PendingReply, { run, hasRun: true, busy, onCheck() {} }));
+      assert.ok(html.includes(runDescription(run).title));
+      assert.ok(html.includes("Last checked run status"));
+      assert.equal(html.includes('disabled=""'), busy);
+      assert.equal(html.includes("private"), false); assert.equal(html.includes("progressbar"), false);
+    }
+    let calls = 0;
+    globalThis.fetch = async (url, init) => {
+      calls++; assert.equal(init.method, "GET"); assert.equal(init.cache, "no-store");
+      if (calls === 1) { assert.ok(String(url).endsWith(`/conversation/${uuid}`)); return Response.json(pendingThread); }
+      assert.ok(String(url).endsWith(`/runs/${uuid}`));
+      return Response.json({ ...run, result: { secret: "test-only-key" }, failure_reason: "private reason", propositions: [] });
+    };
+    const result = await POST(request(runRequest)); assert.equal(result.status, 200);
+    const payload = await result.json(); assert.deepEqual(payload.data, run); assert.equal(calls, 2);
+    assert.equal(JSON.stringify(payload).includes("test-only-key"), false);
+    assert.equal(JSON.stringify(payload).includes("private"), false);
+  }
+  assert.equal(runStatusSchema.safeParse({ ...planned, status: "MAYBE" }).success, false);
+  assert.equal(runStatusSchema.safeParse({ ...planned, status: "REFUSED" }).success, false);
+  assert.equal(runStatusSchema.safeParse({ ...planned, status: "FAILED", refusal_code: "CANCELLED" }).success, false);
+  assert.equal(runStatusSchema.safeParse({ ...planned, status: "REFUSED", refusal_code: "MAGIC" }).success, false);
+  assert.equal(runDescription({ ...planned, status: "REFUSED", refusal_code: "CANCELLED" }).title, "Run cancelled");
+  for (const hasRun of [true, false]) {
+    const html = renderToStaticMarkup(React.createElement(PendingReply, { hasRun, busy: false, onCheck() {} }));
+    assert.ok(html.includes(hasRun ? "Reply pending" : "Reply not yet available"));
+    assert.equal(html.includes("Check reply updates"), hasRun);
+    assert.equal(html.includes("Processing</h2>"), false);
+  }
+  let runCalls = 0;
+  globalThis.fetch = async () => { runCalls++; return Response.json(pendingThread); };
+  assert.equal((await POST(request({ ...runRequest, messageId: laterId }))).status, 404); assert.equal(runCalls, 1);
+  assert.equal((await POST(request({ ...runRequest, runId: otherId }))).status, 404);
+  globalThis.fetch = async url => String(url).includes("/conversation/") ? Response.json(pendingThread) : Response.json({ ...planned, id: otherId });
+  assert.equal((await POST(request(runRequest))).status, 502);
+  globalThis.fetch = async url => String(url).includes("/conversation/") ? Response.json(pendingThread) : Response.json({ status: "REFUSED", code: "NOT_FOUND", detail: "private text" });
+  assert.equal((await POST(request(runRequest))).status, 422);
+  assert.equal((await POST(request({ action: "run", runId: uuid }))).status, 400);
+  const signal = new AbortController().signal;
+  let reads = 0, waits = 0, records = [];
+  const options = { signal, visible: () => true, read: async () => { reads++; return planned; }, onRecord: run => records.push(run), wait: async ms => { assert.equal(ms, 5000); waits++; } };
+  assert.equal(await followRunUpdates(options), "limit"); assert.equal(reads, 3); assert.equal(waits, 2); assert.equal(records.length, 3);
+  for (const status of ["AWAITING_HUMAN", "ANSWERED", "PARTIAL", "REFUSED", "FAILED"]) {
+    reads = 0; waits = 0;
+    assert.equal(await followRunUpdates({ ...options, read: async () => { reads++; return { ...planned, status }; } }), "finished");
+    assert.equal(reads, 1); assert.equal(waits, 0);
+  }
+  reads = 0;
+  assert.equal(await followRunUpdates({ ...options, visible: () => false }), "hidden"); assert.equal(reads, 0);
+  records = [];
+  let visible = true;
+  assert.equal(await followRunUpdates({ ...options, visible: () => visible, read: async () => { visible = false; return planned; } }), "hidden"); assert.equal(records.length, 0);
+  const stopped = new AbortController(); stopped.abort(); reads = 0;
+  await assert.rejects(followRunUpdates({ ...options, signal: stopped.signal })); assert.equal(reads, 0);
+  const stale = new AbortController(); records = [];
+  await assert.rejects(followRunUpdates({ ...options, signal: stale.signal, read: async () => { stale.abort(); return planned; } })); assert.equal(records.length, 0);
+  reads = 0;
+  await assert.rejects(followRunUpdates({ ...options, read: async () => { reads++; throw new Error("Offline synthetic failure"); } })); assert.equal(reads, 1);
+  const sleeping = new AbortController(); records = [];
+  const waiting = followRunUpdates({ ...options, signal: sleeping.signal, wait: undefined, onRecord: run => { records.push(run); queueMicrotask(() => sleeping.abort()); } });
+  await assert.rejects(waiting); assert.equal(records.length, 1);
+  for (const finalStatus of ["RUNNING", "ANSWERED"]) {
+    let upstreamReads = 0, statusReads = 0;
+    globalThis.fetch = async url => {
+      upstreamReads++;
+      if (String(url).includes("/conversation/")) return Response.json(pendingThread);
+      statusReads++;
+      return Response.json({ ...planned, status: statusReads === 3 ? finalStatus : "RUNNING" });
+    };
+    const outcome = await followRunUpdates({ ...options, read: activeSignal => callConversation(runRequest, activeSignal) });
+    if (outcome === "finished") await callConversation({ action: "get", conversationId: uuid }, signal);
+    assert.equal(statusReads, 3); assert.equal(upstreamReads, finalStatus === "RUNNING" ? 6 : 7); assert.ok(upstreamReads <= 8);
+  }
   console.log("PASS: conversation contract, ownership, local gating, CSRF, gateway path and credential-redaction checks");
+  console.log("PASS: seven process states, private-result projection, message/run correlation and bounded update/abort/visibility/terminal/error checks (synthetic offline only)");
 } finally {
   globalThis.fetch = saved.fetch;
   for (const [key, value] of [["NODE_ENV", saved.mode], ["GATEWAY_URL", saved.origin], ["PLACEDON_GATEWAY_KEY", saved.key]]) { if (value === undefined) delete process.env[key]; else process.env[key] = value; }

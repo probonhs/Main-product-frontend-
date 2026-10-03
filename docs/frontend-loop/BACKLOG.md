@@ -13,7 +13,7 @@ acceptance and remaining full accessibility/error checks move to post-build; ori
 | 1 | Latest v2 contracts/roles/screens compatibility | GUARDED_SLICE_BUILT / NEEDS_CONNECTED_VERIFICATION | PHASE_1_COMPATIBILITY.md; source collision rejected, Q-008 pending |
 | 1 | Production session/principal boundary | DEFERRED_TO_POST_BUILD | D-013/Q-001; reuse existing viewer/lawyer/admin primitives; not a frontend-build blocker |
 | 2 | Local conversations, source re-check and trace | BUILT / NEEDS_CONNECTED_VERIFICATION | Gateway/store/principal setup; ASK_CONVERSATION_SLICE.md |
-| 2 | Run polling/terminal states/retry safety | READY_AFTER_CONTRACT_RECONCILIATION | Actual runs.get/cancel semantics; no fake streaming/stages |
+| 2 | Run polling/terminal states/retry safety | BUILT / NEEDS_FINAL_ACCEPTANCE | PHASE_2_RUN_UPDATES.md; bounded message-owned reads, terminal/refusal distinctions and explicit recovery; mounted/live checks and Q-009 remain |
 | 2 | Complete Ask browser acceptance | DEFERRED_TO_POST_BUILD | D-013; live synthetic flow, refusal/error/stale source, follow-up/reload still required before release |
 | 2 | Retain prior evidence while inputs are edited | BUILT / NEEDS_FINAL_ACCEPTANCE | PHASE_2_RETAINED_EVIDENCE.md; 256 reducer/render assertions and bounded Brave pass; full acceptance deferred D-013 |
 | 3 | Extraction and attachments | NOT_INTEGRATED | Donor patterns, limits/scan refusal, processing permission |

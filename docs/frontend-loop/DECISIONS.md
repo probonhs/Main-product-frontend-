@@ -169,3 +169,19 @@ Do not copy historical decisions here unless they are still in force. Link their
   reducer/render regression plus bounded Brave inspection, not full deferred acceptance.
 - **Reversal:** Observed confusion between previous evidence and edited facts warrants stronger separation
   or hiding the old answer behind an explicit previous-record disclosure.
+
+## D-015 — Bounded process updates and explicit send recovery (3 October 2026)
+
+- **Decision:** Add user-started, read-only reply updates: three status checks/five-second gaps/60-second
+  window, with at most seven backend reads including ownership guards and terminal reply refresh.
+  Stop on terminal/review, hidden tab, abort or error. No streaming, percentage or auto-restart/resend.
+- **Truth boundary:** Process completion never supplies a legal answer. Only the stored validated envelope
+  does. Status projection removes internal result/failure data; conversation/message/run IDs must correlate.
+- **Recovery:** Pause uncertain submissions until refreshed saved work is inspected and the user deliberately
+  acknowledges duplication risk. Known-thread recovery requires that thread's read. No guarantee across reload
+  or missing returned identity; Q-009 remains open. Preserve unsent edits and same-thread inspected evidence.
+- **Rejected:** Unlimited/background polling adds load; blind retry can create duplicate paid work; server
+  cancellation needs a separate confirmed mutation contract and is not represented by Stop waiting.
+- **Review/evidence:** PHASE_2_RUN_UPDATES.md; independent R2 corrections accepted. Mounted/live/full browser
+  acceptance is not claimed. Roll back this frontend slice if connected tests violate correlation or recovery.
+- **Next:** Contract-grounded Phase 3 UI preparation; integration/auth/acceptance remain post-build per D-013.
