@@ -3,7 +3,7 @@
 Repository: `probonhs/Main-product-frontend-`
 Branch: `codex/frontend-handoff`; inspect `git log -5 --oneline` for actual HEAD before continuing.
 Current entry: `docs/START_HERE.md`. Execute `docs/FIVE_PHASE_FRONTEND_LOOP_PROMPT.md`, not the full chat.
-Execution is PAUSED at the user's request after this checkpoint. Resume only on a new user instruction.
+Execution resumed on 3 October 2026 at the user's request from checkpoint `7435ae1`.
 
 Preservation commits: implementation `fc47985`, organization/prompt `fc47616`, guarded compatibility
 `9c2024e` (plus four earlier commits). All published to `probonhs/codex/frontend-handoff`, with matching
@@ -34,7 +34,12 @@ npm run build -- --webpack
 npm run performance:budget
 ```
 
-Last slice: offline/build/budget passed; Brave full acceptance and connected v2 tests incomplete.
+Last implementation slice: offline/build/budget passed. Subsequent measured independent-Ask Brave slice
+passes eight widths, keyboard, 200% zoom and sampled reduced-motion/contrast. Full acceptance and connected
+v2 tests remain incomplete; see VERIFY_phase1-brave-2026-10-03.md.
+Bounded review copy fixes distinguish held text, restricted source records and configured local submission;
+320/1920px regression passes. Fresh engineering gates pass, including 141 render assertions and
+399,573-byte gzip budget. Historical 399,238-byte figures below are the earlier implementation checkpoint.
 Turbopack stalled locally; webpack passed. Do not infer CI default build success.
 
 ## Git boundary
@@ -50,11 +55,13 @@ User selected Phase 1. The workspace-local skip link now bypasses repeated navig
 in independent Ask no longer narrows/recenters the answer. Sources stays in flow below 1800px; beyond that
 it uses the right spare margin. Structural tests, TypeScript, lint, contracts, loop checks, webpack build
 and unchanged 399,238-byte gzip budget pass. Local HTTP render checks pass on a captured partial answer.
-Independent targeted review accepted those two fixes; full Brave control was interrupted, so focus,
-screen-reader, measured reflow/contrast and wide-screen geometry remain NOT RUN. See PHASE_1_SHELL_ACCEPTANCE.md.
+Independent targeted review accepted those two fixes. Subsequent Brave testing confirms stable answer
+geometry at eight widths, keyboard skip/source/return and 200% zoom. Sampled contrast and reduced motion
+pass. Screen-reader/full accessibility and other-state coverage remain unverified. See
+VERIFY_phase1-brave-2026-10-03.md and PHASE_1_SHELL_ACCEPTANCE.md.
 Editing facts still clears the previous answer: open follow-up UX item, not silently fixed with stale evidence.
-Next: complete actual Brave acceptance (320/360/400/768/1024/1440/1800/1920px, keyboard, source open/return),
-then approved connected synthetic setup. Do not mark Phase 1 complete or choose production identity silently.
+Next: remaining accessibility/other-state coverage and approved connected synthetic setup. Do not rerun
+the completed eight-width slice or mark Phase 1 complete or choose production identity silently.
 
 Organization and a bounded Phase 1 move are now preserved. See PHASE_1_COMPATIBILITY.md: typed auth/error
 states, critic/null-cost trace, request/record correlation and fail-closed message-bound sources. Source IDs

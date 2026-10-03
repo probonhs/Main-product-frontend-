@@ -1,7 +1,7 @@
 # Phase 1 shell checkpoint — 3 October 2026
 
 Status: **NEEDS_VERIFICATION**, not Phase 1 complete or pilot approval.
-Execution: **PAUSED** by the user after saving this checkpoint; no next slice should start automatically.
+Execution: paused after checkpoint `7435ae1`, then resumed by the user on 3 October 2026.
 Baseline: `9c2024e`, verified published on `probonhs/codex/frontend-handoff`.
 Backend compatibility evidence remains pinned to `889ba54`; no backend mutation or AI request in this slice.
 
@@ -11,7 +11,8 @@ Backend compatibility evidence remains pinned to `889ba54`; no backend mutation 
   the inherited root landmark is preserved, without adding a nested main.
 - Independent Ask Sources opens without shrinking/recentering the answer or composer. Below 1800px it stays
   in flow. At/above 1800px, the answer remains 800px; the 320px panel and 24px gap occupy spare right margin.
-  At 1800px the declared dimensions leave 44px at the right edge. That calculation is not browser proof.
+  At 1800px the declared dimensions leave 44px at the right edge. Subsequent measured Brave evidence
+  confirms this; see VERIFY_phase1-brave-2026-10-03.md.
 - Brand tokens, legal formatting, response data, legacy website, conversation implementation and gates unchanged.
 
 ## Independent review
@@ -36,7 +37,7 @@ No full council rerun, new dependency, paid inference or automatic deployment.
 | `git diff --check` | PASS |
 | Local HTTP `/workspace` shell | PASS: skip link and focus target rendered |
 | Local HTTP `/workspace/ask?example=ask-partial` | PASS: skip target, captured partial answer, Sources and legal-serif markup rendered |
-| Brave measured focus, screen reader, contrast, 200% reflow, widths | NOT RUN to completion: native control interrupted by user interaction |
+| Brave measured focus, sampled contrast, 200% reflow, widths, reduced motion | Subsequent PASS for independent-Ask slice; see VERIFY_phase1-brave-2026-10-03.md. Screen reader and full accessibility audit remain unverified |
 | Connected latest v2 gateway/store/roles/persistence | NOT RUN: setup dependency remains |
 | Default Turbopack CI / preview / practitioner / founder acceptance | NOT VERIFIED by this slice |
 
@@ -45,8 +46,7 @@ The HTTP checks only read the local page/captured fixture; no question was sent 
 
 ## Next safe action
 
-In Brave, verify the unchanged starting shell and captured partial answer at 320, 360, 400, 768, 1024, 1440,
-1800 and 1920px. Open Sources/return; measure answer width/position and body overflow. Test keyboard skip,
-focus return, 200% zoom, reduced motion and contrast. Keep sample/live/technical states distinct.
-Then obtain the approved synthetic gateway/store setup (Q-007/Q-008). Production identity (Q-001) remains
+The captured partial answer now passes the measured eight-width, keyboard, 200% zoom and sampled
+reduced-motion/contrast checks. Finish screen-reader/full accessibility and other-state coverage.
+Obtain the approved synthetic gateway/store setup (Q-007/Q-008). Production identity (Q-001) remains
 a founder decision. Do not enable uploads, choose credentials/data processing or claim Phase 1 complete.

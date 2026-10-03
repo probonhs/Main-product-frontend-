@@ -99,7 +99,16 @@ try {
 
   const partial = fixture("ask-partial");
   const partialHtml = rendered.get("ask-partial");
-  includes(partialHtml, "Source text established", "Partial: established source text identified");
+  includes(partialHtml, "Source text held", "Partial: held source text identified without operative-law claim");
+  excludes(partialHtml, "Source text established", "Partial: no overstated source heading");
+  includes(partialHtml, "not a statement that the provision is suspended in law", "Partial: suspended source distinguished from statutory suspension");
+  closedDetails(partialHtml, 'class="ws-details"(?=><summary>Source-record detail)', "Partial: exact internal source state progressively disclosed");
+  const sourceRegion = partialHtml.slice(partialHtml.indexOf('class="ws-source-drawer"'));
+  includes(sourceRegion, "does not verify commencement or amendment dates", "Partial: operative-law qualification is next to source evidence");
+  includes(sourceRegion, 'Evidence: corroborated</p><p class="ws-muted">Held text only.', "Partial: qualification immediately follows source evidence status");
+  const verifiedPointInTime = structuredClone(partial);
+  verifiedPointInTime.response.law_version.point_in_time_verified = true;
+  excludes(render(verifiedPointInTime), "Held text only.", "Source qualification depends on backend law-version flag");
   includes(partialHtml, "Read verbatim text", "Partial: held source disclosure");
   includes(partialHtml, partial.response.not_confirmed[0].detail, "Partial: exact missing-source detail");
   includes(partialHtml, 'class="section-reference"', "Partial: section legal markup");
@@ -131,7 +140,9 @@ try {
   includes(liveHtml, 'name="board_meetings"', "Live mode includes board-meeting control");
   includes(liveHtml, 'name="calendar_year"', "Live mode includes calendar-year control");
   excludes(liveHtml, 'name="useFacts"', "Live form has no useFacts checkbox");
-  includes(liveHtml, "Local checks are available", "Live mode labelled");
+  includes(liveHtml, "Local checks configured", "Live mode labels configuration, not established availability");
+  includes(liveHtml, "Sending a new question", "Live submission distinguished from shown result");
+  includes(liveHtml, "captured example, not a new local check", "Sample answer remains labelled with live composer");
   includes(liveHtml, "not a saved chat", "Live mode disclaims persistence");
   closedDetails(liveHtml, 'id="ws-company-facts"', "Live context disclosure");
   includes(liveHtml, "Add provisions &amp; company facts", "Live context groups provisions and facts");

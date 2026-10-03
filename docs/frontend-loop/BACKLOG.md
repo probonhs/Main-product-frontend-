@@ -6,7 +6,7 @@ only dependent work. Select the first valuable unblocked slice; do not start fiv
 | Phase | Slice | Status | Next evidence / dependency |
 |---|---|---|---|
 | 1 | Legacy truth map, typed client and captured fixtures | DONE (pinned) | `8a41d4f`; remains legacy evidence, not latest v2 certification |
-| 1 | Approved shell, branding and independent Ask | BUILT / NEEDS_BROWSER_VERIFICATION | Skip navigation + stable Sources implemented; PHASE_1_SHELL_ACCEPTANCE.md; measured Brave gates remain |
+| 1 | Approved shell, branding and independent Ask | BUILT / PARTIAL_BROWSER_ACCEPTANCE | Eight widths, keyboard, zoom and sampled motion/contrast pass; VERIFY_phase1-brave-2026-10-03.md; full accessibility/other states remain |
 | 1 | Latest v2 contracts/roles/screens compatibility | GUARDED_SLICE_BUILT / NEEDS_CONNECTED_VERIFICATION | PHASE_1_COMPATIBILITY.md; source collision rejected, Q-008 pending |
 | 1 | Production session/principal boundary | DECISION_GATED | Q-001; reuse existing viewer/lawyer/admin primitives |
 | 2 | Local conversations, source re-check and trace | BUILT / NEEDS_CONNECTED_VERIFICATION | Gateway/store/principal setup; ASK_CONVERSATION_SLICE.md |
