@@ -148,6 +148,15 @@
   .workspace .ws-primary.ws-conversation:has(.ws-evidence-panel) { max-width: 1120px; }
   .workspace .ws-conversation-grid:has(.ws-evidence-panel) { grid-template-columns: minmax(0, 1fr) minmax(280px, .65fr); align-items: start; }
 }
+/* Local document preparation is never presented as an uploaded or reviewed record. */
+.workspace .ws-document-choice { border: 0; padding: 0; margin: 0; }
+.workspace .ws-document-choice legend { font-size: 13px; font-weight: 600; }
+.workspace .ws-document-choice small { display: block; font-size: 12px; }
+.workspace .ws-document-choice input { align-self: start; margin-top: 4px; }
+.workspace .ws-document-input { min-height: 200px; }
+.workspace .ws-document-prepared { display: grid; gap: 16px; border-top: 1px solid var(--rule); padding-top: 24px; }
+.workspace .ws-document-text { max-height: 420px; overflow: auto; padding: 16px; border: 1px solid var(--rule); background: var(--paper); border-radius: 4px; }
+.workspace .ws-document-text pre { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; font: 14px/1.7 Georgia, "Times New Roman", serif; }
 .workspace .ws-chat-answer { min-width: 0; }
 .workspace .ws-question-bubble { width: fit-content; max-width: 88%; margin: 0 0 22px auto; padding: 12px 16px; background: var(--paper); border-radius: 6px; font-size: 14px; }
 .workspace .ws-grid { display: grid; grid-template-columns: minmax(0, 1fr); align-items: start; gap: 16px; min-width: 0; }

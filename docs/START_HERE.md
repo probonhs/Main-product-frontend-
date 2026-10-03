@@ -2,12 +2,13 @@
 
 Updated 3 October 2026. This is the current product handoff, not a claim of production readiness.
 
-GitHub preservation succeeded on `codex/frontend-handoff` through `918bab3`; main remains unchanged.
-The next Phase 2 run-update checkpoint is documented in [bounded updates](frontend-loop/PHASE_2_RUN_UPDATES.md);
+GitHub preservation succeeded on `codex/frontend-handoff` through `e9d6b40`; main remains unchanged.
+Phase 2 run updates are documented in [bounded updates](frontend-loop/PHASE_2_RUN_UPDATES.md).
+Current Phase 3 checkpoint: [local document preparation](frontend-loop/PHASE_3_LOCAL_PREPARATION.md);
 inspect Git for its current publication SHA. It is not full phase or live acceptance.
-Founder reviewed and approved that checkpoint on 3 October 2026 (D-012); pending verification gates remain open.
+Founder reviewed and approved work through `5343e98` on 3 October 2026 (D-012); pending verification gates remain open.
 Current sequence (D-013): build/commit the main frontend phases first; sign-in, live connections and remaining
-accessibility/error acceptance follow afterwards. Phase 2 build may proceed without claiming those gates passed.
+accessibility/error acceptance follow afterwards. Later frontend build may proceed without claiming those gates passed.
 Phase 1 independent-Ask checks now pass at eight widths with keyboard/zoom and sampled motion/contrast;
 see [Brave evidence](frontend-loop/VERIFY_phase1-brave-2026-10-03.md) and
 [the current checkpoint](frontend-loop/PHASE_1_SHELL_ACCEPTANCE.md) and state for remaining gates.
@@ -37,6 +38,8 @@ delete branches or close someone else's PR to make the history look cleaner.
   Implementation exists; live acceptance awaits a configured gateway/store. No browser-stored history.
 - User-started bounded run updates, message-owned status projection and explicit uncertain-send recovery;
   no blind resend or implied server cancellation. Mounted/live acceptance and durable retry Q-009 remain.
+- Local text preparation at `/workspace/documents`: paste/read UTF-8 text, inspect a separate snapshot and
+  choose the intended review. No upload, storage or review result; PHASE_3_LOCAL_PREPARATION.md and Q-010.
 - Typed validation, backend-pinned fixtures, contract/render tests, privacy controls and a bounded review runner.
 
 The latest user choice settles the starting appearance. It does not approve every future screen or waive

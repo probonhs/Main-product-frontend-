@@ -185,3 +185,16 @@ Do not copy historical decisions here unless they are still in force. Link their
 - **Review/evidence:** PHASE_2_RUN_UPDATES.md; independent R2 corrections accepted. Mounted/live/full browser
   acceptance is not claimed. Roll back this frontend slice if connected tests violate correlation or recovery.
 - **Next:** Contract-grounded Phase 3 UI preparation; integration/auth/acceptance remain post-build per D-013.
+
+## D-016 — Local document preparation before connected reviews (3 October 2026)
+
+- **Decision:** Build one working Documents intake/snapshot route, not a fake upload or review. Plain UTF-8
+  .txt/pasted text only, local 256 KiB/200,000-character limits, strict decoding and explicit preparation.
+  Snapshot stays separate from edits; unknown/stale reads cannot replace the draft. No browser persistence.
+- **Reason:** Backend upload is not extraction or durable text storage. Q-010 must prove the document text
+  reaching review before attachment integration. Review type describes intended scope, not a finding.
+- **Rejected:** Blindly transplanting donor PDF/DOCX parser/size→scan assumptions; truncating oversized paste;
+  connected success without permissions; preview text formatted as verified legal evidence.
+- **Review:** PHASE_3_LOCAL_PREPARATION.md; independent R2 corrections to truncation/field association accepted.
+  Browser/mounted/live gates remain NOT RUN. Roll back or narrow the local reader if completeness/privacy
+  tests show altered, exposed or misleading text. Founder retains processing/retention/release decisions.

@@ -7,7 +7,22 @@ Execution resumed on 3 October 2026 at the user's request from checkpoint `7435a
 Founder subsequently reviewed and approved all work through `5343e98` and requested a commit (D-012).
 Implementation was already committed/published; this approval is recorded without changing release gates.
 
-## Current sequence and Phase 2 checkpoint
+## Current sequence and build checkpoints
+
+Latest slice: Phase 3 local document preparation, D-016, baseline `e9d6b40`. New `/workspace/documents`
+route and navigation; paste/read strict UTF-8 .txt, name/review choice, explicitly prepared unchanged snapshot.
+No upload/review/storage/model call. Local limits 256KiB/200,000 characters; oversized paste rejects without
+truncation. Edits invalidate pending reads and retain labelled previous preparation; Clear removes page state.
+No browser-history secure-erasure claim. Q-010 records upload's missing proven extracted-text retention path.
+Reviewer Singer accepted truncation/field-association fixes. Main tests: 230 new assertions plus existing
+full contracts; typecheck/quiet lint/loop/webpack build/budget pass. 28 routes, 50 client chunks; final gzip
+bytes in PHASE_3_LOCAL_PREPARATION.md. HTTP200 route/boundary/nav render confirmed after read-only
+sandbox-approved retry. Brave/mounted/full acceptance NOT RUN; installed Brave app path timed out.
+
+Five-hour usage reached82%, weekly13%: finish safe save/push, no large new move. Next: measured client sharing/
+budget headroom (~2.4KiB to existing cap), then pinned review-result/quote-and-reason UI. Do not raise budgets,
+send client content, enable attachments/auth/model spending or rerun the old council to make progress.
+Local dev server still listens on3300 (PID60252); no new credentials/config. Check Git for final HEAD/publication.
 
 Founder D-013 now prioritizes building/committing the five frontend phases before live connections and full
 accessibility/error acceptance, with production sign-in after the main frontend build. This supersedes the
@@ -32,9 +47,8 @@ Typecheck/quiet lint/full contracts/loop/webpack build/budget PASS: 27 routes, 4
 Brave new-state check NOT RUN (no window/ambiguous app/explicit installed path timeout). No screenshot,
 mounted React, live persistence or full acceptance claim. Q-009 keeps durable retry/idempotency open.
 
-Next independent build slice: Phase 3 extraction/attachment UI preparation against pinned backend contracts
-and processing gates. No credential setup, paid calls or fake upload success to make a frontend preview work.
-Inspect actual Git HEAD/publication state; this checkpoint follows the published `918bab3` baseline.
+The Phase 2 checkpoint above is historical; current Phase 3 work and next slice are at the top. No credential
+setup, paid calls or fake upload success merely to make a frontend preview work. Inspect actual Git HEAD.
 
 Post-build checklist (still required before pilot/release):
 

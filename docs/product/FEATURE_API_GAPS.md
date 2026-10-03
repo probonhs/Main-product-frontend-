@@ -21,8 +21,8 @@ company facts or conversational reasoning memory; each question needs its own re
 | Inspect an answer's basis | `citation.get`, `runs.trace` | Citation re-check and trace panel | Founder: expose newly returned critic metadata; browser focus and stale-source acceptance. |
 | Check supplied company facts | legacy `/v1/ask`, `/v1/compliance-pack`; `company_facts.extract` | Independent structured Ask; captured examples | Founder: confirmed-context UI. Extracted facts are supplied, not verified, and do not steer v2 research. No live MCA21 claim. |
 | Sign in / invite / remove access | Actor/role/invite persistence; `gateway/roles.py`, `passwords.py` | No production identity/session UI | Founder builds frontend auth/session adapter after decision. Teammate confirms principal provisioning/revocation and missing server endpoints only. |
-| Watch a durable run | `runs.submit/get/trace/cancel` | Trace only; manual refresh, stop waiting | Founder: bounded polling, terminal states, true cancellation. Aborting a browser request is not cancelling the run. |
-| Attach/read a document | `documents.upload` | Attach visibly unavailable | Founder: donor extraction integration, limits, unreadable-file states. Backend records extracted text/reason; it is not a PDF/OCR parser. |
+| Watch a durable run | `runs.submit/get/trace/cancel` | Message-owned bounded updates, trace and explicit uncertain-send recovery built; offline verification | Connected/mounted checks and Q-009 remain. True server cancellation is not implemented; Stop waiting aborts browser work only. |
+| Attach/read a document | `documents.upload` | Local pasted/UTF-8 .txt preparation and unchanged snapshot at `/workspace/documents`; no upload | Founder: PDF/DOCX extraction/permission/integration. Backend upload records hash/size/name/reason, not text or durable storage; Q-010 proves upload→review content before attachment enablement. |
 | Review corporate documents | `review_document`, `runs.approve/reject` | Not integrated; donor PR has useful workflow | Founder: quote + reason gate, role-specific actions, audit result. |
 | Review a contract | `review_contract`, review decisions | Not integrated; donor PR has prototype | Founder: party/context, approved playbook, standards versus law, source and review gate. Region policy must permit client content. |
 | Compare many documents | `review_table.create/status/cancel/export` | Not integrated | Founder: table states, spend/unknown cost, partial failures, cancellation, safe CSV. |
@@ -44,6 +44,7 @@ All browser operations go to POST `/api/workspace/conversations`; the server dis
 | Send | POST `/v2/conversation/send` | `text`, optional `conversation_id`, `task_override: "RESEARCH_QUESTION"` |
 | Source | POST `/v2/citation` | `conversation_id`, `citation_id` |
 | Trace | GET `/v2/runs/{run_id}/trace` | UUID path only |
+| Run status | GET `/v2/runs/{run_id}` after originating thread read | Local conversation/message/run UUID correlation; projected id/status/refusal_code only; three user-started checks |
 
 `citation.get` is **not** `/v2/citation/get`. Approval is POST `/v2/runs/approve/{run_id}`,
 rejection `/v2/runs/reject/{run_id}`, cancellation `/v2/runs/cancel/{run_id}`. Do not guess REST paths from

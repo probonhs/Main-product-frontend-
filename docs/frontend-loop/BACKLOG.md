@@ -16,7 +16,7 @@ acceptance and remaining full accessibility/error checks move to post-build; ori
 | 2 | Run polling/terminal states/retry safety | BUILT / NEEDS_FINAL_ACCEPTANCE | PHASE_2_RUN_UPDATES.md; bounded message-owned reads, terminal/refusal distinctions and explicit recovery; mounted/live checks and Q-009 remain |
 | 2 | Complete Ask browser acceptance | DEFERRED_TO_POST_BUILD | D-013; live synthetic flow, refusal/error/stale source, follow-up/reload still required before release |
 | 2 | Retain prior evidence while inputs are edited | BUILT / NEEDS_FINAL_ACCEPTANCE | PHASE_2_RETAINED_EVIDENCE.md; 256 reducer/render assertions and bounded Brave pass; full acceptance deferred D-013 |
-| 3 | Extraction and attachments | NOT_INTEGRATED | Donor patterns, limits/scan refusal, processing permission |
+| 3 | Extraction and attachments | LOCAL_PREPARATION_BUILT / NOT_INTEGRATED | PHASE_3_LOCAL_PREPARATION.md; pasted/UTF-8 text snapshot, 230 tests; PDF/DOCX/attachment/storage/processing and Q-010 remain gated |
 | 3 | Corporate-document and contract review | NOT_INTEGRATED | Quote/reason, playbook and role gates |
 | 4 | Review tables/spend/cancellation/CSV | NOT_INTEGRATED | Current grid contracts and safe export |
 | 4 | Drafts/blocking/version/diff/DOCX | NOT_INTEGRATED | Current draft contracts and support/approval boundary |
