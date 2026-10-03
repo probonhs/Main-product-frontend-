@@ -45,7 +45,8 @@ function excludes(html, value, label) {
   assertions++;
 }
 const fixture = (id) => JSON.parse(readFileSync(new URL(`fixtures/engine/${id}.json`, root), "utf8"));
-const { AskWorkspace } = await import("../src/app/workspace/ask/ask-workspace.tsx");
+const { AskWorkspace, ResultRecord } = await import("../src/app/workspace/ask/ask-workspace.tsx");
+const { askRecordReducer, initialAskRecordState, retainedAskNotice } = await import("../src/lib/engine/ask-record-state.ts");
 const render = (source, liveEnabled = false) => renderToStaticMarkup(React.createElement(AskWorkspace, {
   liveEnabled,
   initialRecord: { data: source.response, mode: "sample", sample: { id: source.fixture_id, capturedAt: source.captured_at, backendCommit: source.backend_commit } },
@@ -162,6 +163,56 @@ try {
   includes(blankLive, 'id="ws-question" name="question"', "Blank composer textarea linked to label");
   closedDetails(blankLive, 'id="ws-company-facts"', "Blank context disclosure");
   excludes(blankSample, "<form", "Blank sample mode has no live composer");
+
+  function same(actual, expected, label) { assert.equal(actual, expected, label); assertions++; }
+  for (const id of expectations.keys()) {
+    const source = fixture(id);
+    const original = JSON.stringify(source.response);
+    const record = { data: source.response, mode: "sample" };
+    let state = initialAskRecordState(record);
+    same(retainedAskNotice(state), null, `${id}: initial record is not mislabelled as edited`);
+    state = askRecordReducer(state, { type: "edit" });
+    same(state.record, record, `${id}: draft edit retains complete evidence bundle`);
+    same(state.pendingId, null, `${id}: edit never starts a request`);
+    same(retainedAskNotice(state).title, "Draft changes not checked", `${id}: edit notice`);
+    includes(retainedAskNotice(state).detail, "captured example, not your draft", `${id}: sample boundary`);
+    const oldHtml = renderToStaticMarkup(React.createElement(ResultRecord, { record, previous: true, revise() {} }));
+    includes(oldHtml, "Sources for the retained record only", `${id}: drawer independently disclaims draft coverage`);
+    includes(oldHtml, source.response.as_of, `${id}: retained record keeps original legal date`);
+    state = askRecordReducer(state, { type: "start", id: 1 });
+    same(state.record, record, `${id}: pending request retains evidence`);
+    same(retainedAskNotice(state).title, "New check pending", `${id}: pending is not a new answer`);
+    state = askRecordReducer(state, { type: "failed", id: 1, message: "Synthetic technical failure" });
+    same(state.record, record, `${id}: failure retains prior record, not fabricated abstention`);
+    same(retainedAskNotice(state).title, "No new result", `${id}: failure does not announce record ready`);
+    state = askRecordReducer(state, { type: "invalid", message: "Synthetic validation rejection" });
+    same(state.pendingId, null, `${id}: validation starts no request`);
+    same(state.record, record, `${id}: validation retains evidence`);
+    state = askRecordReducer(state, { type: "start", id: 2 });
+    state = askRecordReducer(state, { type: "edit" });
+    same(askRecordReducer(state, { type: "received", id: 2, record: { data: answered.response, mode: "local" } }), state, `${id}: canceled completion ignored`);
+    same(askRecordReducer(state, { type: "failed", id: 2, message: "Late error" }), state, `${id}: canceled rejection ignored`);
+    state = askRecordReducer(state, { type: "start", id: 3 });
+    same(askRecordReducer(state, { type: "received", id: 2, record }), state, `${id}: older response cannot win new request`);
+    const replacement = { data: answered.response, mode: "local" };
+    state = askRecordReducer(state, { type: "received", id: 3, record: replacement });
+    same(state.record, replacement, `${id}: accepted completion swaps whole bundle`);
+    same(state.draftChanged, false, `${id}: accepted local result matches submitted draft`);
+    same(retainedAskNotice(state), null, `${id}: successful local completion clears warning`);
+    state = askRecordReducer(state, { type: "edit" });
+    includes(retainedAskNotice(state).detail, "previous check and its original facts", `${id}: local evidence bound to original inputs`);
+    state = askRecordReducer(state, { type: "start", id: 4 });
+    state = askRecordReducer(state, { type: "received", id: 4, record });
+    same(state.draftChanged, true, `${id}: opening example never marks existing draft checked`);
+    same(JSON.stringify(source.response), original, `${id}: legal response was not mutated`);
+  }
+  const emptyEdited = askRecordReducer(initialAskRecordState(null), { type: "edit" });
+  same(emptyEdited.record, null, "Blank draft has no fabricated previous result");
+  same(retainedAskNotice(emptyEdited), null, "Blank draft has no fabricated evidence notice");
+  const askSource = readFileSync(new URL("src/app/workspace/ask/ask-workspace.tsx", root), "utf8");
+  excludes(askSource, "setRecord(null)", "Draft/request path never discards returned record");
+  includes(askSource, "if (!request.signal.aborted) dispatch", "Canceled transport completion is guarded before reducer");
+  excludes(askSource.slice(askSource.indexOf("function editDraft()"), askSource.indexOf("function clearContext()")), "submit(", "Editing does not automatically resend");
 
   // Structural regressions only: these checks do not replace browser focus/reflow acceptance.
   const layout = readFileSync(new URL("src/app/workspace/layout.tsx", root), "utf8");

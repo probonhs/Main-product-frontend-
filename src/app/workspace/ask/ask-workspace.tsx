@@ -1,9 +1,9 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState, type FormEvent } from "react";
+import { useCallback, useEffect, useReducer, useRef, useState, type FormEvent } from "react";
 import { LegalText } from "@/components/brand";
-import type { AskResponse } from "@/lib/engine/ask";
 import { askLabel } from "@/lib/engine/ask-label";
+import { askRecordReducer, initialAskRecordState, retainedAskNotice, type LoadedAskRecord } from "@/lib/engine/ask-record-state";
 import { WORKSPACE_SAMPLES } from "@/lib/workspace-samples";
 import { ArrowUp, BookOpen, SlidersHorizontal } from "lucide-react";
 
@@ -17,7 +17,7 @@ const FACT_LABELS: Record<string, string> = { company_class: "Company type", pai
 function sourceUrl(value: unknown): string | undefined {
   try { const url = new URL(text(value)); return url.protocol === "https:" && !url.username && !url.password ? url.href : undefined; } catch { return undefined; }
 }
-type LoadedRecord = { data: AskResponse; mode: "sample" | "local"; sample?: { capturedAt: string; backendCommit: string; id: string } };
+type LoadedRecord = LoadedAskRecord;
 const EVIDENCE_DATES = { financial_year_end: "Financial year end", first_financial_year_end: "First financial year end", aoc4_filed_on: "AOC-4 filing date", annual_return_filed_on: "Annual return filing date" };
 function factValue(value: unknown): string {
   if (value === null || value === undefined) return "Not supplied";
@@ -33,7 +33,7 @@ function UnresolvedDetail({ value }: { value: string }) {
   return <><p><LegalText>{`Section ${suspended[1]}`}</LegalText>: Placedon’s source record is suspended from use in answers. This is a source-record restriction, not a statement that the provision is suspended in law.</p><details className="ws-details"><summary>Source-record detail</summary><p className="ws-mono">{value}</p></details></>;
 }
 
-function ResultRecord({ record, revise }: { record: LoadedRecord; revise: () => void }) {
+export function ResultRecord({ record, revise, previous }: { record: LoadedRecord; revise: () => void; previous: boolean }) {
   const response = object(record.data);
   const confirmed = records(response.confirmed);
   const rows = [...records(response.rows), ...confirmed.filter((item) => item.obligation_id)];
@@ -78,7 +78,7 @@ function ResultRecord({ record, revise }: { record: LoadedRecord; revise: () => 
       {texts(response.what_it_is_not).length > 0 && <section className="ws-section"><h3>Boundary of this result</h3>{texts(response.what_it_is_not).map((item, index) => <p key={index}><LegalText>{item}</LegalText></p>)}</section>}
       <details className="ws-details"><summary>How this record was obtained</summary><dl className="ws-fact-list"><div><dt>Generated</dt><dd className="ws-mono">{text(response.generated_at)}</dd></div><div><dt>Record reference</dt><dd className="ws-mono">{text(response.turn_id)}</dd></div><div><dt>Retrieval</dt><dd>{text(object(response.evidence_pack).retrieval_query) || "Named figures or held-scope check"}</dd></div>{record.sample && <><div><dt>Captured</dt><dd className="ws-mono">{record.sample.capturedAt}</dd></div><div><dt>Engine version</dt><dd className="ws-mono">{record.sample.backendCommit}</dd></div></>}</dl></details>
     </article>
-    <details className="ws-source-drawer" ref={sourceDrawer}><summary>Sources ({sources.length + figures.length})</summary><aside className="ws-aside" aria-labelledby="ws-source-heading"><h2 id="ws-source-heading" tabIndex={-1}>Sources</h2><p className="ws-muted">The evidence returned for this check.</p>
+    <details className="ws-source-drawer" ref={sourceDrawer}><summary>Sources ({sources.length + figures.length})</summary><aside className="ws-aside" aria-labelledby="ws-source-heading"><h2 id="ws-source-heading" tabIndex={-1}>Sources</h2><p className="ws-muted">{previous ? "Sources for the retained record only. Your draft has not been checked against these sources." : "The evidence returned for this check."}</p>
       {sources.length === 0 && figures.length === 0 && <div className="ws-empty">No usable source was returned. This is an evidence gap, not a finding that no duty applies.</div>}
       {sources.map((source) => <section className="ws-source" id={`source-${text(source.ref)}`} tabIndex={-1} key={text(source.ref)}><h3><LegalText>{text(source.cite)}</LegalText></h3><p>{text(source.title)}</p><p className="ws-status">Evidence: {text(source.evidence_state).replaceAll("_", " ").toLowerCase()}</p>{law.point_in_time_verified === false && <p className="ws-muted">Held text only. This response does not verify commencement or amendment dates, or the law on a past date.</p>}{text(source.unusable_reason) && <p>{text(source.unusable_reason)}</p>}{Array.isArray(source.defects) && source.defects.map((defect, index) => <p key={index}>{factValue(defect)}</p>)}{text(source.verbatim) ? <details className="ws-details"><summary>Read verbatim text</summary><blockquote className="ws-verbatim">{text(source.verbatim)}</blockquote></details> : <p className="ws-muted">This response cites the provision but does not return its full text.</p>}{sourceUrl(source.source_url) && <a className="ws-link" href={sourceUrl(source.source_url)} target="_blank" rel="noopener noreferrer">Open publisher source ↗</a>}<p className="ws-muted">Retrieved: {texts(source.retrieved_on).join(", ") || "Not returned"}</p></section>)}
       {figures.map((figure) => <section className="ws-source" key={text(figure.key)}><h3 className="ws-mono">{text(figure.amount)}</h3><p className="ws-mono">{text(figure.instrument)}</p><p>In force from {text(figure.effective_from)}</p><p>Evidence: {text(figure.evidence_state).toLowerCase()}</p>{sourceUrl(figure.source_url) && <a className="ws-link" href={sourceUrl(figure.source_url)} target="_blank" rel="noopener noreferrer">Read governing instrument ↗</a>}</section>)}
@@ -88,34 +88,36 @@ function ResultRecord({ record, revise }: { record: LoadedRecord; revise: () => 
 }
 
 export function AskWorkspace({ liveEnabled, initialRecord }: { liveEnabled: boolean; initialRecord?: LoadedRecord | null }) {
-  const [record, setRecord] = useState<LoadedRecord | null>(initialRecord ?? null);
-  const [error, setError] = useState("");
-  const [busy, setBusy] = useState(false);
+  const [state, dispatch] = useReducer(askRecordReducer, initialRecord ?? null, initialAskRecordState);
+  const { record, error } = state;
+  const busy = state.pendingId !== null;
+  const notice = retainedAskNotice(state);
   const [question, setQuestion] = useState("");
   const [contextCount, setContextCount] = useState(0);
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const form = useRef<HTMLFormElement>(null);
   const controller = useRef<AbortController | null>(null);
+  const requestId = useRef(0);
   const submit = useCallback(async (body: unknown) => {
     controller.current?.abort();
     const request = new AbortController(); controller.current = request;
-    setBusy(true); setError(""); setRecord(null);
+    const id = ++requestId.current;
+    dispatch({ type: "start", id });
     try {
       const response = await fetch("/api/workspace/ask", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body), signal: request.signal });
       const payload = await response.json();
       if (!response.ok || !payload.ok) throw new Error(payload.error?.message || "The check could not be completed.");
       // The same-origin gateway validates the full engine contract before returning it.
-      if (!["answered", "partial", "out_of_scope"].includes(payload.data?.state) || !["sample", "local"].includes(payload.mode)) throw new Error("The response could not be verified. No legal result is displayed.");
-      if (!request.signal.aborted) setRecord({ data: payload.data, mode: payload.mode, sample: payload.sample });
-    } catch (cause) { if (!request.signal.aborted) setError(cause instanceof Error ? cause.message : "The service is unavailable. Your inputs are preserved."); }
-    finally { if (!request.signal.aborted) setBusy(false); }
+      if (!["answered", "partial", "out_of_scope"].includes(payload.data?.state) || !["sample", "local"].includes(payload.mode)) throw new Error("The response could not be verified. No new legal result is displayed.");
+      if (!request.signal.aborted) dispatch({ type: "received", id, record: { data: payload.data, mode: payload.mode, sample: payload.sample } });
+    } catch (cause) { if (!request.signal.aborted) dispatch({ type: "failed", id, message: cause instanceof Error ? cause.message : "The service is unavailable. Your inputs are preserved." }); }
   }, []);
   useEffect(() => () => controller.current?.abort(), []);
   useEffect(() => { if (record) document.getElementById("ws-result-heading")?.focus(); }, [record]);
   function fieldError(key: string) { return fieldErrors[key] ? <p id={`error-${key}`} className="ws-field-error">{fieldErrors[key]}</p> : null; }
   function fieldA11y(key: string) { return { "aria-invalid": !!fieldErrors[key], "aria-describedby": fieldErrors[key] ? `error-${key}` : undefined }; }
-  function invalidateResult() {
-    controller.current?.abort(); setBusy(false); setRecord(null); setError(""); setFieldErrors({});
+  function editDraft() {
+    controller.current?.abort(); dispatch({ type: "edit" }); setFieldErrors({});
   }
   function clearContext() {
     if (!form.current) return;
@@ -125,7 +127,7 @@ export function AskWorkspace({ liveEnabled, initialRecord }: { liveEnabled: bool
         else control.value = "";
       } else if (control instanceof HTMLSelectElement) control.value = "";
     }
-    setContextCount(0); invalidateResult();
+    setContextCount(0); editDraft();
   }
   function runLive(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -162,7 +164,8 @@ export function AskWorkspace({ liveEnabled, initialRecord }: { liveEnabled: bool
     }
     setFieldErrors(errors);
     if (Object.keys(errors).length) {
-      setError("Check the highlighted fields. No request was sent.");
+      controller.current?.abort();
+      dispatch({ type: "invalid", message: "Check the highlighted fields. No request was sent." });
       const details = document.getElementById("ws-company-facts") as HTMLDetailsElement | null;
       if (details) details.open = true;
       (event.currentTarget.elements.namedItem(Object.keys(errors)[0]) as HTMLElement | null)?.focus();
@@ -177,18 +180,22 @@ export function AskWorkspace({ liveEnabled, initialRecord }: { liveEnabled: bool
   }
   return <div className={`ws-primary ws-chat${record ? " ws-chat-has-answer" : ""}`}>
     <div className="ws-welcome"><h1 className="ws-heading">{record ? "Ask Placedon" : "What are you working on?"}</h1><p className="ws-intro">Ask about the <em>Companies Act, 2013</em>. See the legal basis and what still needs checking.</p></div>
-    {record && <ResultRecord key={text(object(record.data).turn_id)} record={record} revise={revise} />}
+    {notice && <div className="ws-record-notice" role="status"><strong>{notice.title}</strong><p>{notice.detail}</p></div>}
+    {record && <ResultRecord key={text(object(record.data).turn_id)} record={record} revise={revise} previous={!!notice} />}
     <p className="ws-mode-note">{liveEnabled ? "Local checks configured. Sending a new question submits your question and facts to the local engine, not a saved chat." : "Sample mode. These captured examples show how Placedon checks a question. They do not analyse your company."}{liveEnabled && record?.mode === "sample" && " The answer above is a captured example, not a new local check."}</p>
     {liveEnabled && <form ref={form} className="ws-form" onSubmit={runLive} onChange={(event) => {
-      invalidateResult();
+      editDraft();
       setContextCount(Array.from(new FormData(event.currentTarget)).filter(([name, value]) => name !== "question" && String(value).trim()).length);
     }} onInvalidCapture={(event) => {
       const control = event.target as HTMLInputElement | HTMLTextAreaElement;
       const disclosure = control.closest("details");
       if (disclosure) disclosure.open = true;
+      controller.current?.abort();
+      dispatch({ type: "invalid", message: "Check the highlighted fields. No request was sent." });
       setFieldErrors((previous) => ({ ...previous, [control.name]: control.validationMessage }));
     }}>
       <div className="ws-field"><label htmlFor="ws-question">Your question</label><textarea className="ws-textarea" id="ws-question" name="question" value={question} onChange={(event) => setQuestion(event.target.value)} required maxLength={2000} rows={3} placeholder="Ask a corporate-law question…" {...fieldA11y("question")} />{fieldError("question")}</div>
+      {notice && <p className="ws-mode-note">Draft only. The answer above does not include these changes.</p>}
       <div className="ws-composer-context"><details className="ws-details" id="ws-company-facts"><summary><SlidersHorizontal size={16} aria-hidden="true" />Add provisions & company facts{contextCount > 0 ? ` (${contextCount} included)` : ""}</summary><p className="ws-muted">Name a provision for a more precise check. Add company facts only when you want to check how it applies.</p><button className="ws-secondary" type="button" onClick={clearContext}>Clear details</button>
       <div className="ws-field"><label htmlFor="ws-provisions">Provisions to check <span className="ws-muted">(required with company facts)</span></label><input className="ws-input" id="ws-provisions" name="provisions" placeholder="Section 2(85), Section 173" {...fieldA11y("provisions")} /><p className="ws-muted">Separate provisions with commas. Without a named provision, a text match may leave the question unresolved.</p>{fieldError("provisions")}</div>
       <label className="ws-label"><input type="checkbox" name="figures" /> Include the prescribed small-company capital and turnover limits</label>
@@ -204,7 +211,7 @@ export function AskWorkspace({ liveEnabled, initialRecord }: { liveEnabled: bool
       <div className="ws-actions"><span className="ws-muted">Today’s check · No conversation memory</span><button className="ws-button" disabled={busy}>{busy ? "Checking…" : "Ask Placedon"}<ArrowUp size={18} aria-hidden="true" /></button></div>
     </form>}
     <section className="ws-example-section" aria-labelledby="ws-examples"><div className="ws-example-heading"><h2 id="ws-examples" tabIndex={-1}>Try an example</h2><span className="ws-muted">Captured engine results</span></div><div className="ws-samples">{WORKSPACE_SAMPLES.map((sample) => <button key={sample.id} className="ws-secondary" disabled={busy} onClick={() => void submit({ sampleId: sample.id })}>{sample.title}</button>)}</div></section>
-    <p className="ws-muted" role="status" aria-live="polite">{busy ? "Checking the record…" : record ? `Record ready: ${askLabel(record.data)}.` : ""}</p>
-    {error && <div role="alert" className="ws-error"><h2>Check not completed</h2><p>{error}</p><p>No legal conclusion was returned. Your question and facts are preserved.</p></div>}
+    <p className="ws-muted" role="status" aria-live="polite">{busy ? "Checking the record…" : notice ? "No new result for your draft. The earlier record remains available." : record ? `Record ready: ${askLabel(record.data)}.` : ""}</p>
+    {error && <div role="alert" className="ws-error"><h2>Check not completed</h2><p>{error}</p><p>No new legal conclusion was returned. Your question and facts are preserved.{record && " The record above belongs to an earlier check or captured example."}</p></div>}
   </div>;
 }

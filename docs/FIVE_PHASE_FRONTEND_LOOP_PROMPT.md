@@ -32,6 +32,23 @@ authorization. Reuse completed work rather than starting each phase from scratch
 | 4. Advanced workflows | Tables/cancellation/spend/CSV; drafts/blocking slots/versions/diff/DOCX; supported company/source/law-change context | State-accurate tables, formula-safe CSV, support-aware draft diff, blocking approval respected and authenticated downloads |
 | 5. Pilot acceptance | Accessibility/responsiveness, privacy/retention/feedback, performance, real practitioner testing, CI/preview and rollback | Recorded engineering/security/legal-data/practitioner gates plus founder final approval; no automatic release |
 
+### Current sequencing override — frontend first (3 October 2026, D-013)
+
+The founder explicitly defers production sign-in until the main frontend is built, live backend connections
+until the five frontend phases are committed, and the remaining accessibility/error-state acceptance checks
+until afterwards. Proceed with Phase 2 and subsequent frontend build slices without repeatedly treating
+those deferred gates as phase-start blockers. The Phase 1 reviewed shell is approved for that progression,
+not certified as connected or production-ready.
+
+Keep BUILD/COMMITTED separate from CONNECTED/ACCEPTED. The table's exit evidence remains the final acceptance
+bar, not evidence already obtained. Phase 5 may prepare acceptance tooling and privacy/release surfaces, but
+cannot finish pilot acceptance before the deferred integration/authentication/testing pass. Maintain a
+post-build checklist in STATE/HANDOFF. Still inspect real pinned contracts and implement honest unavailable,
+validation and technical-error states; do not substitute fake success, saved history or authorization.
+Continue focused code/state tests, typecheck, lint, build and budgets, plus a bounded visual check of new
+behavior. Full accessibility and error-state browser campaigns are deferred, not waived. Production access,
+uploads/processing permissions, provider spending, merge and deployment remain gated.
+
 Identity being blocked must not stop independent shell/source/error work. Portfolio, Vault, alerts and past-date
 controls stay deferred without verified contracts. Keep today-only by default. Code, snapshots and static
 tests are not connected acceptance. Record every exit check as PASS, FAIL or NOT RUN.

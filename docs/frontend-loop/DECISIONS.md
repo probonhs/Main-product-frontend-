@@ -139,3 +139,33 @@ Do not copy historical decisions here unless they are still in force. Link their
   connected gateway/store/source acceptance, remaining accessibility coverage and release gates stay open.
   This instruction requests a commit, not a merge or deployment.
 - **Evidence:** VERIFY_phase1-brave-2026-10-03.md; working tree was clean at the start of this approval turn.
+
+## D-013 — Frontend build before integration and final acceptance (3 October 2026)
+
+- **Authority:** Founder defers remaining accessibility/error-state checks until afterwards, connections
+  until all five frontend phases are committed, and sign-in until the main product frontend is complete.
+- **Decision:** Move into Phase 2 frontend implementation. Carry Phase 1 pending gates into a post-build
+  checklist; do not repeatedly block independent build work on them or describe them as passed.
+- **Boundary:** Reviewed Phase 1 UI is approved for progression, not fully accepted for release. Maintain
+  pinned contracts, basic accessible semantics, technical failures, source guards, focused tests and build
+  gates. No fake connected features, credential provisioning, multi-user enablement, model spending or release.
+- **Follow-through:** After frontend build checkpoints, choose sign-in mapping, connect approved synthetic
+  backend setup/fix source collisions, then run full accessibility/error/integration acceptance before pilot GO.
+- **Reversal:** Founder changes sequence, or a concrete safety defect cannot be isolated behind existing gates.
+
+## D-014 — Retain independent-Ask evidence while drafts change (3 October 2026)
+
+- **Decision:** Keep the complete returned record when editing or clearing context, while requesting a new
+  result, and after failed/invalid requests. Show an explicit draft/previous-record boundary before the
+  answer, beside the composer and within Sources. Original question/facts/dates/provenance remain unchanged.
+- **Safety:** Only an accepted response for the current request replaces the record; edits abort pending
+  requests and invalidate their completion IDs. No automatic retry or inferred legal result. Opening a
+  captured example does not mark an existing draft checked. Evidence remains in memory for this page only.
+- **Rejected:** Clearing evidence loses comparison context; retaining it without a warning risks false
+  applicability. Exact-input comparison/restoration is deferred: even reverted edits conservatively remain
+  unchecked until a new accepted local response.
+- **Scope:** Independent Ask only; no change to backend-owned conversations, API contracts or legal text.
+- **Review:** Bounded R2 Devil's Advocate/execution-checker with simulated Indian-lawyer perspective;
+  reducer/render regression plus bounded Brave inspection, not full deferred acceptance.
+- **Reversal:** Observed confusion between previous evidence and edited facts warrants stronger separation
+  or hiding the old answer behind an explicit previous-record disclosure.

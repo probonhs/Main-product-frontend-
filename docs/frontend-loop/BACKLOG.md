@@ -3,16 +3,19 @@
 Track implementation, connected acceptance and founder approval separately. A backend dependency blocks
 only dependent work. Select the first valuable unblocked slice; do not start five simultaneous screens.
 
+Sequencing override D-013: founder approves frontend-first progression into Phase 2. Sign-in, connected
+acceptance and remaining full accessibility/error checks move to post-build; original release gates stay open.
+
 | Phase | Slice | Status | Next evidence / dependency |
 |---|---|---|---|
 | 1 | Legacy truth map, typed client and captured fixtures | DONE (pinned) | `8a41d4f`; remains legacy evidence, not latest v2 certification |
 | 1 | Approved shell, branding and independent Ask | BUILT / PARTIAL_BROWSER_ACCEPTANCE | Eight widths, keyboard, zoom and sampled motion/contrast pass; VERIFY_phase1-brave-2026-10-03.md; full accessibility/other states remain |
 | 1 | Latest v2 contracts/roles/screens compatibility | GUARDED_SLICE_BUILT / NEEDS_CONNECTED_VERIFICATION | PHASE_1_COMPATIBILITY.md; source collision rejected, Q-008 pending |
-| 1 | Production session/principal boundary | DECISION_GATED | Q-001; reuse existing viewer/lawyer/admin primitives |
+| 1 | Production session/principal boundary | DEFERRED_TO_POST_BUILD | D-013/Q-001; reuse existing viewer/lawyer/admin primitives; not a frontend-build blocker |
 | 2 | Local conversations, source re-check and trace | BUILT / NEEDS_CONNECTED_VERIFICATION | Gateway/store/principal setup; ASK_CONVERSATION_SLICE.md |
 | 2 | Run polling/terminal states/retry safety | READY_AFTER_CONTRACT_RECONCILIATION | Actual runs.get/cancel semantics; no fake streaming/stages |
-| 2 | Complete Ask browser acceptance | NEEDS_VERIFICATION | Live synthetic flow, refusal/error/stale source, follow-up/reload |
-| 2 | Retain prior evidence while inputs are edited | OPEN_UX_FOLLOW_UP | Current edits clear the answer. Design an explicit stale-record/submitted-facts boundary before retaining evidence; no inferred current result |
+| 2 | Complete Ask browser acceptance | DEFERRED_TO_POST_BUILD | D-013; live synthetic flow, refusal/error/stale source, follow-up/reload still required before release |
+| 2 | Retain prior evidence while inputs are edited | BUILT / NEEDS_FINAL_ACCEPTANCE | PHASE_2_RETAINED_EVIDENCE.md; 256 reducer/render assertions and bounded Brave pass; full acceptance deferred D-013 |
 | 3 | Extraction and attachments | NOT_INTEGRATED | Donor patterns, limits/scan refusal, processing permission |
 | 3 | Corporate-document and contract review | NOT_INTEGRATED | Quote/reason, playbook and role gates |
 | 4 | Review tables/spend/cancellation/CSV | NOT_INTEGRATED | Current grid contracts and safe export |

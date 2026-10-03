@@ -7,6 +7,32 @@ Execution resumed on 3 October 2026 at the user's request from checkpoint `7435a
 Founder subsequently reviewed and approved all work through `5343e98` and requested a commit (D-012).
 Implementation was already committed/published; this approval is recorded without changing release gates.
 
+## Current sequence and Phase 2 checkpoint
+
+Founder D-013 now prioritizes building/committing the five frontend phases before live connections and full
+accessibility/error acceptance, with production sign-in after the main frontend build. This supersedes the
+older next-action sequencing below, not its factual pending-gate status. Do not repeatedly block frontend
+construction on those deferred decisions. Production and release remain gated; no simulated connected success.
+
+Phase 2 retained independent-Ask evidence is built (D-014). Edits/Clear details retain the original answer,
+facts/date/Sources with draft warnings; pending/failed/invalid requests retain it too. Current request IDs and
+abort guards prevent canceled/stale completions. Captured examples never mark an existing draft checked.
+No browser storage or legal/API mutation. See PHASE_2_RETAINED_EVIDENCE.md for review and exact evidence.
+TypeScript/lint/full contracts/loop/build/budget PASS; 256 reducer/render assertions, 27 routes,
+49 chunks / 400,076 gzip bytes. Bounded Brave draft/context/Sources checks at 320/1920px pass; zero Ask
+requests observed while editing. Screenshot saved; temporary device override and disposable QA draft removed.
+
+Next build slice: inspect pinned run/task contracts and implement bounded updates without fake stages or
+blind resend. No live backend/auth configuration needed merely to build the honest, gated frontend.
+
+Post-build checklist (still required before pilot/release):
+
+1. Founder chooses sign-in/session/principal mapping (Q-001).
+2. Approved synthetic gateway/store/worker setup and Q-008 message-scoped source correction.
+3. Connected role/isolation/persistence/Ask-source-follow-up-reload checks, using an approved non-spending path.
+4. Full accessibility/error-state coverage, CI/preview, privacy and real practitioner acceptance.
+5. Founder final release approval and approved deployment/rollback ownership. No automatic merge/deploy.
+
 Preservation commits: implementation `fc47985`, organization/prompt `fc47616`, guarded compatibility
 `9c2024e` (plus four earlier commits). All published to `probonhs/codex/frontend-handoff`, with matching
 remote SHA verified after user-authorized workflow permission. The earlier push failure is resolved.

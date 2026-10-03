@@ -166,6 +166,8 @@
 .workspace .ws-status:is([data-state="abstained"], [data-state="unknown"]) { border-color: var(--abstain); border-left-style: dashed; }
 .workspace .ws-error { padding: 14px; border: 2px solid var(--ink); border-radius: 4px; font-size: 13px; }
 .workspace .ws-error h2 { margin-bottom: 8px; font-family: var(--font-body), Inter, sans-serif; font-size: 16px; font-weight: 600; }
+.workspace .ws-record-notice { margin-block: 20px; padding: 12px 14px; border: 1px solid var(--grey); border-left-width: 3px; border-radius: 4px; font-size: 13px; }
+.workspace .ws-record-notice p { margin-top: 4px; }
 .workspace .ws-fact-list { margin-top: 10px; padding-left: 20px; }
 .workspace .ws-fact-list li { padding-block: 3px; }
 .workspace dl.ws-fact-list { padding: 0; }

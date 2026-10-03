@@ -4,6 +4,8 @@ Updated 3 October 2026. This is the current product handoff, not a claim of prod
 
 GitHub preservation succeeded on `codex/frontend-handoff` through `5343e98`; main remains unchanged.
 Founder reviewed and approved that checkpoint on 3 October 2026 (D-012); pending verification gates remain open.
+Current sequence (D-013): build/commit the main frontend phases first; sign-in, live connections and remaining
+accessibility/error acceptance follow afterwards. Phase 2 build may proceed without claiming those gates passed.
 Phase 1 independent-Ask checks now pass at eight widths with keyboard/zoom and sampled motion/contrast;
 see [Brave evidence](frontend-loop/VERIFY_phase1-brave-2026-10-03.md) and
 [the current checkpoint](frontend-loop/PHASE_1_SHELL_ACCEPTANCE.md) and state for remaining gates.

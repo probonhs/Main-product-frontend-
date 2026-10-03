@@ -2,6 +2,10 @@
 
 Items need evidence or a human choice. Continue independent work; do not answer these silently in code.
 
+Founder sequencing D-013 (3 October): sign-in decision, live connections and remaining accessibility/error
+acceptance are deferred until after the main frontend build/five phase commits. Q-001/Q-007/Q-008 remain
+open for integration/release, not reasons to stop independent frontend implementation. No gates are waived.
+
 | ID | Question | Owner | Blocks | Current fact / next evidence |
 |---|---|---|---|---|
 | Q-001 | Which human login/session method and principal provisioning/revocation mapping will we use? | Founder decision; teammate contract support | Production multi-user access | Backend `889ba54` has actors/invites and viewer/lawyer/admin checks. Confirm missing HTTP/session boundary; do not rebuild existing roles. |
