@@ -4,6 +4,8 @@ Repository: `probonhs/Main-product-frontend-`
 Branch: `codex/frontend-handoff`; inspect `git log -5 --oneline` for actual HEAD before continuing.
 Current entry: `docs/START_HERE.md`. Execute `docs/FIVE_PHASE_FRONTEND_LOOP_PROMPT.md`, not the full chat.
 Execution resumed on 3 October 2026 at the user's request from checkpoint `7435ae1`.
+Founder subsequently reviewed and approved all work through `5343e98` and requested a commit (D-012).
+Implementation was already committed/published; this approval is recorded without changing release gates.
 
 Preservation commits: implementation `fc47985`, organization/prompt `fc47616`, guarded compatibility
 `9c2024e` (plus four earlier commits). All published to `probonhs/codex/frontend-handoff`, with matching

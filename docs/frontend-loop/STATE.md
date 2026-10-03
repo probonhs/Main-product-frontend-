@@ -22,12 +22,13 @@ Updated 3 October 2026. Current authority: `docs/START_HERE.md` and the five-pha
   Subsequent independent-Ask responsive/keyboard evidence is recorded in VERIFY_phase1-brave-2026-10-03.md.
   Full privacy/accessibility and live gateway acceptance remain unverified, not inferred from HTML.
 - Gateway: no v2 URL/key currently configured. No principal/credentials created and no paid model call made.
-- Git: `7435ae1` and its predecessor work are published on `probonhs/codex/frontend-handoff`; remote SHA
+- Git: `5343e98` and its predecessor work are published on `probonhs/codex/frontend-handoff`; remote SHA
   was verified. Workflow scope was authorized by the user; the earlier push blocker is resolved.
   No PR/merge/deployment created. Publish only to `probonhs`, never the website's `origin`.
   This Phase 1 checkpoint follows that baseline; inspect Git for the current HEAD/publication state.
 - Runtime: development server was running on 127.0.0.1:3300. Check before starting another process.
-- Review status: NEEDS_VERIFICATION, not pilot GO. Founder authorizes safe WIP checkpoint commits.
+- Review status: founder approved the reviewed work through `5343e98` on 3 October 2026 (D-012).
+  Remaining gates are NEEDS_VERIFICATION, not pilot GO. No merge/deployment authorized by this approval.
 - Ownership: founder builds frontend; teammate supplies local backend setup/contract clarification/narrow fixes.
 - Founder-only choices: identity/session approach, data processing, retention, pilot scope and release.
 - Next move: remaining screen-reader/full accessibility and other-state checks, then approved synthetic

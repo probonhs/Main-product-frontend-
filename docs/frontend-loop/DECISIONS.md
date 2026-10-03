@@ -127,3 +127,15 @@ Do not copy historical decisions here unless they are still in force. Link their
 - **Evidence:** PHASE_1_SHELL_ACCEPTANCE.md; focused independent review and structural/runtime render checks.
 - **Reversal:** Measured Brave reflow/focus or practitioner comparison testing warrants a narrower adjustment.
   Full browser and connected gates remain pending; this is a safe NEEDS_VERIFICATION checkpoint, not release.
+
+## D-012 — Founder approval of reviewed frontend checkpoint (3 October 2026)
+
+- **Authority:** User: “I have reviewed everything up until now and I approve it. Commit these changes”.
+- **Accepted checkpoint:** `5343e98`, including the approved workspace appearance, stable independent-Ask
+  Sources, keyboard bypass, source-record/date qualifications and documented Brave verification.
+- **Decision:** Preserve the reviewed implementation and record founder approval in Git. No further UI
+  changes were requested in this approval turn; the implementation was already committed and published.
+- **Boundary:** Approval of the reviewed work is not proof that pending checks passed. Production identity,
+  connected gateway/store/source acceptance, remaining accessibility coverage and release gates stay open.
+  This instruction requests a commit, not a merge or deployment.
+- **Evidence:** VERIFY_phase1-brave-2026-10-03.md; working tree was clean at the start of this approval turn.
