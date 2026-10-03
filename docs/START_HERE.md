@@ -1,6 +1,10 @@
 # Placedon frontend — start here
 
-Updated 2 October 2026. This is the current product handoff, not a claim of production readiness.
+Updated 3 October 2026. This is the current product handoff, not a claim of production readiness.
+
+GitHub preservation succeeded on `codex/frontend-handoff` through `9c2024e`; main remains unchanged.
+Phase 1 shell acceptance is now progressing; see
+[the current checkpoint](frontend-loop/PHASE_1_SHELL_ACCEPTANCE.md) and state for remaining gates.
 
 ## Repository boundaries
 

@@ -152,6 +152,19 @@ try {
   closedDetails(blankLive, 'id="ws-company-facts"', "Blank context disclosure");
   excludes(blankSample, "<form", "Blank sample mode has no live composer");
 
+  // Structural regressions only: these checks do not replace browser focus/reflow acceptance.
+  const layout = readFileSync(new URL("src/app/workspace/layout.tsx", root), "utf8");
+  includes(layout, 'href="#workspace-content"', "Shell: local skip link bypasses workspace navigation");
+  includes(layout, 'id="workspace-content" tabIndex={-1}', "Shell: skip target accepts focus");
+  assert.ok(layout.indexOf('href="#workspace-content"') < layout.indexOf("<aside"));
+  assert.ok(layout.indexOf('id="workspace-content"') > layout.indexOf("</aside>"));
+  assertions += 2;
+  const css = readFileSync(new URL("src/app/workspace/workspace.css", root), "utf8");
+  includes(css, ".workspace .ws-skip-link:focus", "Shell: local skip control becomes visible on focus");
+  includes(css, "@media (min-width: 1800px)", "Sources: side panel requires space beyond reading column");
+  includes(css, "grid-template-columns: var(--ws-reading-width) var(--ws-source-width)", "Sources: preserves fixed reading width");
+  excludes(css, ".ws-primary.ws-chat:has(.ws-source-drawer[open])", "Sources: opening no longer expands or recenters composer");
+
   console.log(`PASS: ${assertions} offline static-render assertions across five captured Ask records`);
 } finally {
   hooks.deregister();

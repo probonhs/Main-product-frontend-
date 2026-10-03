@@ -1,9 +1,11 @@
 # Frontend loop state
 
-Updated 2 October 2026. Current authority: `docs/START_HERE.md` and the five-phase loop prompt.
+Updated 3 October 2026. Current authority: `docs/START_HERE.md` and the five-phase loop prompt.
 
 - Product repository: `probonhs/Main-product-frontend-`; review branch: `codex/frontend-handoff`.
-- Current work: organization preserved; GitHub push rejected; bounded Phase 1 compatibility work implemented.
+- Execution: PAUSED at the user's request after this checkpoint; do not continue until the user resumes.
+- Current work: user selected Phase 1. Keyboard navigation and stable independent-Ask Sources layout
+  implemented; engineering gates passed. Full Brave and connected acceptance remain pending.
 - Appearance: user selected the Starting view of the hybrid cream workspace; snapshots saved in `docs/design/`.
 - Implementation: independent Ask → result → Sources; local backend-owned conversation list/send/reopen,
   citation re-verification and trace. Connected/browser/production acceptance remain incomplete.
@@ -17,20 +19,18 @@ Updated 2 October 2026. Current authority: `docs/START_HERE.md` and the five-pha
   PASS. See PHASE_1_COMPATIBILITY.md and VERIFY_handoff-2026-10-02.md.
   Full responsive/keyboard/privacy and live gateway acceptance are NOT RUN, not inferred from HTML.
 - Gateway: no v2 URL/key currently configured. No principal/credentials created and no paid model call made.
-- Git: four earlier local commits follow product `b84c910`; implementation preserved in `fc47985`.
-  Organization/prompt records committed in `fc47616`; working tree was clean after that commit.
-  Push to `codex/frontend-handoff` was REJECTED: OAuth token lacks workflow scope for the existing CI file.
-  Publish only to `probonhs`; never to the public website's `origin`.
-- Access: GitHub authentication works; current CLI token has repo/read:org/gist, not workflow scope.
-  No remote branch/PR created. User action: `gh auth refresh -h github.com -s workflow`, then retry the normal
-  product push. Do not drop workflow history or work around the authorization restriction.
+- Git: `9c2024e` and its predecessor work are published on `probonhs/codex/frontend-handoff`; remote SHA
+  was verified. Workflow scope was authorized by the user; the earlier push blocker is resolved.
+  No PR/merge/deployment created. Publish only to `probonhs`, never the website's `origin`.
+  This Phase 1 checkpoint follows that baseline; inspect Git for the current HEAD/publication state.
 - Runtime: development server was running on 127.0.0.1:3300. Check before starting another process.
 - Review status: NEEDS_VERIFICATION, not pilot GO. Founder authorizes safe WIP checkpoint commits.
 - Ownership: founder builds frontend; teammate supplies local backend setup/contract clarification/narrow fixes.
 - Founder-only choices: identity/session approach, data processing, retention, pilot scope and release.
-- Next move: connect approved synthetic setup and complete source/role/persistence and Brave acceptance.
+- Next move: complete Phase 1 Brave keyboard/reflow/Sources checks when browser control is available,
+  then connect approved synthetic setup for source/role/persistence acceptance.
   Q-008 needs narrow backend message-scoped source lookup. Production identity remains a founder choice.
   Preserve the UI, source guard and local checkpoints; do not repeat the old council or unchanged push failure.
 
-Detailed evidence: ASK_CONVERSATION_SLICE.md, PHASE_1_COMPATIBILITY.md, VERIFY_handoff-2026-10-02.md,
+Detailed evidence: PHASE_1_SHELL_ACCEPTANCE.md, ASK_CONVERSATION_SLICE.md, PHASE_1_COMPATIBILITY.md, VERIFY_handoff-2026-10-02.md,
 and `docs/product/FEATURE_API_GAPS.md`.

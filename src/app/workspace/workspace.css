@@ -6,6 +6,9 @@
   --border: var(--rule);
   --muted: var(--grey);
   --ws-gutter: clamp(16px, 3vw, 40px);
+  --ws-reading-width: 800px;
+  --ws-source-width: 320px;
+  --ws-source-gap: 24px;
   display: grid;
   grid-template-columns: 224px minmax(0, 1fr);
   min-height: 100svh;
@@ -34,6 +37,8 @@
 .workspace :where([tabindex="-1"], .ws-field, [aria-invalid="true"]) { scroll-margin-block: 24px; }
 .workspace ::selection { background: var(--ink); color: var(--cream); }
 .workspace [hidden] { display: none !important; }
+.workspace .ws-skip-link { position: fixed; top: 8px; left: 8px; z-index: 100; transform: translateY(calc(-100% - 16px)); padding: 10px 14px; min-height: 44px; background: var(--ink); color: var(--cream); border: 1px solid var(--cream); border-radius: 4px; text-decoration: underline; }
+.workspace .ws-skip-link:focus { transform: none; outline-color: var(--ink); }
 
 /* Quiet, persistent navigation; a compact top strip on small screens. */
 .workspace .ws-sidebar {
@@ -64,7 +69,7 @@
 .workspace .ws-topbar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 4px 16px; min-height: 64px; padding: 12px var(--ws-gutter); border-bottom: 1px solid var(--rule); font-size: 13px; }
 .workspace .ws-topbar :where(h1, h2) { font-family: var(--font-body), Inter, sans-serif; font-size: 14px; font-weight: 600; line-height: 1.5; letter-spacing: 0; }
 .workspace .ws-topbar a { display: inline-flex; align-items: center; min-height: 44px; }
-.workspace .ws-primary { display: flex; flex-direction: column; gap: 18px; width: min(800px, calc(100% - 2 * var(--ws-gutter))); margin: 32px auto; min-width: 0; }
+.workspace .ws-primary { display: flex; flex-direction: column; gap: 18px; width: min(var(--ws-reading-width), calc(100% - 2 * var(--ws-gutter))); margin: 32px auto; min-width: 0; }
 .workspace .ws-primary.ws-chat { max-width: 800px; gap: 16px; margin-block: 32px 24px; }
 .workspace .ws-welcome { display: grid; gap: 10px; padding-block: 12px 8px; }
 .workspace .ws-welcome :where(h1, .ws-heading) { max-width: 25ch; font-family: var(--font-display), Fraunces, Georgia, serif; font-size: clamp(30px, 3vw, 36px); line-height: 1.2; }
@@ -202,11 +207,12 @@
 .workspace a.ws-entry { min-height: 44px; text-decoration: none; }
 .workspace a.ws-entry:hover { background: var(--paper); }
 
-/* Native details controls visibility. Never give its hidden content a display override. */
-@media (min-width: 1200px) {
-  .workspace .ws-primary.ws-chat:has(.ws-source-drawer[open]) { width: calc(100% - 2 * var(--ws-gutter)); max-width: 1160px; }
-  .workspace .ws-chat:has(.ws-source-drawer[open]) > :is(.ws-form, .ws-welcome, .ws-mode-note, .ws-samples, .ws-example-heading) { width: 100%; max-width: 800px; margin-inline: auto; }
-  .workspace .ws-grid:has(> .ws-source-drawer[open]) { grid-template-columns: minmax(0, 1fr) minmax(280px, 0.65fr); gap: 24px; }
+/* Keep the answer's width and position when Sources opens. The right-hand panel
+   needs spare room beyond the centered 800px reading column: at least the 224px
+   sidebar + 800px + two (320px panel + 24px gap + 40px gutter) = 1792px.
+   Below this breakpoint Sources stays in flow; native details controls visibility. */
+@media (min-width: 1800px) {
+  .workspace .ws-chat .ws-grid:has(> .ws-source-drawer[open]) { width: calc(var(--ws-reading-width) + var(--ws-source-gap) + var(--ws-source-width)); grid-template-columns: var(--ws-reading-width) var(--ws-source-width); gap: var(--ws-source-gap); }
   .workspace .ws-grid > .ws-source-drawer[open] { grid-column: 2; grid-row: 1; }
   .workspace .ws-grid:has(> .ws-source-drawer[open]) > .ws-result { grid-column: 1; grid-row: 1; }
 }

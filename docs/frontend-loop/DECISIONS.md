@@ -115,3 +115,15 @@ Do not copy historical decisions here unless they are still in force. Link their
 - **Verification:** Expanded tests and independent audit response round; PHASE_1_COMPATIBILITY.md.
 - **Reversal:** Verified message-scoped upstream lookup removes the redundant thread read only after regression
   evidence preserves identity/quote binding. No presumed legal truth or availability from a majority vote.
+
+## D-011 — Phase 1 keyboard bypass and stable source comparison (3 October 2026)
+
+- **Authority:** User selects Phase 1; preserve approved cream/black workspace.
+- **Decision:** Add a workspace-local skip control targeting focusable content after the sidebar. Keep the
+  independent Ask reading column's width and position when Sources opens; use an in-flow drawer until
+  1800px, then a 320px panel in the right spare margin beside the existing 800px answer.
+- **Reason:** Repeated navigation should be bypassable; comparing a finding with its source should not
+  rewrap that finding. No legal state, API route, identity gate, website or source text was changed.
+- **Evidence:** PHASE_1_SHELL_ACCEPTANCE.md; focused independent review and structural/runtime render checks.
+- **Reversal:** Measured Brave reflow/focus or practitioner comparison testing warrants a narrower adjustment.
+  Full browser and connected gates remain pending; this is a safe NEEDS_VERIFICATION checkpoint, not release.

@@ -1,13 +1,14 @@
-# Frontend handoff — 2 October 2026
+# Frontend handoff — 3 October 2026
 
 Repository: `probonhs/Main-product-frontend-`
 Branch: `codex/frontend-handoff`; inspect `git log -5 --oneline` for actual HEAD before continuing.
 Current entry: `docs/START_HERE.md`. Execute `docs/FIVE_PHASE_FRONTEND_LOOP_PROMPT.md`, not the full chat.
+Execution is PAUSED at the user's request after this checkpoint. Resume only on a new user instruction.
 
-Preservation commits: implementation `fc47985`, organization/prompt `fc47616` (plus four earlier unpublished
-commits). Push REJECTED: OAuth token lacks `workflow` scope for `.github/workflows/frontend-quality.yml`.
-No remote branch/PR exists from this attempt. Refresh permission with `gh auth refresh -h github.com -s workflow`,
-then `git push -u probonhs HEAD:refs/heads/codex/frontend-handoff`. Preserve CI/history; no bypass.
+Preservation commits: implementation `fc47985`, organization/prompt `fc47616`, guarded compatibility
+`9c2024e` (plus four earlier commits). All published to `probonhs/codex/frontend-handoff`, with matching
+remote SHA verified after user-authorized workflow permission. The earlier push failure is resolved.
+No PR, merge or release. This Phase 1 checkpoint follows that baseline; inspect actual HEAD before resuming.
 
 ## Completed and preserved
 
@@ -44,6 +45,16 @@ unrelated changes. Do not omit the existing CI workflow to bypass token scope. I
 commit and record its SHA/blocker. Confirm remote HEAD before saying it is published.
 
 ## Next action
+
+User selected Phase 1. The workspace-local skip link now bypasses repeated navigation, and opening Sources
+in independent Ask no longer narrows/recenters the answer. Sources stays in flow below 1800px; beyond that
+it uses the right spare margin. Structural tests, TypeScript, lint, contracts, loop checks, webpack build
+and unchanged 399,238-byte gzip budget pass. Local HTTP render checks pass on a captured partial answer.
+Independent targeted review accepted those two fixes; full Brave control was interrupted, so focus,
+screen-reader, measured reflow/contrast and wide-screen geometry remain NOT RUN. See PHASE_1_SHELL_ACCEPTANCE.md.
+Editing facts still clears the previous answer: open follow-up UX item, not silently fixed with stale evidence.
+Next: complete actual Brave acceptance (320/360/400/768/1024/1440/1800/1920px, keyboard, source open/return),
+then approved connected synthetic setup. Do not mark Phase 1 complete or choose production identity silently.
 
 Organization and a bounded Phase 1 move are now preserved. See PHASE_1_COMPATIBILITY.md: typed auth/error
 states, critic/null-cost trace, request/record correlation and fail-closed message-bound sources. Source IDs
