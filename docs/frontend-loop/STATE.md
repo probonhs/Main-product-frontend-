@@ -3,8 +3,12 @@
 Updated 5 October 2026. Current authority: `docs/START_HERE.md` and the five-phase loop prompt.
 
 - Product repository: `probonhs/Main-product-frontend-`; review branch: `codex/frontend-handoff`.
-- Execution: Phase 3 frontend preparation, under the founder's frontend-first sequencing override (D-013).
-- Current work: captured contract/playbook comparison built (D-020), PHASE_3_CONTRACT_FINDINGS.md.
+- Execution: Phase 4 frontend preparation, under the founder's frontend-first sequencing override (D-013).
+- Current work: captured review tables built (D-021), PHASE_4_REVIEW_TABLES.md.
+  Five cell states, document-bound quotations, failures/pending/cancellation, rounded priced subtotal and
+  CSV text only. Unknown cost not zero; downloads/live actions disabled; dangerous CSV rejected. R2 guard
+  fixes independently cleared; 396 new assertions. Q-013 export/cost and Q-014 persisted context added.
+  Captured contract/playbook comparison remains built (D-020), PHASE_3_CONTRACT_FINDINGS.md.
   Fixed extraction, DRAFT non-adoption, missing exact quotes and limited match scope; decisions disabled.
   R2 qualifiers cleared;262 corporate+252 contract tests; final3HTML renders PASS, Brave/full/live not accepted.
   Captured corporate-review findings remain built (D-019), PHASE_3_REVIEW_FINDINGS.md.
@@ -30,8 +34,12 @@ Updated 5 October 2026. Current authority: `docs/START_HERE.md` and the five-pha
 - Donor: website PR #2 remains OPEN; head `8461a06`. Preserve useful contracts/extraction/review/run patterns;
   do not merge the whole branch or copy the shared-passcode identity.
 - Current slice verification: typecheck, quiet lint, full offline contracts/loop checks, webpack production
-  build (29 routes), diff checks and budget PASS: 51 chunks / 407,964 gzip bytes (cap unchanged).
-  Review assertions262+252; seven synthetic handler fixtures889ba54, no provider model/store/network. Final HTML confirmed.
+  build (30 routes), diff checks and budget PASS: 52 chunks / 408,170 gzip bytes (cap unchanged).
+  Review assertions262+252+396; ten table envelopes plus seven earlier fixtures889ba54. Table captures use an
+  isolated memory store, explicitly seeded synthetic text and stub answerer, not real persistence/processing.
+  Six final table HTTP renders PASS (four states, unknown/repeated sample); no provider bill or network capture.
+  Brave current table page/AX/screenshot load PASS; further disclosures interrupted by unavailable windows.
+  No click/keyboard/responsive acceptance or saved screenshot for the new view.
   Final Brave review view interrupted by user browser use; not completed. No screenshot/full acceptance claim.
   Local preparation assertions: 284; Ask/key assertions: 316. Independent R2 IME/held-Enter findings fixed.
   Bounded Brave start/draft/Shift+Enter/context/captured reply/Sources checks PASS after refreshing task runtime.
@@ -40,19 +48,21 @@ Updated 5 October 2026. Current authority: `docs/START_HERE.md` and the five-pha
   Subsequent independent-Ask responsive/keyboard evidence is recorded in VERIFY_phase1-brave-2026-10-03.md.
   Full privacy/accessibility and live gateway acceptance remain unverified, not inferred from HTML.
 - Gateway: no v2 URL/key currently configured. No principal/credentials created and no paid model call made.
-- Git: baseline `7dc9a16` and its predecessor work are published on `probonhs/codex/frontend-handoff`; remote SHA
+- Git: baseline `c3c2120` and its predecessor work are published on `probonhs/codex/frontend-handoff`; remote SHA
   was verified. Workflow scope was authorized by the user; the earlier push blocker is resolved.
   No PR/merge/deployment created. Publish only to `probonhs`, never the website's `origin`.
-  This Phase 3 checkpoint follows that baseline; inspect Git for the current HEAD/publication state.
+  This Phase 4 checkpoint follows that baseline; inspect Git for the current HEAD/publication state.
 - Runtime: project script restarted development server on 127.0.0.1:3300, PID46363/session19460.
   Previous host-mismatched runtime had dev-resource403/HMR failures; interactions recovered without security changes.
 - Review status: founder approved the reviewed work through `5343e98` on 3 October 2026 (D-012).
   Remaining gates are NEEDS_VERIFICATION, not pilot GO. No merge/deployment authorized by this approval.
 - Ownership: founder builds frontend; teammate supplies local backend setup/contract clarification/narrow fixes.
 - Founder-only choices: identity/session approach, data processing, retention, pilot scope and release.
-- Resource checkpoint: usage32% five-hour/26%weekly (5 October); old82% is historical.
-  Do not assume automatic provider switching. Client headroom1,636bytes; preserve limits.
-- Next move: bounded final Brave review views when available, then pinned Phase4 review-table states/spend/CSV groundwork.
+- Resource checkpoint: usage52% five-hour/29%weekly (5 October); old82% is historical.
+  Do not assume automatic provider switching. Client headroom1,430bytes; preserve limits.
+- Next move: inspect pinned draft status/blocking slots/versions/diff/DOCX boundaries for Phase4 captured frontend.
+  Bounded final Brave review views when available; Q-013 unsafe CSV and Q-014 context block live table integration,
+  not independent frontend work. Do not retry a stopped browser or change security settings.
   Icon duplication found but no proven scoped saving; no speculative refactor. Quorum detector matches negative
   statements; adversary/warning preserved, not repaired by frontend. Q-010 gates live upload→review/storage;
   no PDF/DOCX or live upload support.

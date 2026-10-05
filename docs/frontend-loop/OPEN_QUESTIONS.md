@@ -28,3 +28,17 @@ decision/reliance, not captured standards UI. Request a narrow clarification/reg
 
 Git workflow scope is an operational access condition, not a product decision. Record the actual push
 failure if it occurs; never drop workflow history or claim remote publication from a local commit.
+
+Q-013 — CSV/spending boundary before download: pinned889ba54 guard misses leading-space headers/names and
+BOM-prefixed values (committed harmless adversary). Embedded CR also breaks rows under system Python3.9.6,
+not bundled3.12.14; prove exact production/runtime download bytes, matrix identity and formula safeguards.
+No spreadsheet execution tested. CSV lacks evidence and cancellation context. Rounded cost totals are not
+strict lower bounds and unpriced/pending work need not add a bill. Frontend shows priced subtotal, does not
+rewrite backend outputs or enable downloads. Owner: teammate narrow export/cost clarification/regressions,
+founder download/integration/review UX. Blocks safe live downloads, not captured text inspection.
+
+Q-014 — Reopen a table with matching context: status returns integer document/column counts and cells_detail,
+not persisted names, questions or kinds. Captured samples use creation/setup context. Confirm an authenticated,
+tenant-scoped retrieval path for those definitions, documents and exact text before live table reopening;
+do not infer column types or names from cells. Owner: teammate contract clarification, founder integration.
+Blocks connected table rendering/reopening, not static captured examples. PHASE_4_REVIEW_TABLES.md.

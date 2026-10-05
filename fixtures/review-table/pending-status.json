@@ -1,0 +1,164 @@
+{
+  "schema_version": 1,
+  "fixture_id": "pending-status",
+  "captured_at": "2026-10-05T18:07:51.143461+00:00",
+  "backend_commit": "889ba548083ea67c8bd72b552a2bcf6d68cdf70b",
+  "route": "POST /v2/review-table/status",
+  "request": {
+    "grid_id": "00000000-0000-4000-8000-000000000004"
+  },
+  "response_status": 200,
+  "response": {
+    "grid_id": "00000000-0000-4000-8000-000000000004",
+    "name": "Synthetic agreement comparison",
+    "documents": 3,
+    "columns": 2,
+    "cells": 6,
+    "findings": 0,
+    "by_state": {
+      "FOUND": 0,
+      "NOT_FOUND": 0,
+      "NEEDS_LAWYER": 0,
+      "PENDING": 6,
+      "FAILED": 0
+    },
+    "complete": false,
+    "cancelled": false,
+    "note": "FAILED cells did not run and say nothing about the document; PENDING cells have not been attempted. Neither is a finding, and `findings` counts only the three states that describe a document.",
+    "spend": {
+      "total_inr": null,
+      "priced_cells": 0,
+      "unpriced_cells": 0,
+      "pending_cells": 6,
+      "is_lower_bound": false,
+      "note": "UNPRICED: not one of this table's 6 cells carries a price, so there is no total. 0 cell(s) have run. A zero here would claim the work was free."
+    },
+    "cells_detail": [
+      {
+        "document_id": "706cfcc96529bab940793ed9c3387f68e05e1817be3a5cd63624af057d8e2936",
+        "column": "Governing law",
+        "state": "PENDING",
+        "value": "",
+        "quote": "",
+        "reason": "queued; this cell has not been run yet"
+      },
+      {
+        "document_id": "706cfcc96529bab940793ed9c3387f68e05e1817be3a5cd63624af057d8e2936",
+        "column": "Term end",
+        "state": "PENDING",
+        "value": "",
+        "quote": "",
+        "reason": "queued; this cell has not been run yet"
+      },
+      {
+        "document_id": "760797810a89f1b837316356073cbdb2302cafece02392c1066a03ac20c429cb",
+        "column": "Governing law",
+        "state": "PENDING",
+        "value": "",
+        "quote": "",
+        "reason": "queued; this cell has not been run yet"
+      },
+      {
+        "document_id": "760797810a89f1b837316356073cbdb2302cafece02392c1066a03ac20c429cb",
+        "column": "Term end",
+        "state": "PENDING",
+        "value": "",
+        "quote": "",
+        "reason": "queued; this cell has not been run yet"
+      },
+      {
+        "document_id": "b3258f590ccfe3bb4dd32d21e36c6ecc514aebcf26ae6905cadd3e7a60cb43a8",
+        "column": "Governing law",
+        "state": "PENDING",
+        "value": "",
+        "quote": "",
+        "reason": "queued; this cell has not been run yet"
+      },
+      {
+        "document_id": "b3258f590ccfe3bb4dd32d21e36c6ecc514aebcf26ae6905cadd3e7a60cb43a8",
+        "column": "Term end",
+        "state": "PENDING",
+        "value": "",
+        "quote": "",
+        "reason": "queued; this cell has not been run yet"
+      }
+    ]
+  },
+  "setup": {
+    "documents": [
+      {
+        "name": "Synthetic NDA.txt",
+        "text": "MUTUAL NDA\nGoverned by the laws of India.\nConfidentiality expires on 2029-03-31.",
+        "document_id": "706cfcc96529bab940793ed9c3387f68e05e1817be3a5cd63624af057d8e2936"
+      },
+      {
+        "name": "Synthetic supply.txt",
+        "text": "SUPPLY AGREEMENT\nThis specimen describes delivery only.",
+        "document_id": "760797810a89f1b837316356073cbdb2302cafece02392c1066a03ac20c429cb"
+      },
+      {
+        "name": "Synthetic scan.txt",
+        "cannot_read": "Synthetic scan specimen has no readable text layer.",
+        "document_id": "b3258f590ccfe3bb4dd32d21e36c6ecc514aebcf26ae6905cadd3e7a60cb43a8"
+      }
+    ],
+    "create_request": {
+      "grid_id": "00000000-0000-4000-8000-000000000004",
+      "name": "Synthetic agreement comparison",
+      "document_ids": [
+        "706cfcc96529bab940793ed9c3387f68e05e1817be3a5cd63624af057d8e2936",
+        "760797810a89f1b837316356073cbdb2302cafece02392c1066a03ac20c429cb",
+        "b3258f590ccfe3bb4dd32d21e36c6ecc514aebcf26ae6905cadd3e7a60cb43a8"
+      ],
+      "columns": [
+        {
+          "name": "Governing law",
+          "kind": "text",
+          "question": "Which law governs?"
+        },
+        {
+          "name": "Term end",
+          "kind": "date",
+          "question": "When does confidentiality expire?"
+        }
+      ]
+    },
+    "create_response": {
+      "grid_id": "00000000-0000-4000-8000-000000000004",
+      "name": "Synthetic agreement comparison",
+      "cells": 6,
+      "documents": 3,
+      "columns": 2,
+      "scheduled": {
+        "grid_id": "00000000-0000-4000-8000-000000000004",
+        "enqueued": [
+          "00000000-0000-4000-8000-000000000004:706cfcc96529bab940793ed9c3387f68e05e1817be3a5cd63624af057d8e2936:Governing law",
+          "00000000-0000-4000-8000-000000000004:706cfcc96529bab940793ed9c3387f68e05e1817be3a5cd63624af057d8e2936:Term end",
+          "00000000-0000-4000-8000-000000000004:760797810a89f1b837316356073cbdb2302cafece02392c1066a03ac20c429cb:Governing law",
+          "00000000-0000-4000-8000-000000000004:760797810a89f1b837316356073cbdb2302cafece02392c1066a03ac20c429cb:Term end",
+          "00000000-0000-4000-8000-000000000004:b3258f590ccfe3bb4dd32d21e36c6ecc514aebcf26ae6905cadd3e7a60cb43a8:Governing law",
+          "00000000-0000-4000-8000-000000000004:b3258f590ccfe3bb4dd32d21e36c6ecc514aebcf26ae6905cadd3e7a60cb43a8:Term end"
+        ],
+        "already_done": [],
+        "already_queued": [],
+        "cancelled": false
+      },
+      "cap": 500,
+      "estimated_cost_inr": null,
+      "cost_note": "UNPRICED: every cell is a separate model call and none has run yet. The ledger prices each one as it happens; a figure here would be a guess wearing a currency symbol.",
+      "note": "One run per cell. Poll review_table.status; nothing is answered until a worker has run it, and a PENDING cell is not a NOT_FOUND one."
+    },
+    "cell_operations": [],
+    "cancel_response": null,
+    "synthetic_debit_only": false,
+    "synthetic_text_seeded": true
+  },
+  "request_sha256": "6b6a95470bf2d021c94104957abf76d846ccaad8d5520e5ab3aee876a4a6e6bc",
+  "response_sha256": "e2653dfac6718bdd3a30add91cd73745d77a1a36e038ed039fa032d1a23e546c",
+  "setup_sha256": "81022d8f4f0aaf1a1e850c536b472ceaaf837909fe5c068266e5ddd3217290d5",
+  "contains_personal_data": false,
+  "sanitisation": [],
+  "capture_command": "/Users/abdulazeez/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3 scripts/capture-document-review.py /private/tmp/placedon-review-evidence.70Jo2y /Users/abdulazeez/Desktop/Placedon-workspace/backend tables",
+  "execution": "Isolated memory store; deterministic answerer; no provider model or billed call",
+  "verified_by": "tests/document-review.mjs"
+}

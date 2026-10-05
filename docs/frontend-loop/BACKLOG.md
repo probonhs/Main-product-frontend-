@@ -18,7 +18,7 @@ acceptance and remaining full accessibility/error checks move to post-build; ori
 | 2 | Retain prior evidence while inputs are edited | BUILT / NEEDS_FINAL_ACCEPTANCE | PHASE_2_RETAINED_EVIDENCE.md; 256 reducer/render assertions and bounded Brave pass; full acceptance deferred D-013 |
 | 3 | Extraction and attachments | LOCAL_PREPARATION_BUILT / NOT_INTEGRATED | PHASE_3_INTAKE_REFINEMENT.md; document-first local text/snapshot, 284 assertions; PDF/DOCX/attachment/storage/processing and Q-010 remain gated |
 | 3 | Corporate-document and contract review | BOTH_CAPTURED_VIEWS_BUILT / NOT_INTEGRATED | PHASE_3_REVIEW_FINDINGS.md / PHASE_3_CONTRACT_FINDINGS.md;262+252 assertions; final Brave/live quote/reason/role and Q-010/011/012 remain |
-| 4 | Review tables/spend/cancellation/CSV | NOT_INTEGRATED | Current grid contracts and safe export |
+| 4 | Review tables/spend/cancellation/CSV | CAPTURED_VIEW_BUILT / NOT_INTEGRATED | PHASE_4_REVIEW_TABLES.md;396 assertions, partial/attempted/cancel states, subtotal/unknown costs; Q-010/013/014 and live export/worker acceptance remain |
 | 4 | Drafts/blocking/version/diff/DOCX | NOT_INTEGRATED | Current draft contracts and support/approval boundary |
 | 4 | Company/source/law-change workspace | PARTIAL_LEGACY / NOT_CANONICAL | Real scope; no live MCA or company-filtered event promise |
 | 5 | Limitations/feedback/privacy controls | LIMITATIONS_BUILT / REST_GATED | Q-005, retention/deletion contract |

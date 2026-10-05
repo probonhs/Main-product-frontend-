@@ -1,0 +1,99 @@
+{
+  "schema_version": 1,
+  "fixture_id": "pending-export",
+  "captured_at": "2026-10-05T18:07:51.143461+00:00",
+  "backend_commit": "889ba548083ea67c8bd72b552a2bcf6d68cdf70b",
+  "route": "POST /v2/review-table/export",
+  "request": {
+    "grid_id": "00000000-0000-4000-8000-000000000004"
+  },
+  "response_status": 200,
+  "response": {
+    "grid_id": "00000000-0000-4000-8000-000000000004",
+    "filename": "Synthetic agreement comparison.csv",
+    "content_type": "text/csv",
+    "csv": "document,Governing law,Term end\nSynthetic NDA.txt,PENDING,PENDING\nSynthetic supply.txt,PENDING,PENDING\nSynthetic scan.txt,PENDING,PENDING\n",
+    "complete": false,
+    "cancelled": false,
+    "findings": 0,
+    "cells": 6,
+    "note": "Every cell carries words, never a blank: NOT FOUND, NEEDS LAWYER, PENDING and COULD NOT RUN each read differently, because a blank makes 'the clause is absent' and 'we did not read it' identical. Values beginning = + - @ are prefixed with a single quote so the file cannot run as a formula in a spreadsheet."
+  },
+  "setup": {
+    "documents": [
+      {
+        "name": "Synthetic NDA.txt",
+        "text": "MUTUAL NDA\nGoverned by the laws of India.\nConfidentiality expires on 2029-03-31.",
+        "document_id": "706cfcc96529bab940793ed9c3387f68e05e1817be3a5cd63624af057d8e2936"
+      },
+      {
+        "name": "Synthetic supply.txt",
+        "text": "SUPPLY AGREEMENT\nThis specimen describes delivery only.",
+        "document_id": "760797810a89f1b837316356073cbdb2302cafece02392c1066a03ac20c429cb"
+      },
+      {
+        "name": "Synthetic scan.txt",
+        "cannot_read": "Synthetic scan specimen has no readable text layer.",
+        "document_id": "b3258f590ccfe3bb4dd32d21e36c6ecc514aebcf26ae6905cadd3e7a60cb43a8"
+      }
+    ],
+    "create_request": {
+      "grid_id": "00000000-0000-4000-8000-000000000004",
+      "name": "Synthetic agreement comparison",
+      "document_ids": [
+        "706cfcc96529bab940793ed9c3387f68e05e1817be3a5cd63624af057d8e2936",
+        "760797810a89f1b837316356073cbdb2302cafece02392c1066a03ac20c429cb",
+        "b3258f590ccfe3bb4dd32d21e36c6ecc514aebcf26ae6905cadd3e7a60cb43a8"
+      ],
+      "columns": [
+        {
+          "name": "Governing law",
+          "kind": "text",
+          "question": "Which law governs?"
+        },
+        {
+          "name": "Term end",
+          "kind": "date",
+          "question": "When does confidentiality expire?"
+        }
+      ]
+    },
+    "create_response": {
+      "grid_id": "00000000-0000-4000-8000-000000000004",
+      "name": "Synthetic agreement comparison",
+      "cells": 6,
+      "documents": 3,
+      "columns": 2,
+      "scheduled": {
+        "grid_id": "00000000-0000-4000-8000-000000000004",
+        "enqueued": [
+          "00000000-0000-4000-8000-000000000004:706cfcc96529bab940793ed9c3387f68e05e1817be3a5cd63624af057d8e2936:Governing law",
+          "00000000-0000-4000-8000-000000000004:706cfcc96529bab940793ed9c3387f68e05e1817be3a5cd63624af057d8e2936:Term end",
+          "00000000-0000-4000-8000-000000000004:760797810a89f1b837316356073cbdb2302cafece02392c1066a03ac20c429cb:Governing law",
+          "00000000-0000-4000-8000-000000000004:760797810a89f1b837316356073cbdb2302cafece02392c1066a03ac20c429cb:Term end",
+          "00000000-0000-4000-8000-000000000004:b3258f590ccfe3bb4dd32d21e36c6ecc514aebcf26ae6905cadd3e7a60cb43a8:Governing law",
+          "00000000-0000-4000-8000-000000000004:b3258f590ccfe3bb4dd32d21e36c6ecc514aebcf26ae6905cadd3e7a60cb43a8:Term end"
+        ],
+        "already_done": [],
+        "already_queued": [],
+        "cancelled": false
+      },
+      "cap": 500,
+      "estimated_cost_inr": null,
+      "cost_note": "UNPRICED: every cell is a separate model call and none has run yet. The ledger prices each one as it happens; a figure here would be a guess wearing a currency symbol.",
+      "note": "One run per cell. Poll review_table.status; nothing is answered until a worker has run it, and a PENDING cell is not a NOT_FOUND one."
+    },
+    "cell_operations": [],
+    "cancel_response": null,
+    "synthetic_debit_only": false,
+    "synthetic_text_seeded": true
+  },
+  "request_sha256": "6b6a95470bf2d021c94104957abf76d846ccaad8d5520e5ab3aee876a4a6e6bc",
+  "response_sha256": "10ed23c73b915865475ee62a90c6c395552b7d5a425b02666cecf69aaa2086b9",
+  "setup_sha256": "81022d8f4f0aaf1a1e850c536b472ceaaf837909fe5c068266e5ddd3217290d5",
+  "contains_personal_data": false,
+  "sanitisation": [],
+  "capture_command": "/Users/abdulazeez/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3 scripts/capture-document-review.py /private/tmp/placedon-review-evidence.70Jo2y /Users/abdulazeez/Desktop/Placedon-workspace/backend tables",
+  "execution": "Isolated memory store; deterministic answerer; no provider model or billed call",
+  "verified_by": "tests/document-review.mjs"
+}

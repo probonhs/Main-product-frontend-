@@ -239,6 +239,10 @@
 .workspace .ws-table :where(th, td) { min-width: 110px; padding: 10px; border-bottom: 1px solid var(--rule); text-align: left; vertical-align: top; }
 .workspace .ws-table th { background: var(--paper); font-weight: 600; }
 .workspace .ws-table caption { padding-bottom: 10px; text-align: left; font-weight: 600; }
+.workspace .ws-review-table .ws-table :where(th, td) { min-width: 180px; font-size: 14px; overflow-wrap: anywhere; }
+.workspace .ws-review-table .ws-table .ws-details { border: 0; padding: 0; margin: 0; }
+.workspace .ws-review-table .ws-table summary { min-height: 44px; }
+.workspace .ws-table-question { display: block; margin-top: 6px; font-size: 12px; font-weight: 400; }
 .workspace .ws-docket-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; }
 .workspace .ws-entry { display: grid; align-content: start; gap: 8px; padding-block: 14px; border-bottom: 1px solid var(--rule); }
 .workspace a.ws-entry { min-height: 44px; text-decoration: none; }

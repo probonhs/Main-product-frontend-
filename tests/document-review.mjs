@@ -94,5 +94,65 @@ try {
   }
   const component = readFileSync(new URL("src/app/workspace/documents/review-example/contract-result.tsx", root), "utf8");
   for (const forbidden of ['"use client"', "dangerouslySetInnerHTML", "fetch(", "localStorage", "sessionStorage"]) eq(component.includes(forbidden), false);
-  console.log(`PASS: ${corporateAssertions} corporate + ${assertions - corporateAssertions} contract captured-review provenance/schema/render assertions; no network or approval`);
+  const contractAssertions = assertions - corporateAssertions;
+  const { reviewTableRecordSchema, reviewTableStatusSchema, csvRows, csvHasUnsafeCell } = await import("../src/lib/engine/review-table.ts");
+  const { ReviewTableResult } = await import("../src/app/workspace/documents/table-example/table-result.tsx");
+  const tableFixtures = {};
+  for (const sample of ["pending", "mixed", "finished", "cancelled", "csv-adversary"]) {
+    for (const action of ["status", "export"]) {
+      const fixture = JSON.parse(readFileSync(new URL(`fixtures/review-table/${sample}-${action}.json`, root), "utf8"));
+      tableFixtures[`${sample}-${action}`] = fixture;
+      eq(fixture.schema_version, 1); eq(fixture.contains_personal_data, false); eq(fixture.sanitisation, []);
+      eq(fixture.backend_commit, "889ba548083ea67c8bd72b552a2bcf6d68cdf70b"); eq(fixture.route, `POST /v2/review-table/${action}`);
+      eq(fixture.response_status, 200); ok(Number.isFinite(Date.parse(fixture.captured_at))); ok(fixture.capture_command.endsWith("tables"));
+      eq(fixture.verified_by, "tests/document-review.mjs"); eq(fixture.execution, "Isolated memory store; deterministic answerer; no provider model or billed call");
+      eq(hash(fixture.request), fixture.request_sha256); eq(hash(fixture.response), fixture.response_sha256); eq(hash(fixture.setup), fixture.setup_sha256);
+      eq(fixture.setup.synthetic_text_seeded, true); eq(fixture.setup.synthetic_debit_only, sample === "mixed");
+    }
+    const captured = tableFixtures[`${sample}-status`], exported = tableFixtures[`${sample}-export`];
+    eq(captured.setup, exported.setup);
+    const raw = { status: captured.response, exported: exported.response, context: { documents: captured.setup.documents, columns: captured.setup.create_request.columns } };
+    if (sample === "csv-adversary") {
+      eq(reviewTableStatusSchema.safeParse(raw.status).success, true);
+      eq(reviewTableRecordSchema.safeParse(raw).success, false);
+      ok(csvHasUnsafeCell(csvRows(raw.exported.csv))); eq(csvRows(raw.exported.csv).length, 2);
+      continue;
+    }
+    const record = reviewTableRecordSchema.parse(raw);
+    eq(csvRows(record.exported.csv).length, record.status.documents + 1); eq(csvHasUnsafeCell(csvRows(record.exported.csv)), false);
+    const html = renderToStaticMarkup(React.createElement(ReviewTableResult, { record, capturedAt: captured.captured_at, backendCommit: captured.backend_commit, syntheticDebit: captured.setup.synthetic_debit_only }));
+    for (const phrase of ["Captured sample", "One question per column", "not a review of your working copy", "No cell certifies legality", "not returned", "not an evidence-complete review report", "not upload, persistence, authentication or worker acceptance", "never starts paid work"]) ok(html.includes(phrase));
+    eq((html.match(/disabled="" class="ws-secondary" aria-describedby="table-actions-gate"/g) || []).length, 3); eq(html.includes("<form"), false); eq(html.includes(" download="), false);
+    ok(html.includes('role="region" aria-label="Document comparison table" tabindex="0"')); ok(html.includes('scope="row"')); ok(html.includes('scope="col"'));
+    for (const item of record.status.cells_detail) {
+      const escaped = value => renderToStaticMarkup(React.createElement(React.Fragment, null, value));
+      ok(html.includes(escaped(item.state === "FOUND" ? item.value : item.reason)));
+      if (item.state === "FOUND") ok(html.includes(escaped(item.quote)));
+    }
+    if (sample === "pending") { eq(record.status.findings, 0); eq(record.status.spend.total_inr, null); ok(html.includes("Unknown cost is not ₹0")); }
+    else {
+      ok(html.includes("Unreadable document — not checked")); ok(html.includes("Technical failure, not a finding")); ok(html.includes("No accepted quotation was returned"));
+      if (sample === "mixed") { ok(html.includes("Synthetic test debit only")); ok(html.includes("Reported priced subtotal ₹0.0412")); ok(html.includes("not a guaranteed minimum")); eq(html.includes("At least ₹"), false); }
+      if (sample === "finished") { eq(record.status.complete, true); eq(record.status.by_state.FAILED, 1); ok(html.includes("All cells attempted — not a clearance")); }
+      if (sample === "cancelled") { eq(record.status.cancelled, true); eq(record.status.by_state.PENDING, 1); ok(html.includes("not establish a refund")); ok(html.includes("live worker cancellation is not verified")); }
+    }
+    for (const patch of [{ cells: 0 }, { findings: 99 }, { documents: 99 }, { columns: 0 }, { complete: !record.status.complete }, { new_field: true }, { by_state: { ...record.status.by_state, FOUND: 99 } }, { cells_detail: [] }, { spend: { ...record.status.spend, total_inr: -1 } }, { spend: { ...record.status.spend, is_lower_bound: !record.status.spend.is_lower_bound } }]) eq(reviewTableRecordSchema.safeParse({ ...record, status: { ...record.status, ...patch } }).success, false);
+    for (const patch of [{ state: "PASSED" }, { document_id: "another document" }, { column: "another column" }, { quote: "invented quotation", state: "FOUND", value: "fabricated" }]) eq(reviewTableRecordSchema.safeParse({ ...record, status: { ...record.status, cells_detail: record.status.cells_detail.map((item, index) => index === 0 ? { ...item, ...patch } : item) } }).success, false);
+    eq(reviewTableRecordSchema.safeParse({ ...record, exported: { ...record.exported, csv: "document,Wrong\nSynthetic,invented\n" } }).success, false);
+    eq(reviewTableRecordSchema.safeParse({ ...record, exported: { ...record.exported, grid_id: "different grid" } }).success, false);
+    eq(reviewTableRecordSchema.safeParse({ ...record, context: { ...record.context, documents: [] } }).success, false);
+    eq(reviewTableRecordSchema.safeParse({ ...record, status: { ...record.status, cells_detail: record.status.cells_detail.map((item, index) => index === 1 ? record.status.cells_detail[0] : item) } }).success, false);
+    if (sample !== "pending") {
+      for (const kind of ["date", "amount", "yes_no"]) eq(reviewTableRecordSchema.safeParse({ ...record, context: { ...record.context, columns: record.context.columns.map((col, index) => index === 0 ? { ...col, kind } : col) } }).success, false);
+      eq(reviewTableRecordSchema.safeParse({ ...record, context: { ...record.context, documents: record.context.documents.map((doc, index) => index === 0 ? { ...doc, cannot_read: "Synthetic unreadable specimen" } : doc) } }).success, false);
+    }
+    const attack = renderToStaticMarkup(React.createElement(ReviewTableResult, { record: { ...record, context: { ...record.context, documents: record.context.documents.map(doc => ({ ...doc, name: "<script>synthetic attack</script>" })) } }, capturedAt: captured.captured_at, backendCommit: captured.backend_commit, syntheticDebit: captured.setup.synthetic_debit_only }));
+    ok(attack.includes("&lt;script&gt;")); eq(attack.includes("<script>"), false);
+  }
+  eq(csvRows('a,"b,c"\n"x\"\"y","line\nnext"\n'), [["a", "b,c"], ['x"y', "line\nnext"]]);
+  for (const invalid of ['"unclosed', 'a"b,c', '"a"junk,b', "a".repeat(200_001)]) eq(csvRows(invalid), null);
+  for (const danger of ["=1+1", "+1", "-1", "@SUM(A1)", " =1+1", "\n=1+1", "\r=1+1", "\t=1+1", "\uFEFF=1+1"]) eq(csvHasUnsafeCell([[danger]]), true);
+  for (const safe of ["India", "2029-03-31", "'=1+1", "NOT FOUND", "PENDING", "NEEDS LAWYER", "COULD NOT RUN"]) eq(csvHasUnsafeCell([[safe]]), false);
+  for (const name of ["page", "table-result"]) { const source = readFileSync(new URL(`src/app/workspace/documents/table-example/${name}.tsx`, root), "utf8"); for (const forbidden of ['"use client"', "dangerouslySetInnerHTML", "fetch(", "localStorage", "sessionStorage"]) eq(source.includes(forbidden), false); }
+  console.log(`PASS: ${corporateAssertions} corporate + ${contractAssertions} contract + ${assertions - corporateAssertions - contractAssertions} table captured-review provenance/schema/render assertions; no network or approval`);
 } finally { globalThis.fetch = oldFetch; hooks.deregister(); }

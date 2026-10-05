@@ -1,0 +1,220 @@
+{
+  "schema_version": 1,
+  "fixture_id": "mixed-status",
+  "captured_at": "2026-10-05T18:07:51.143461+00:00",
+  "backend_commit": "889ba548083ea67c8bd72b552a2bcf6d68cdf70b",
+  "route": "POST /v2/review-table/status",
+  "request": {
+    "grid_id": "00000000-0000-4000-8000-000000000004"
+  },
+  "response_status": 200,
+  "response": {
+    "grid_id": "00000000-0000-4000-8000-000000000004",
+    "name": "Synthetic agreement comparison",
+    "documents": 3,
+    "columns": 2,
+    "cells": 6,
+    "findings": 4,
+    "by_state": {
+      "FOUND": 1,
+      "NOT_FOUND": 2,
+      "NEEDS_LAWYER": 1,
+      "PENDING": 1,
+      "FAILED": 1
+    },
+    "complete": false,
+    "cancelled": false,
+    "note": "FAILED cells did not run and say nothing about the document; PENDING cells have not been attempted. Neither is a finding, and `findings` counts only the three states that describe a document.",
+    "spend": {
+      "total_inr": 0.0412,
+      "priced_cells": 1,
+      "unpriced_cells": 4,
+      "pending_cells": 1,
+      "is_lower_bound": true,
+      "note": "At least Rs.0.0412, over 1 priced cell(s). 4 cell(s) ran and could not be priced and 1 have not run, so the true figure is HIGHER. This is a lower bound, not the bill."
+    },
+    "cells_detail": [
+      {
+        "document_id": "706cfcc96529bab940793ed9c3387f68e05e1817be3a5cd63624af057d8e2936",
+        "column": "Governing law",
+        "state": "FOUND",
+        "value": "India",
+        "quote": "Governed by the laws of India",
+        "reason": ""
+      },
+      {
+        "document_id": "706cfcc96529bab940793ed9c3387f68e05e1817be3a5cd63624af057d8e2936",
+        "column": "Term end",
+        "state": "NEEDS_LAWYER",
+        "value": "",
+        "quote": "",
+        "reason": "an answer was proposed and could not be accepted automatically: Term end: 'sometime in 2029' is not an ISO date (YYYY-MM-DD). A date column that answers 'sometime in April' has not answered. The honest answer is NEEDS_LAWYER with this quote attached, so a person can read it and decide"
+      },
+      {
+        "document_id": "760797810a89f1b837316356073cbdb2302cafece02392c1066a03ac20c429cb",
+        "column": "Governing law",
+        "state": "NOT_FOUND",
+        "value": "",
+        "quote": "",
+        "reason": "the document was read in full and it does not answer 'Which law governs?'"
+      },
+      {
+        "document_id": "760797810a89f1b837316356073cbdb2302cafece02392c1066a03ac20c429cb",
+        "column": "Term end",
+        "state": "FAILED",
+        "value": "",
+        "quote": "",
+        "reason": "this cell did not complete: TimeoutError: synthetic offline failure; no provider called. That is a failure of ours and says nothing about the document -- it was not read, so no conclusion about this column follows from it"
+      },
+      {
+        "document_id": "b3258f590ccfe3bb4dd32d21e36c6ecc514aebcf26ae6905cadd3e7a60cb43a8",
+        "column": "Governing law",
+        "state": "NOT_FOUND",
+        "value": "",
+        "quote": "",
+        "reason": "the document could not be read, so this column was not answered against it: Synthetic scan specimen has no readable text layer."
+      },
+      {
+        "document_id": "b3258f590ccfe3bb4dd32d21e36c6ecc514aebcf26ae6905cadd3e7a60cb43a8",
+        "column": "Term end",
+        "state": "PENDING",
+        "value": "",
+        "quote": "",
+        "reason": "queued; this cell has not been run yet"
+      }
+    ]
+  },
+  "setup": {
+    "documents": [
+      {
+        "name": "Synthetic NDA.txt",
+        "text": "MUTUAL NDA\nGoverned by the laws of India.\nConfidentiality expires on 2029-03-31.",
+        "document_id": "706cfcc96529bab940793ed9c3387f68e05e1817be3a5cd63624af057d8e2936"
+      },
+      {
+        "name": "Synthetic supply.txt",
+        "text": "SUPPLY AGREEMENT\nThis specimen describes delivery only.",
+        "document_id": "760797810a89f1b837316356073cbdb2302cafece02392c1066a03ac20c429cb"
+      },
+      {
+        "name": "Synthetic scan.txt",
+        "cannot_read": "Synthetic scan specimen has no readable text layer.",
+        "document_id": "b3258f590ccfe3bb4dd32d21e36c6ecc514aebcf26ae6905cadd3e7a60cb43a8"
+      }
+    ],
+    "create_request": {
+      "grid_id": "00000000-0000-4000-8000-000000000004",
+      "name": "Synthetic agreement comparison",
+      "document_ids": [
+        "706cfcc96529bab940793ed9c3387f68e05e1817be3a5cd63624af057d8e2936",
+        "760797810a89f1b837316356073cbdb2302cafece02392c1066a03ac20c429cb",
+        "b3258f590ccfe3bb4dd32d21e36c6ecc514aebcf26ae6905cadd3e7a60cb43a8"
+      ],
+      "columns": [
+        {
+          "name": "Governing law",
+          "kind": "text",
+          "question": "Which law governs?"
+        },
+        {
+          "name": "Term end",
+          "kind": "date",
+          "question": "When does confidentiality expire?"
+        }
+      ]
+    },
+    "create_response": {
+      "grid_id": "00000000-0000-4000-8000-000000000004",
+      "name": "Synthetic agreement comparison",
+      "cells": 6,
+      "documents": 3,
+      "columns": 2,
+      "scheduled": {
+        "grid_id": "00000000-0000-4000-8000-000000000004",
+        "enqueued": [
+          "00000000-0000-4000-8000-000000000004:706cfcc96529bab940793ed9c3387f68e05e1817be3a5cd63624af057d8e2936:Governing law",
+          "00000000-0000-4000-8000-000000000004:706cfcc96529bab940793ed9c3387f68e05e1817be3a5cd63624af057d8e2936:Term end",
+          "00000000-0000-4000-8000-000000000004:760797810a89f1b837316356073cbdb2302cafece02392c1066a03ac20c429cb:Governing law",
+          "00000000-0000-4000-8000-000000000004:760797810a89f1b837316356073cbdb2302cafece02392c1066a03ac20c429cb:Term end",
+          "00000000-0000-4000-8000-000000000004:b3258f590ccfe3bb4dd32d21e36c6ecc514aebcf26ae6905cadd3e7a60cb43a8:Governing law",
+          "00000000-0000-4000-8000-000000000004:b3258f590ccfe3bb4dd32d21e36c6ecc514aebcf26ae6905cadd3e7a60cb43a8:Term end"
+        ],
+        "already_done": [],
+        "already_queued": [],
+        "cancelled": false
+      },
+      "cap": 500,
+      "estimated_cost_inr": null,
+      "cost_note": "UNPRICED: every cell is a separate model call and none has run yet. The ledger prices each one as it happens; a figure here would be a guess wearing a currency symbol.",
+      "note": "One run per cell. Poll review_table.status; nothing is answered until a worker has run it, and a PENDING cell is not a NOT_FOUND one."
+    },
+    "cell_operations": [
+      {
+        "status": "ANSWERED",
+        "grid_id": "00000000-0000-4000-8000-000000000004",
+        "document_id": "706cfcc96529bab940793ed9c3387f68e05e1817be3a5cd63624af057d8e2936",
+        "column": "Governing law",
+        "cell_state": "FOUND",
+        "written": true,
+        "cost_inr": null,
+        "cost_note": "no billed call was made: a caller-supplied answerer served this cell. This is not a cost of zero.",
+        "note": null
+      },
+      {
+        "status": "ANSWERED",
+        "grid_id": "00000000-0000-4000-8000-000000000004",
+        "document_id": "706cfcc96529bab940793ed9c3387f68e05e1817be3a5cd63624af057d8e2936",
+        "column": "Term end",
+        "cell_state": "NEEDS_LAWYER",
+        "written": true,
+        "cost_inr": null,
+        "cost_note": "no billed call was made: a caller-supplied answerer served this cell. This is not a cost of zero.",
+        "note": null
+      },
+      {
+        "status": "ANSWERED",
+        "grid_id": "00000000-0000-4000-8000-000000000004",
+        "document_id": "760797810a89f1b837316356073cbdb2302cafece02392c1066a03ac20c429cb",
+        "column": "Governing law",
+        "cell_state": "NOT_FOUND",
+        "written": true,
+        "cost_inr": null,
+        "cost_note": "no billed call was made: a caller-supplied answerer served this cell. This is not a cost of zero.",
+        "note": null
+      },
+      {
+        "status": "ANSWERED",
+        "grid_id": "00000000-0000-4000-8000-000000000004",
+        "document_id": "760797810a89f1b837316356073cbdb2302cafece02392c1066a03ac20c429cb",
+        "column": "Term end",
+        "cell_state": "FAILED",
+        "written": true,
+        "cost_inr": null,
+        "cost_note": "no billed call was made: a caller-supplied answerer served this cell. This is not a cost of zero.",
+        "note": null
+      },
+      {
+        "status": "ANSWERED",
+        "grid_id": "00000000-0000-4000-8000-000000000004",
+        "document_id": "b3258f590ccfe3bb4dd32d21e36c6ecc514aebcf26ae6905cadd3e7a60cb43a8",
+        "column": "Governing law",
+        "cell_state": "NOT_FOUND",
+        "written": true,
+        "cost_inr": null,
+        "cost_note": "no billed call was made: a caller-supplied answerer served this cell. This is not a cost of zero.",
+        "note": null
+      }
+    ],
+    "cancel_response": null,
+    "synthetic_debit_only": true,
+    "synthetic_text_seeded": true
+  },
+  "request_sha256": "6b6a95470bf2d021c94104957abf76d846ccaad8d5520e5ab3aee876a4a6e6bc",
+  "response_sha256": "abdd6556310e3b73632d65cc59ff448903a10508678a875a4907484eb07cd570",
+  "setup_sha256": "663c74c5e81d3f1161fa8eb4d92806f5e9ff550d8af1d382b25ef488b3d5b929",
+  "contains_personal_data": false,
+  "sanitisation": [],
+  "capture_command": "/Users/abdulazeez/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3 scripts/capture-document-review.py /private/tmp/placedon-review-evidence.70Jo2y /Users/abdulazeez/Desktop/Placedon-workspace/backend tables",
+  "execution": "Isolated memory store; deterministic answerer; no provider model or billed call",
+  "verified_by": "tests/document-review.mjs"
+}

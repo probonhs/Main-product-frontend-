@@ -9,6 +9,18 @@ Implementation was already committed/published; this approval is recorded withou
 
 ## Current sequence and build checkpoints
 
+Newest D-021: PHASE_4_REVIEW_TABLES.md, baseline `c3c2120` published; table-example route with pending/mixed/
+finished/cancelled states, native quote/reason disclosures, qualified synthetic spending, captured CSV inspection.
+No live actions/provider bill; unsafe CSV rejected and downloads disabled. Isolated memory captures explicitly
+seed synthetic text (not Q-010 proof). Q-013 export/subtotal/runtime and Q-014 persisted table context remain.
+Arendt narrow audit; Popper independent guard corrections/recheck, 910 total review assertions (396 table).
+Final typecheck/quiet lint/contracts/loop/webpack build30routes/budget52chunks408,170bytes/diff PASS. Six HTTP
+renders PASS; Brave load/AX/screenshot inspected, subsequent click check interrupted by unavailable windows.
+No saved screenshot/full responsive/live acceptance. DevPID46363/session19460 unchanged. Usage52%/29%,
+headroom1,430bytes. Inspect Git for this checkpoint's publication. No merge/deploy/backend/auth/config changes.
+Next: pinned draft/blocking/version/diff/DOCX frontend boundaries; retain completed guards, not recapture old
+evidence or pretend the loop is an installed background scheduler. Browser checks when available, not endless retries.
+
 Newest D-020: PHASE_3_CONTRACT_FINDINGS.md, baseline7dc9a16 verified published. Same review-example route
 now has contract-deviation/judgment/missing with fixed extraction, DRAFT standards/rationale, missing exact
 quote, unheld law and match-scope qualifiers. No model/provider call or client boundary, decisions disabled.

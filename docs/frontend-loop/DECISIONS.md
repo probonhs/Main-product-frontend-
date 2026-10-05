@@ -245,3 +245,15 @@ Do not copy historical decisions here unless they are still in force. Link their
 - **Evidence:** PHASE_3_CONTRACT_FINDINGS.md; pinned889ba54 stubbed-handler captures, Curie R2 qualifiers cleared.
 - **Reversal:** Verified exact item-bound quote/match context or changed playbook contract enables a new slice,
   not silent reinterpretation. Real practitioner/browser/release approval remain outstanding.
+
+## D-021 — Captured review tables with evidence and qualified spending (5 October 2026)
+
+- **Decision:** Server-only document/question matrix, cell disclosures, truthful pending/failure/cancellation
+  states, reported priced subtotal and captured CSV inspection. Secondary Documents sample; no live actions.
+- **Reason:** Backend completion does not mean legal clearance; null is not free; rounded priced totals are
+  not guaranteed minimums. Unreadable NOT_FOUND is explicitly not a checked document. Reject unsafe CSV.
+- **Evidence:** PHASE_4_REVIEW_TABLES.md; ten pinned-handler envelopes, Arendt audit/Popper targeted corrections,
+  396 table assertions. Production budget unchanged; Brave load only, not final interaction acceptance.
+- **Boundary/reversal:** Q-010/Q-013/Q-014 and verified roles/store/processing/download bytes must precede live
+  enablement. New contracts or practitioner confusion warrant a scoped change, not fake capability. Rollback:
+  remove the sample link/route; no client/backend state migration. Founder retains final release authority.

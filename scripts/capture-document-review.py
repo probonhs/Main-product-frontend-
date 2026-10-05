@@ -42,6 +42,75 @@ cases = {
 }
 captured = datetime.now(timezone.utc).isoformat()
 result = []
+if len(sys.argv) > 3 and sys.argv[3] == "tables":
+    from gateway.store import MemoryBackend
+    from gateway.jobs import MemoryQueue
+    from gateway.verbs import _review_grid_cell
+    verbs = {item.name: item for item in VERBS}
+    columns = [{"name": "Governing law", "kind": "text", "question": "Which law governs?"},
+               {"name": "Term end", "kind": "date", "question": "When does confidentiality expire?"}]
+    specimens = [{"name": "Synthetic NDA.txt", "text": "MUTUAL NDA\nGoverned by the laws of India.\nConfidentiality expires on 2029-03-31."},
+                 {"name": "Synthetic supply.txt", "text": "SUPPLY AGREEMENT\nThis specimen describes delivery only."},
+                 {"name": "Synthetic scan.txt", "cannot_read": "Synthetic scan specimen has no readable text layer."}]
+    def answer(question, kind, text):
+        if text.startswith("SUPPLY"):
+            if kind == "date":
+                raise TimeoutError("synthetic offline failure; no provider called")
+            return None
+        if kind == "date":
+            return ("sometime in 2029", "expires on 2029-03-31")
+        return ("India", "Governed by the laws of India")
+    for scenario in ("pending", "mixed", "finished", "cancelled", "csv-adversary"):
+        ctx = Context(store=MemoryBackend(), queue=MemoryQueue(), model_for=lambda origins: answer)
+        specimen_set, column_set = specimens, columns
+        if scenario == "csv-adversary":
+            # Harmless arithmetic/no URL. Leading spaces in names and a BOM in
+            # the value evade the pinned guard; never deliver this as a download.
+            specimen_set = [{"name": " =1+1", "text": "Synthetic clause: \ufeff=1+1 governs this agreement."}]
+            column_set = [{"name": " =1+1", "kind": "text", "question": "Which law governs?"}]
+            ctx.model_for = lambda origins: lambda question, kind, text: ("\ufeff=1+1", "\ufeff=1+1 governs this agreement")
+        documents = []
+        for specimen in specimen_set:
+            uploaded = verbs["documents.upload"].run(specimen, ctx)
+            # Upload at this SHA does not retain text. Deliberately seed only synthetic
+            # test text; this is not upload/persistence acceptance (Q-010).
+            if "text" in specimen:
+                ctx.documents[uploaded["document_id"]]["text"] = specimen["text"]
+            documents.append(dict(specimen, document_id=uploaded["document_id"]))
+        create_request = {"grid_id": "00000000-0000-4000-8000-000000000004", "name": "Synthetic agreement comparison", "document_ids": [doc["document_id"] for doc in documents], "columns": column_set}
+        created = verbs["review_table.create"].run(create_request, ctx)
+        if "grid_id" not in created:
+            raise SystemExit("Synthetic table creation refused")
+        operations = []
+        jobs = [{"grid_id": created["grid_id"], "document_id": doc["document_id"], "column": col["name"], "kind": col["kind"], "question": col["question"]} for doc in documents for col in column_set]
+        count = 0 if scenario == "pending" else 6 if scenario == "finished" else 5
+        for job in jobs[:count]:
+            operations.append(_review_grid_cell(job, ctx))
+        # Seed the same synthetic debit used in pinned gateway/verbs.py's cost tests.
+        # This exercises the reported lower bound, never a provider bill.
+        if scenario == "mixed":
+            priced = ctx.store.read_grid_cells(created["grid_id"])[0]
+            priced.update(provider="azure", cost_inr=0.0412, cost_note="Synthetic test debit only; no billed provider call")
+            ctx.store.write_grid_cell(priced, if_pending=False)
+        cancellation = verbs["review_table.cancel"].run({"grid_id": created["grid_id"]}, ctx) if scenario == "cancelled" else None
+        setup = {"documents": documents, "create_request": create_request, "create_response": created,
+                 "cell_operations": operations, "cancel_response": cancellation,
+                 "synthetic_debit_only": scenario == "mixed", "synthetic_text_seeded": True}
+        for action in ("status", "export"):
+            verb = verbs[f"review_table.{action}"]
+            request = {"grid_id": created["grid_id"]}
+            response = verb.run(request, ctx)
+            result.append({"schema_version": 1, "fixture_id": f"{scenario}-{action}", "captured_at": captured,
+                "backend_commit": SHA, "route": verb.method + " " + rest_path(verb), "request": request,
+                "response_status": 200, "response": response, "setup": setup,
+                "request_sha256": hashlib.sha256(canonical(request)).hexdigest(),
+                "response_sha256": hashlib.sha256(canonical(response)).hexdigest(),
+                "setup_sha256": hashlib.sha256(canonical(setup)).hexdigest(),
+                "contains_personal_data": False, "sanitisation": [], "capture_command": COMMAND,
+                "execution": "Isolated memory store; deterministic answerer; no provider model or billed call",
+                "verified_by": "tests/document-review.mjs"})
+    print(json.dumps(result, ensure_ascii=False))
+    raise SystemExit(0)
 if len(sys.argv) > 3 and sys.argv[3] == "contracts":
     from agents import review_contract as rc
     book_path = "playbooks/nda_v1.json"
