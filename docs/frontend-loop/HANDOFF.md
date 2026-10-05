@@ -9,6 +9,16 @@ Implementation was already committed/published; this approval is recorded withou
 
 ## Current sequence and build checkpoints
 
+Newest D-020: PHASE_3_CONTRACT_FINDINGS.md, baseline7dc9a16 verified published. Same review-example route
+now has contract-deviation/judgment/missing with fixed extraction, DRAFT standards/rationale, missing exact
+quote, unheld law and match-scope qualifiers. No model/provider call or client boundary, decisions disabled.
+Curie R2 three qualifiers cleared; corporate262+contract252 tests; final typecheck/lint/contracts/loop/build
+29routes/51chunks407,964bytes PASS;3final localhostHTML checks pass, not visual acceptance. Exact command/
+capturetime refreshed for7fixtures, payloadhashes unchanged. Brave remains deferred after user interruption.
+DevPID46363 unchanged; usage32%/26%;1,636-byte headroom. Q-010/011/012/auth/live/final acceptance remain.
+Next: pinned Phase4 review-table states/spend/CSV frontend groundwork; bounded Brave when available.
+Inspect Git for newest publication; no merge/deploy. Preserve completed captures/qualifiers, not fake live results.
+
 Latest D-019: PHASE_3_REVIEW_FINDINGS.md, baseline5377f0c. Captured corporate-document findings view at
 /workspace/documents/review-example; server-only, native disclosures, all pinned checks, reported evidence
 not literal quote, defect criteria not assumed findings; no uploaded/local draft reviewed. Decisions disabled.

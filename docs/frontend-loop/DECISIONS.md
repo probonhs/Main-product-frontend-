@@ -234,3 +234,14 @@ Do not copy historical decisions here unless they are still in force. Link their
   Native disclosures keep existing budget cap, not a runtime performance or complete acceptance claim.
 - **Reversal:** Changed pinned checks or practitioner confusion requires recapture/stronger separation.
   Processing, auth, connected decisions, browser/final acceptance and founder release stay gated.
+
+## D-020 — Captured contract comparison, not invented clause approval (5 October 2026)
+
+- **Decision:** Reuse server-only review-example route for finding versus playbook standard/rationale;
+  fixed-extraction captures explicitly not actual model reading. DRAFT is not adopted company policy.
+- **Boundary:** No clause quotation returned means no manufactured quote/approval. MATCHES based on no
+  extraction is not confirmed absence; city-list match does not verify company operations. Raw data preserved.
+  Existing processing/auth/live/approval gates remain. No new client boundary or spending.
+- **Evidence:** PHASE_3_CONTRACT_FINDINGS.md; pinned889ba54 stubbed-handler captures, Curie R2 qualifiers cleared.
+- **Reversal:** Verified exact item-bound quote/match context or changed playbook contract enables a new slice,
+  not silent reinterpretation. Real practitioner/browser/release approval remain outstanding.

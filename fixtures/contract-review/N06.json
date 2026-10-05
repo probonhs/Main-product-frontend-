@@ -1,0 +1,136 @@
+{
+  "schema_version": 1,
+  "fixture_id": "N06",
+  "captured_at": "2026-10-05T17:51:05.177486+00:00",
+  "backend_commit": "889ba548083ea67c8bd72b552a2bcf6d68cdf70b",
+  "route": "POST /v2/review-contract",
+  "request": {
+    "text": "MUTUAL NON-DISCLOSURE AGREEMENT\n\nThis Agreement is made on 1 April 2026 between Acme Private Limited and Beta Limited.\n\n1. Definition of Confidential Information\n\"Confidential Information\" means any information disclosed by one party to the other,\nwhether orally or in writing, that is marked confidential or would reasonably be\nunderstood to be confidential.\n\n2. Confidentiality Obligation\nEach party shall keep the other's Confidential Information secret and shall not disclose\nit to any third party without prior written consent.\n\n3. Permitted Disclosure\nA party may disclose Confidential Information to the extent required by law or by an\norder of a court of competent jurisdiction.\n\n4. Return or Destruction\nOn termination each party shall return or destroy all Confidential Information in its\npossession.\n\n5. Term\nThis Agreement continues for three years from the date above.\n\n6. Limitation of Liability\nThe total liability of either party under this Agreement shall not exceed Rs 50,00,000.\n\n7. Governing Law\nThis Agreement is governed by the laws of India.\n\n8. Jurisdiction\nThe courts at Mumbai shall have exclusive jurisdiction.\n\n9. Non-Compete\nThe Receiving Party shall not compete with the Disclosing Party for two years.\n",
+    "name": "N06",
+    "playbook": "playbooks/nda_v1.json",
+    "test_data": true
+  },
+  "response_status": 200,
+  "response": {
+    "playbook_status": "DRAFT",
+    "requires_review": true,
+    "model": "azure/llama-3-3-70b",
+    "clauses_in_contract": 10,
+    "findings": [
+      {
+        "rule_id": "NDA-01",
+        "clause": "Term",
+        "status": "MATCHES",
+        "kind": "POTENTIAL_ISSUE",
+        "detail": "'three years' (3) against the standard maximum '3 years' (3)",
+        "standard_text": "Confidentiality lasts no more than 3 years from signature.",
+        "rationale": "A longer obligation costs more to administer than it is usually worth, and is the term most often negotiated down."
+      },
+      {
+        "rule_id": "NDA-02",
+        "clause": "Governing Law",
+        "status": "MATCHES",
+        "kind": "POTENTIAL_ISSUE",
+        "detail": "'India' against the accepted list ['India', 'laws of India', 'the laws of India', 'Republic of India', 'India, without regard to conflict of laws']",
+        "standard_text": "The agreement is governed by Indian law.",
+        "rationale": "A foreign governing law makes any dispute slower and more expensive to run."
+      },
+      {
+        "rule_id": "NDA-03",
+        "clause": "Jurisdiction",
+        "status": "MATCHES",
+        "kind": "POTENTIAL_ISSUE",
+        "detail": "'Mumbai' against the accepted list ['Mumbai', 'New Delhi', 'Delhi', 'Bengaluru', 'Bangalore', 'Chennai', 'Kolkata', 'Hyderabad']",
+        "standard_text": "Exclusive jurisdiction sits with the courts of an Indian city where the company already operates.",
+        "rationale": "Exclusive jurisdiction somewhere the company has no presence turns a small dispute into a travel budget."
+      },
+      {
+        "rule_id": "NDA-04",
+        "clause": "Definition of Confidential Information",
+        "status": "MATCHES",
+        "kind": "POTENTIAL_ISSUE",
+        "detail": "present, which is the standard",
+        "standard_text": "The agreement defines what counts as confidential information.",
+        "rationale": "Without a definition there is nothing in particular being protected."
+      },
+      {
+        "rule_id": "NDA-05",
+        "clause": "Confidentiality Obligation",
+        "status": "MATCHES",
+        "kind": "POTENTIAL_ISSUE",
+        "detail": "present, which is the standard",
+        "standard_text": "The agreement contains a promise to keep the other side's confidential information secret.",
+        "rationale": "It is the operative promise, so its absence is the most consequential omission this document type can have."
+      },
+      {
+        "rule_id": "NDA-06",
+        "clause": "Permitted Disclosure",
+        "status": "MATCHES",
+        "kind": "POTENTIAL_ISSUE",
+        "detail": "present, which is the standard",
+        "standard_text": "The agreement permits disclosure where it is required by law or by a court.",
+        "rationale": "Without that carve-out the receiving party is promising something it cannot perform."
+      },
+      {
+        "rule_id": "NDA-07",
+        "clause": "Return or Destruction",
+        "status": "MATCHES",
+        "kind": "POTENTIAL_ISSUE",
+        "detail": "present, which is the standard",
+        "standard_text": "The agreement says what happens to the material when it ends.",
+        "rationale": "It is the clause people discover is missing at the end, when the material is already out."
+      },
+      {
+        "rule_id": "NDA-08",
+        "clause": "Non-Compete",
+        "status": "NEEDS_LAWYER",
+        "kind": "POTENTIAL_ISSUE",
+        "detail": "present, and not in the approved list. Code cannot decide whether this form is acceptable; a person has to look",
+        "standard_text": "The agreement contains no non-compete.",
+        "rationale": "A non-compete changes what an NDA does and is easy to miss inside one; whether a particular form is acceptable is a person's call, not code's."
+      },
+      {
+        "rule_id": "NDA-09",
+        "clause": "Non-Solicit",
+        "status": "MATCHES",
+        "kind": "POTENTIAL_ISSUE",
+        "detail": "the clause is absent, which is the standard",
+        "standard_text": "The agreement contains no non-solicit.",
+        "rationale": "Same as the non-compete: it changes what the document does, and whether the form is acceptable is a person's call, not code's."
+      },
+      {
+        "rule_id": "NDA-10",
+        "clause": "Limitation of Liability",
+        "status": "MATCHES",
+        "kind": "POTENTIAL_ISSUE",
+        "detail": "'Rs 50,00,000' (5e+06) against the standard maximum '1 crore' (1e+07)",
+        "standard_text": "Liability is capped at no more than Rs 1 crore.",
+        "rationale": "An uncapped or very high cap is unusual on a mutual NDA, and this figure is exactly the kind a reviewing lawyer should replace with the company's own."
+      }
+    ],
+    "unverified": [],
+    "law_not_held": [
+      {
+        "body": "CONTRACT1872",
+        "refusal": "Indian Contract Act, 1872 (Parliament of India) is within scope — it covers formation, consideration, free consent, void and voidable agreements, restraint of trade, remedies for breach — but no instrument has been acquired, so nothing here can be decided. Nothing acquired. F12 reviews a contract against a COMPANY PLAYBOOK, which is a commercial standard and not a legal test. Any question about whether a clause is valid, enforceable or void reaches this body and is refused by name until it is held. This is a statement about what we hold, not a finding that no obligation applies."
+      },
+      {
+        "body": "ARBITRATION1996",
+        "refusal": "Arbitration and Conciliation Act, 1996 (Parliament of India) is within scope — it covers arbitration agreements, seat and venue, interim relief, enforcement of awards — but no instrument has been acquired, so nothing here can be decided. Nothing acquired. Reached by the dispute-resolution clause of almost every commercial contract, which is why declaring it matters more here than its acquisition priority suggests. This is a statement about what we hold, not a finding that no obligation applies."
+      },
+      {
+        "body": "STAMP",
+        "refusal": "Stamp duty — Indian Stamp Act, 1899 and State amendments (State governments) is within scope — it covers instrument stamping on share transfers, debentures, agreements — but no instrument has been acquired, so nothing here can be decided. Declared with a warning: rates vary across 25+ States and Union Territories, so a single national answer is wrong by construction. Any answer here must be State-qualified or refused. This is a statement about what we hold, not a finding that no obligation applies."
+      }
+    ],
+    "run_id": null
+  },
+  "request_sha256": "e75058301101b3b52b5b58541a9ea3ba09b09ec780899757200285cc5d2e84ba",
+  "response_sha256": "adffa920262eeb5a14bd781be78f18257d13029a9a4968446fba86de69173791",
+  "contains_personal_data": false,
+  "sanitisation": [],
+  "capture_command": "/Users/abdulazeez/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3 scripts/capture-document-review.py /private/tmp/placedon-review-evidence.70Jo2y /Users/abdulazeez/Desktop/Placedon-workspace/backend contracts",
+  "execution": "Injected deterministic fixture extraction; no provider model called",
+  "playbook_sha256": "a7e9f0f1b2264d7bbd12b853ef4d66ef98c255a35fdda0b6ead3ad21e80d9d8f",
+  "verified_by": "tests/document-review.mjs"
+}

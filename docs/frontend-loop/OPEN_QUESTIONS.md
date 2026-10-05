@@ -20,5 +20,11 @@ open for integration/release, not reasons to stop independent frontend implement
 | Q-010 | What proven upload→review text and retention contract will attachments use? | Teammate, narrow contract/fix; founder processing permission | Connected attachments/review, not local preparation | At 889ba54 upload stores hash/size/name/reason in memory, not text; _task_args looks for document.text then falls back to conversation text. Prove exact extracted text reaches the chosen review across required persistence boundaries; do not treat a READ file panel as that proof. |
 | Q-011 | Can corporate pattern checks distinguish negative statements and incomplete evidence? | Teammate, narrow detector review | Pilot reliance on corporate checks, not captured frontend examples | Captured pinned889ba54 negative-quorum specimen returns C.quorum PASS for “quorum being absent”. Frontend preserves output and states detector limits; it does not fix the detector. Require a backend regression/clarification before reliance or approval enablement. PHASE_3_REVIEW_FINDINGS.md. |
 
+Q-012 — Contract evidence and match scope: backend owner should confirm a real item-bound extracted quote
+path before approval integration. At889ba54 review_contract findings do not serve extracted spans; absence
+rules can MATCH on omitted extraction, and jurisdiction matches a fixed city list, not company presence.
+Frontend qualifiers preserve these boundaries; Q-010 alone does not resolve them. Blocks live contract
+decision/reliance, not captured standards UI. Request a narrow clarification/regression, not a backend rewrite.
+
 Git workflow scope is an operational access condition, not a product decision. Record the actual push
 failure if it occurs; never drop workflow history or claim remote publication from a local commit.

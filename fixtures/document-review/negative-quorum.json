@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "fixture_id": "negative-quorum",
-  "captured_at": "2026-10-05T17:35:00.138770+00:00",
+  "captured_at": "2026-10-05T17:51:06.236386+00:00",
   "backend_commit": "889ba548083ea67c8bd72b552a2bcf6d68cdf70b",
   "route": "POST /v2/review-document",
   "request": {
@@ -158,6 +158,6 @@
   "response_sha256": "816ea97fbde4dbd2374604a3eb10eae549d0cd7c3b2fde8d80af6cedf2b5c0cf",
   "contains_personal_data": false,
   "sanitisation": [],
-  "capture_command": "scripts/capture-document-review.py <unmodified SHA archive> <backend repository>",
+  "capture_command": "/Users/abdulazeez/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3 scripts/capture-document-review.py /private/tmp/placedon-review-evidence.70Jo2y /Users/abdulazeez/Desktop/Placedon-workspace/backend",
   "verified_by": "tests/document-review.mjs"
 }

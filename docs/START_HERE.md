@@ -2,7 +2,9 @@
 
 Updated 5 October 2026. This is the current product handoff, not a claim of production readiness.
 
-GitHub preservation succeeded on `codex/frontend-handoff` through `5377f0c`; main remains unchanged.
+GitHub preservation succeeded on `codex/frontend-handoff` through `7dc9a16`; main remains unchanged.
+Newest Phase3 build: [captured contract/playbook findings](frontend-loop/PHASE_3_CONTRACT_FINDINGS.md), D-020;
+fixed extraction, draft standards, no live review or approval. Inspect Git for publication.
 Latest Phase3 build: [captured corporate-review findings](frontend-loop/PHASE_3_REVIEW_FINDINGS.md), D-019;
 not live review or final browser acceptance. Inspect Git for checkpoint publication.
 Latest user refinement: [chat-first interaction](frontend-loop/CHAT_INTERFACE_REFINEMENT.md), D-018;
@@ -48,6 +50,8 @@ delete branches or close someone else's PR to make the history look cleaner.
 - Typed validation, backend-pinned fixtures, contract/render tests, privacy controls and a bounded review runner.
 - Separate captured corporate-review findings with evidence/basis/limits and next action. These never review
   the local working copy; approval/rejection unavailable.
+- Captured contract comparisons show finding versus draft standard/rationale; missing exact quotation,
+  law held-scope, fixed extraction and absence/location match limits explicit. No approved company playbook implied.
 
 The latest user choice settles the starting appearance. It does not approve every future screen or waive
 browser, tenancy, accessibility or legal-data checks.

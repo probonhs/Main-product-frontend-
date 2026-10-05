@@ -64,5 +64,35 @@ try {
   const page = readFileSync(new URL("src/app/workspace/documents/page.tsx", root), "utf8");
   ok(page.includes('target="_blank" rel="noopener noreferrer"')); ok(page.includes("keep your draft on this page"));
   for (const name of ["page", "review-result"]) { const source = readFileSync(new URL(`src/app/workspace/documents/review-example/${name}.tsx`, root), "utf8"); for (const forbidden of ['"use client"', "dangerouslySetInnerHTML", "fetch(", "localStorage", "sessionStorage"]) eq(source.includes(forbidden), false); }
-  console.log(`PASS: ${assertions} captured corporate-review provenance/schema/render assertions; no network or approval`);
+  const corporateAssertions = assertions;
+  const { contractReviewSchema } = await import("../src/lib/engine/contract-review.ts");
+  const { ContractReviewResult } = await import("../src/app/workspace/documents/review-example/contract-result.tsx");
+  for (const id of ["N02", "N06", "N09"]) {
+    const fixture = JSON.parse(readFileSync(new URL(`fixtures/contract-review/${id}.json`, root), "utf8"));
+    eq(fixture.fixture_id, id); eq(fixture.schema_version, 1); eq(fixture.contains_personal_data, false); eq(fixture.sanitisation, []);
+    eq(fixture.backend_commit, "889ba548083ea67c8bd72b552a2bcf6d68cdf70b"); eq(fixture.route, "POST /v2/review-contract");
+    eq(fixture.response_status, 200); eq(fixture.request.test_data, true); eq(fixture.request.playbook, "playbooks/nda_v1.json");
+    ok(Number.isFinite(Date.parse(fixture.captured_at))); ok(/^[a-f0-9]{64}$/.test(fixture.playbook_sha256));
+    eq(fixture.execution, "Injected deterministic fixture extraction; no provider model called");
+    eq(fixture.verified_by, "tests/document-review.mjs"); ok(fixture.capture_command.endsWith("contracts"));
+    eq(hash(fixture.request), fixture.request_sha256); eq(hash(fixture.response), fixture.response_sha256);
+    const review = contractReviewSchema.parse(fixture.response);
+    eq(review.playbook_status, "DRAFT"); eq(review.requires_review, true); eq(review.run_id, null);
+    const html = renderToStaticMarkup(React.createElement(ContractReviewResult, { review, documentText: fixture.request.text, capturedAt: fixture.captured_at, backendCommit: fixture.backend_commit }));
+    for (const text of ["Captured sample", "fixed fixture extraction", "Draft playbook — not approved", "not been adopted by your company", "not a legal defect", "Exact clause quotation not returned", "not prove that the clause is absent", "Decisions are unavailable", "no provider model called", "not the model used for this capture", "not a real model’s ability"]) ok(html.includes(text));
+    eq((html.match(/disabled="" aria-describedby="contract-decision-gate"/g) || []).length, 2);
+    eq(html.includes("<form"), false); eq(html.includes("<blockquote"), false);
+    for (const finding of review.findings) { ok(html.includes(finding.rule_id)); ok(html.includes(renderToStaticMarkup(React.createElement(React.Fragment, null, finding.standard_text)))); ok(html.includes(renderToStaticMarkup(React.createElement(React.Fragment, null, finding.rationale)))); }
+    for (const item of review.law_not_held) ok(html.includes(item.body));
+    ok(html.includes("absence not confirmed")); ok(html.includes("Company operations in that city were not checked"));
+    if (review.findings.some(item => item.detail.includes("approved"))) ok(html.includes("draft configured values"));
+    for (const patch of [{ playbook_status: "UNKNOWN" }, { requires_review: false }, { run_id: "fake" }, { law_not_held: [] }, { findings: [] }, { added: true }]) eq(contractReviewSchema.safeParse({ ...review, ...patch }).success, false);
+    for (const patch of [{ status: "VERIFIED" }, { kind: "LEGAL_DEFECT" }, { standard_text: "" }, { rationale: "" }]) eq(contractReviewSchema.safeParse({ ...review, findings: [{ ...review.findings[0], ...patch }, ...review.findings.slice(1)] }).success, false);
+    eq(contractReviewSchema.safeParse({ ...review, findings: review.findings.map((item, index) => index === 1 ? { ...item, rule_id: review.findings[0].rule_id } : item) }).success, false);
+    const attack = renderToStaticMarkup(React.createElement(ContractReviewResult, { review: { ...review, findings: review.findings.map(item => ({ ...item, detail: "<script>synthetic attack</script>" })) }, documentText: "<img onerror=alert(1)>", capturedAt: fixture.captured_at, backendCommit: fixture.backend_commit }));
+    ok(attack.includes("&lt;script&gt;")); eq(attack.includes("<script>"), false); eq(attack.includes("<img"), false);
+  }
+  const component = readFileSync(new URL("src/app/workspace/documents/review-example/contract-result.tsx", root), "utf8");
+  for (const forbidden of ['"use client"', "dangerouslySetInnerHTML", "fetch(", "localStorage", "sessionStorage"]) eq(component.includes(forbidden), false);
+  console.log(`PASS: ${corporateAssertions} corporate + ${assertions - corporateAssertions} contract captured-review provenance/schema/render assertions; no network or approval`);
 } finally { globalThis.fetch = oldFetch; hooks.deregister(); }
