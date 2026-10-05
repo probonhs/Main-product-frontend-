@@ -1,8 +1,10 @@
 # Placedon frontend — start here
 
-Updated 4 October 2026. This is the current product handoff, not a claim of production readiness.
+Updated 5 October 2026. This is the current product handoff, not a claim of production readiness.
 
-GitHub preservation succeeded on `codex/frontend-handoff` through `68da9d5`; main remains unchanged.
+GitHub preservation succeeded on `codex/frontend-handoff` through `5377f0c`; main remains unchanged.
+Latest Phase3 build: [captured corporate-review findings](frontend-loop/PHASE_3_REVIEW_FINDINGS.md), D-019;
+not live review or final browser acceptance. Inspect Git for checkpoint publication.
 Latest user refinement: [chat-first interaction](frontend-loop/CHAT_INTERFACE_REFINEMENT.md), D-018;
 bounded Brave interaction evidence, not full responsive or connected acceptance.
 Phase 2 run updates are documented in [bounded updates](frontend-loop/PHASE_2_RUN_UPDATES.md).
@@ -44,6 +46,8 @@ delete branches or close someone else's PR to make the history look cleaner.
 - Document-first preparation at `/workspace/documents`: paste/read UTF-8 text, then name/choose review and
   inspect a separate snapshot. No upload, storage or review result; PHASE_3_INTAKE_REFINEMENT.md and Q-010.
 - Typed validation, backend-pinned fixtures, contract/render tests, privacy controls and a bounded review runner.
+- Separate captured corporate-review findings with evidence/basis/limits and next action. These never review
+  the local working copy; approval/rejection unavailable.
 
 The latest user choice settles the starting appearance. It does not approve every future screen or waive
 browser, tenancy, accessibility or legal-data checks.

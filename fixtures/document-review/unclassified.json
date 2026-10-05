@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "fixture_id": "unclassified",
+  "captured_at": "2026-10-05T17:19:45.438604+00:00",
+  "backend_commit": "889ba548083ea67c8bd72b552a2bcf6d68cdf70b",
+  "route": "POST /v2/review-document",
+  "request": {
+    "text": "Dear colleague, please acknowledge receipt of this synthetic specimen letter."
+  },
+  "response_status": 200,
+  "response": {
+    "doc_type": "unknown",
+    "status": "UNCLASSIFIED",
+    "code": "CLASSIFICATION_UNCERTAIN",
+    "note": "This document could not be identified as minutes, a notice or an outcome filing, so no check was run against it. That is uncertainty about the document, NOT a finding that it is free of defects: every check here is written for a particular document type, and one run against a document nobody has identified would be a claim about a thing we cannot name.",
+    "meeting_kind": "board",
+    "requires_review": true,
+    "checks_run": 0,
+    "defect_count": 0,
+    "needs_human_count": 0,
+    "findings": [],
+    "run_id": null
+  },
+  "request_sha256": "0c2e2e87ed207ff3b55b063f7dac7820370da1feb7bb6b41f3847645a89cdcc3",
+  "response_sha256": "b6b32ec95a871170bc503978f6413c76bebd413644638195e557b18dabe07942",
+  "contains_personal_data": false,
+  "sanitisation": [],
+  "capture_command": "scripts/capture-document-review.py <unmodified SHA archive> <backend repository>",
+  "verified_by": "tests/document-review.mjs"
+}

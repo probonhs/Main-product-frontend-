@@ -223,3 +223,14 @@ Do not copy historical decisions here unless they are still in force. Link their
 - **Review:** CHAT_INTERFACE_REFINEMENT.md; independent R2 IME/held-Enter findings fixed. Bounded Brave
   interactions pass after refreshing the verified preview runtime; full responsive/live acceptance pending.
   Revisit keyboard behavior if actual input-method testing finds premature sends. No automatic release.
+
+## D-019 — Captured corporate-review findings (5 October 2026)
+
+- **Decision:** Server-only captured result: all pinned checks, status-specific action, reported evidence,
+  stated basis and detector limits. Local intake unchanged; samples open separately, do not consume drafts.
+- **Boundary:** Run completion/PASS do not certify compliance; criteria are not findings, absence is not a
+  quotation. Missing legal date/source retrieval stays missing. No live review, client-only approval or spending.
+- **Evidence:** PHASE_3_REVIEW_FINDINGS.md; real-handler synthetic captures889ba54; R2 corrections cleared.
+  Native disclosures keep existing budget cap, not a runtime performance or complete acceptance claim.
+- **Reversal:** Changed pinned checks or practitioner confusion requires recapture/stronger separation.
+  Processing, auth, connected decisions, browser/final acceptance and founder release stay gated.

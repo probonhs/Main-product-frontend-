@@ -1,0 +1,163 @@
+{
+  "schema_version": 1,
+  "fixture_id": "notice",
+  "captured_at": "2026-10-05T17:19:45.438604+00:00",
+  "backend_commit": "889ba548083ea67c8bd72b552a2bcf6d68cdf70b",
+  "route": "POST /v2/review-document",
+  "request": {
+    "text": "NOTICE OF THE ANNUAL GENERAL MEETING\nNotice is hereby given that the Annual General Meeting of the members of Synthetic Specimen Private Limited will be held on 30 September 2026.\nAn explanatory statement is annexed. A proxy form is enclosed. E-voting will be available."
+  },
+  "response_status": 200,
+  "response": {
+    "doc_type": "notice",
+    "status": "ANSWERED",
+    "code": null,
+    "note": "Every finding cites Secretarial Standards and a real ROC adjudication order. A NEEDS_BOOK item is not a defect and not a pass: it is a property of the physical minutes book that no reader of a file can decide.",
+    "meeting_kind": "board",
+    "requires_review": true,
+    "checks_run": 12,
+    "defect_count": 1,
+    "needs_human_count": 0,
+    "findings": [
+      {
+        "rule_id": "T1.6a",
+        "status": "DEFECT",
+        "source": "SS-1 7.1.x / SS-2 17.2.2.1",
+        "defect": "Serial number of the meeting not stated in the minutes",
+        "quoted_span": "no meeting serial number found",
+        "precedent": "Sunima Trading P Ltd, ROC UP-I, 13.07.2026 — Rs 45,000; Merino Shelters, 15.05.2026",
+        "applies": true,
+        "advisory_only": false,
+        "needs_human": false
+      },
+      {
+        "rule_id": "T1.6b",
+        "status": "N/A",
+        "source": "SS-2 17.2.2.1(o) / SS-1 equivalent",
+        "defect": "Time of commencement of the meeting not recorded",
+        "quoted_span": "not applicable to a document of type 'notice'",
+        "precedent": "Rashi Steel and Power, ROC Chhattisgarh, 24.03.2026 & 07.04.2026; Triveni Nidhi, 04.09.2024",
+        "applies": false,
+        "advisory_only": false,
+        "needs_human": false
+      },
+      {
+        "rule_id": "T1.6c",
+        "status": "N/A",
+        "source": "SS-2 17.2.2.1(o) / SS-1 equivalent",
+        "defect": "Time of conclusion of the meeting not recorded",
+        "quoted_span": "not applicable to a document of type 'notice'",
+        "precedent": "Rashi Steel and Power, ROC Chhattisgarh, 24.03.2026 & 07.04.2026; Triveni Nidhi, 04.09.2024",
+        "applies": false,
+        "advisory_only": false,
+        "needs_human": false
+      },
+      {
+        "rule_id": "T1.7",
+        "status": "N/A",
+        "source": "SS-1 7.6",
+        "defect": "Place at which the minutes were signed not recorded",
+        "quoted_span": "not applicable to a document of type 'notice'",
+        "precedent": "Wind World (India) Ltd, ROC Goa/Daman & Diu, 2024; Sany Heavy Industry, 17.05.2024",
+        "applies": false,
+        "advisory_only": false,
+        "needs_human": false
+      },
+      {
+        "rule_id": "T1.4a",
+        "status": "N/A",
+        "source": "SS-1 7.5.2 / SS-2 17.4.2 r/w R.25(1)(b)",
+        "defect": "Date of entry of the minutes in the Minutes Book not recorded",
+        "quoted_span": "not applicable to a document of type 'notice'",
+        "precedent": "Harsh Gathani Enterprise, ROC Ahmedabad, 24.06.2025; Sen Hon Lee, 13.10.2025",
+        "applies": false,
+        "advisory_only": false,
+        "needs_human": false
+      },
+      {
+        "rule_id": "T1.4b",
+        "status": "N/A",
+        "source": "R.25(1)(b), SS-1 7.5.2",
+        "defect": "Cannot verify the 30-day entry deadline",
+        "quoted_span": "not applicable to a document of type 'notice'",
+        "precedent": "Trouw Nutrition India, ROC Telangana, 22.10.2024 — Rs 21.35 lakh across 54 board meetings",
+        "applies": false,
+        "advisory_only": false,
+        "needs_human": false
+      },
+      {
+        "rule_id": "T1.5",
+        "status": "N/A",
+        "source": "SS-1 7.6",
+        "defect": "Minutes signed by another director on behalf of the Chairman",
+        "quoted_span": "not applicable to a document of type 'notice'",
+        "precedent": "Landomus Realty Ventures, ROC Bangalore, 31.03.2026; Dystar India, 09.09.2025",
+        "applies": false,
+        "advisory_only": false,
+        "needs_human": false
+      },
+      {
+        "rule_id": "C.quorum",
+        "status": "N/A",
+        "source": "SS-1 7.2.2.1(e)",
+        "defect": "Presence of quorum not recorded",
+        "quoted_span": "not applicable to a document of type 'notice'",
+        "precedent": "Mandatory enumerated content; SS-1 7.2.2.1",
+        "applies": false,
+        "advisory_only": false,
+        "needs_human": false
+      },
+      {
+        "rule_id": "T1.8",
+        "status": "N/A",
+        "source": "SS-1 7.3.2 / SS-2 17.3.2",
+        "defect": "Minutes not written in the third person",
+        "quoted_span": "not applicable to a document of type 'notice'",
+        "precedent": "No penalty order found for tense alone — advisory",
+        "applies": false,
+        "advisory_only": true,
+        "needs_human": false
+      },
+      {
+        "rule_id": "T1.1",
+        "status": "N/A",
+        "source": "SS-1 7.1.4 / SS-2 17.1.4",
+        "defect": "Minutes book pages not consecutively numbered across the whole book",
+        "quoted_span": "not applicable to a document of type 'notice'",
+        "precedent": "Rosmerta Technologies, ROC Delhi, 07.10.2025 — numbering restarted each FY; ~24 of 68 orders",
+        "applies": false,
+        "advisory_only": false,
+        "needs_human": false
+      },
+      {
+        "rule_id": "T1.2",
+        "status": "N/A",
+        "source": "SS-1 7.6.2",
+        "defect": "Chairman did not initial every page of the minutes",
+        "quoted_span": "not applicable to a document of type 'notice'",
+        "precedent": "Chartered Mercantile Mutual Benefits, ROC Kanpur, 10.02.2026; Rashi Steel, 24.03.2026",
+        "applies": false,
+        "advisory_only": false,
+        "needs_human": false
+      },
+      {
+        "rule_id": "T1.3",
+        "status": "N/A",
+        "source": "SS-1 7.1.4",
+        "defect": "Blank pages not scored out and not initialled by the Chairman",
+        "quoted_span": "not applicable to a document of type 'notice'",
+        "precedent": "Madhyam Agrivet Industries, ROC Pune, 30.06.2023; Rosmerta Autotech, 09.10.2025",
+        "applies": false,
+        "advisory_only": false,
+        "needs_human": false
+      }
+    ],
+    "run_id": null
+  },
+  "request_sha256": "47a41a1538222a41a58ec2fceb458b7b5056687261e09dc82723ec55497d5d96",
+  "response_sha256": "3dbaada89c2ea4e6bf065d2950983c259dac40e7b05ad1c7b5a84b16e2624894",
+  "contains_personal_data": false,
+  "sanitisation": [],
+  "capture_command": "scripts/capture-document-review.py <unmodified SHA archive> <backend repository>",
+  "verified_by": "tests/document-review.mjs"
+}
