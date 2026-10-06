@@ -21,7 +21,8 @@ acceptance and remaining full accessibility/error checks move to post-build; ori
 | 4 | Review tables/spend/cancellation/CSV | CAPTURED_VIEW_BUILT / NOT_INTEGRATED | PHASE_4_REVIEW_TABLES.md;396 assertions, partial/attempted/cancel states, subtotal/unknown costs; Q-010/013/014 and live export/worker acceptance remain |
 | 4 | Drafts/blocking/version/diff/DOCX | NOT_INTEGRATED | Current draft contracts and support/approval boundary |
 | 4 | Company/source/law-change workspace | PARTIAL_LEGACY / NOT_CANONICAL | Real scope; no live MCA or company-filtered event promise |
-| 5 | Limitations/feedback/privacy controls | LIMITATIONS_BUILT / REST_GATED | Q-005, retention/deletion contract |
+| 5 | Limitations/Help/feedback/privacy controls | HELP_AND_UNSENT_NOTE_BUILT / SUBMISSION_DELETION_GATED | PHASE_5_PREPARATION.md;46 structural assertions; Q-005 destination/consent/retention/deletion, Brave acceptance remain |
+| 5 | Candidate acceptance inventory / CI coverage | DECLARATION_CHECKER_BUILT / ACCEPTANCE_INCOMPLETE | PILOT_ACCEPTANCE.md/json;115 tests; all11 NOT_RUN/candidate unset; codex push trigger added, remote CI not presumed |
 | 5 | Responsive/a11y/performance/security acceptance | NEEDS_VERIFICATION | Changed states in Brave, measured gates |
 | 5 | Real practitioner pilot and release | HUMAN_GATED | Q-002/Q-006; founder final approval |
 

@@ -1,6 +1,6 @@
 # Feature, API and gap map
 
-Inspected 2 October 2026. Backend latest fetched main: `889ba548083ea67c8bd72b552a2bcf6d68cdf70b`.
+Backend inspected 2 October 2026; frontend status updated 6 October. Latest fetched main: `889ba548083ea67c8bd72b552a2bcf6d68cdf70b`.
 Frontend conversations currently target `127ef70a1187273707dd7e19aa9a6c7e0dc61220`; original deterministic
 fixtures target `9486600`. Code existence, connected acceptance and production readiness are separate statuses.
 
@@ -31,7 +31,7 @@ company facts or conversational reasoning memory; each question needs its own re
 | See law changes | `/v1/company/{cin}/events`, instrument impact; `events.assess` | Older product surfaces; not canonical workspace | Founder: scope-correct integration. Legacy CIN does not filter events; no company-alert promise. |
 | Portfolio / stored company matters | No verified profile/portfolio store contract in this handoff | Not built | Defer UI dependent on persistence; request a narrow backend contract only if pilot needs it. |
 | Earlier-date check | No approved bounded provision/text coverage contract | Intentionally absent | Keep today-only. One contextual date only after tested coverage and point-in-time text exist. |
-| Feedback / retention / deletion | No integrated end-user contract here | Limitations page only | Founder selects policy/destination; teammate implements narrowly specified backend gap, not generic infrastructure. |
+| Feedback / retention / deletion | No integrated end-user contract here | Limitations and Help/data; native unsent note, sending/deletion disabled | PHASE_5_PREPARATION.md; Q-005. Founder selects policy/destination; teammate implements narrowly specified backend gap, not generic infrastructure. Browser restoration is not secure erasure. |
 
 ## Exact integrated v2 calls
 

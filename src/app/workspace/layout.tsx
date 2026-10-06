@@ -13,7 +13,7 @@ export default function WorkspaceLayout({ children }: { children: React.ReactNod
     <div className="ws-content" id="workspace-content" tabIndex={-1}>
       <header className="ws-topbar"><span>Indian corporate law</span></header>
       {children}
-      <footer className="ws-meta">For professional review, not legal advice. <a href="/workspace/limitations">Scope & limitations</a></footer>
+      <footer className="ws-meta">For professional review, not legal advice. <a href="/workspace/limitations">Scope & limitations</a><a href="/workspace/help">Help &amp; data</a></footer>
     </div>
   </div>;
 }

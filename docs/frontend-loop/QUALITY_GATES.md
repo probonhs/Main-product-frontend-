@@ -2,9 +2,20 @@
 
 ## Continuous integration
 
-`.github/workflows/frontend-quality.yml` runs on pull requests and pushes to the product branches. It installs
-from the lockfile, validates loop governance, tests the runner, type-checks, lints, runs contract assertions,
+`.github/workflows/frontend-quality.yml` runs on pull requests and pushes to `main`, `codex/**` review branches
+and the inherited website review branch. It installs
+from the lockfile, validates loop governance, tests the runner and readiness declarations, type-checks, lints, runs contract assertions,
 builds production output and enforces the coarse client-bundle budget. A red required check blocks GO.
+The `codex/**` trigger was added on 6 October 2026; older documentation overstated review-branch coverage.
+Observe actual remote CI; local webpack success does not certify the default CI build.
+
+## Candidate evidence
+
+PILOT_ACCEPTANCE.json and PILOT_ACCEPTANCE.md separate eleven release-candidate gates from WIP verification.
+`npm run pilot:readiness` exits2 while incomplete; even complete declarations require human review and never
+authorize release. `npm run test:readiness` is an engineering test, not acceptance evidence for live workflows.
+Deferred sign-in/connections/full accessibility under D-013 remain open. Phase progression does not complete
+unbuilt features. Confirm pilot exclusions and any change to Today/portfolio research tasks explicitly.
 
 ## Performance budgets
 

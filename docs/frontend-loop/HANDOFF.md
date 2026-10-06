@@ -1,4 +1,4 @@
-# Frontend handoff — 5 October 2026
+# Frontend handoff — 6 October 2026
 
 Repository: `probonhs/Main-product-frontend-`
 Branch: `codex/frontend-handoff`; inspect `git log -5 --oneline` for actual HEAD before continuing.
@@ -8,6 +8,19 @@ Founder subsequently reviewed and approved all work through `5343e98` and reques
 Implementation was already committed/published; this approval is recorded without changing release gates.
 
 ## Current sequence and build checkpoints
+
+Newest D-022: PHASE_5_PREPARATION.md, baseline47909e3 verified published. Founder requests Phase5;
+unbuilt Phase4 drafts/version/diff/DOCX and canonical company work remain backlog, not accepted.
+Server-only Help & data/native unsent note, corrected limitations, eleven-gate candidate inventory/checker,
+CIcodex/** push trigger and115readiness/46Help assertions built. No sink/deletion/policy/auth/backend changes.
+Hilbert privacy/backend and Newton R2/Devil's Advocate delta corrections cleared. Final typecheck/quietlint/
+contracts/loop/webpack31routes/budget53chunks408,367bytes/diff PASS;1,233-byte headroom.
+Three local HTTP200/render checks (Help/limits/Ask) PASS. Brave permission review timed out; no page/screenshot/
+interaction acceptance this turn. Acceptance CLI expectedexit2/all11NOT_RUN/candidateunset/releasefalse.
+Default remoteCI/preview/live/accessibility/practitioner acceptance remain unverified. No merge/deploy.
+DevPID46363/session19460 remains localhost3300; no runtime/env changes. Usage0%/29% at turnstart.
+Next: candidate evidence inventory/remaining selected frontend slices; human policies/sign-in/scope needed
+before connected release acceptance. Inspect Git for newest checkpoint/publication; no background-loop claim.
 
 Newest D-021: PHASE_4_REVIEW_TABLES.md, baseline `c3c2120` published; table-example route with pending/mixed/
 finished/cancelled states, native quote/reason disclosures, qualified synthetic spending, captured CSV inspection.

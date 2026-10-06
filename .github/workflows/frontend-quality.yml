@@ -3,7 +3,7 @@ name: Frontend quality
 on:
   pull_request:
   push:
-    branches: [main, site/footer-icons-features-council]
+    branches: [main, "codex/**", site/footer-icons-features-council]
 
 permissions:
   contents: read
@@ -25,6 +25,7 @@ jobs:
       - run: npm ci
       - run: npm run loop:validate
       - run: npm run test:loop
+      - run: npm run test:readiness
       - run: npm run typecheck
       - run: npm run lint
       - run: npm run test:contracts

@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "assessmentDate": "2026-10-06",
+  "candidate": { "frontendCommit": null, "backendCommit": "889ba548083ea67c8bd72b552a2bcf6d68cdf70b" },
+  "gates": [
+    { "id": "engineering", "status": "NOT_RUN", "owner": "Frontend owner", "nextEvidence": "Name a release candidate, then record its typecheck, lint, tests, build and unchanged budget results. Prior WIP checks are not candidate acceptance.", "evidence": [] },
+    { "id": "identity_tenancy", "status": "NOT_RUN", "owner": "Founder / frontend owner / backend owner", "nextEvidence": "Production session choice and principal mapping; tenant/role/revocation/CSRF/ownership acceptance against the named candidate.", "evidence": [] },
+    { "id": "connected_workflows", "status": "NOT_RUN", "owner": "Frontend owner", "nextEvidence": "Approved synthetic Ask, source, follow-up, reload, run recovery and task acceptance. Record enabled pilot scope; do not treat deferred drafts or company workflows as built.", "evidence": [] },
+    { "id": "document_processing", "status": "NOT_RUN", "owner": "Founder / backend owner / frontend owner", "nextEvidence": "Approved processing path and exact upload-to-review text, unreadable-file, persistence and isolation proof. No real client material before permission.", "evidence": [] },
+    { "id": "legal_evidence", "status": "NOT_RUN", "owner": "Legal-data reviewer / backend owner", "nextEvidence": "Current response/state/source/date/quote truth; Q-008 and Q-010–Q-014 boundaries resolved or affected capabilities excluded from the approved pilot.", "evidence": [] },
+    { "id": "accessibility", "status": "NOT_RUN", "owner": "Frontend owner / accessibility reviewer", "nextEvidence": "Named-candidate Brave widths320–1440, keyboard/focus, zoom200%, live regions, contrast, motion, technical/error/unresolved states. Prior partial checks are not full acceptance.", "evidence": [] },
+    { "id": "route_performance", "status": "NOT_RUN", "owner": "Frontend owner", "nextEvidence": "Five representative-device/network runs per enabled primary route; p75 LCP/INP/CLS against existing budgets, without recording matter content.", "evidence": [] },
+    { "id": "feedback_retention", "status": "NOT_RUN", "owner": "Founder / privacy reviewer / frontend owner", "nextEvidence": "Approved support destination, consent, retention/deletion and processing statements; test the implemented controls and failures. Local clearing is not saved-data deletion.", "evidence": [] },
+    { "id": "practitioner_pilot", "status": "NOT_RUN", "owner": "Founder / real practitioner research", "nextEvidence": "At least five real participants and recorded task/comprehension/results against QUALITY_GATES.md; simulated personas do not count. Confirm scope if Today/portfolio remains unavailable.", "evidence": [] },
+    { "id": "ci_preview_rollback", "status": "NOT_RUN", "owner": "Deployment owner / frontend owner", "nextEvidence": "Actual remote CI and preview of immutable candidate, product deployment owner/domain and observed rollback process. Local webpack success does not prove CI Turbopack passed.", "evidence": [] },
+    { "id": "founder_review", "status": "NOT_RUN", "owner": "Founder", "nextEvidence": "Human final review of the named candidate, evidence, exclusions and unresolved risks. WIP checkpoint approval is not release approval.", "evidence": [] }
+  ]
+}

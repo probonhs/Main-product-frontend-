@@ -1,8 +1,12 @@
 # Placedon frontend — start here
 
-Updated 5 October 2026. This is the current product handoff, not a claim of production readiness.
+Updated 6 October 2026. This is the current product handoff, not a claim of production readiness.
 
-GitHub preservation succeeded on `codex/frontend-handoff` through `c3c2120`; main remains unchanged.
+GitHub preservation succeeded on `codex/frontend-handoff` through `47909e3`; main remains unchanged.
+Newest Phase5 groundwork: [Help/data and acceptance preparation](frontend-loop/PHASE_5_PREPARATION.md), D-022;
+native unsent note, eleven-gate declaration checker, no live feedback/deletion or release approval.
+See [candidate inventory guide](frontend-loop/PILOT_ACCEPTANCE.md). Unbuilt Phase4 drafts/company work stays
+in the backlog; progression does not mark it complete. Inspect Git for newest publication.
 Newest Phase4 build: [review tables, spending and captured CSV](frontend-loop/PHASE_4_REVIEW_TABLES.md), D-021;
 captured matrix with guarded evidence, no live review/cancellation/download. Inspect Git for publication.
 Newest Phase3 build: [captured contract/playbook findings](frontend-loop/PHASE_3_CONTRACT_FINDINGS.md), D-020;
@@ -56,6 +60,8 @@ delete branches or close someone else's PR to make the history look cleaner.
   law held-scope, fixed extraction and absence/location match limits explicit. No approved company playbook implied.
 - Captured multi-document tables distinguish five cell states, quotation/reason, cancellation and priced
   subtotal/unknown spending. Unsafe CSV rejected; live actions/downloads disabled. Q-013/Q-014 remain open.
+- Help & data distinguishes working copies from server submissions; feedback is explicitly unsent and
+  saved-data deletion unavailable. Candidate acceptance inventory remains incomplete; no policy invented.
 
 The latest user choice settles the starting appearance. It does not approve every future screen or waive
 browser, tenancy, accessibility or legal-data checks.
@@ -85,8 +91,11 @@ npm run lint
 npm run test:contracts
 npm run loop:validate
 npm run test:loop
+npm run test:readiness
 npm run build -- --webpack
 npm run performance:budget
+# Optional release-candidate inventory (expected exit 2 while incomplete, never grants release)
+npm run pilot:readiness
 ```
 
 The last build passed using webpack; Turbopack stalled locally without a diagnosis. CI still uses the

@@ -259,6 +259,28 @@ try {
   excludes(css, ".ws-primary.ws-chat:has(.ws-source-drawer[open])", "Sources: opening no longer expands or recenters composer");
 
   console.log(`PASS: ${assertions} offline static-render assertions across five captured Ask records`);
+  const askAssertions = assertions;
+  const { default: Help } = await import("../src/app/workspace/help/page.tsx");
+  const { default: Limitations } = await import("../src/app/workspace/limitations/page.tsx");
+  const help = renderToStaticMarkup(React.createElement(Help));
+  const limits = renderToStaticMarkup(React.createElement(Limitations));
+  for (const text of ["Clear working copy", "does not upload or review", "not deletion of a file", "browser may retain or restore", "Processing may involve a model", "does not prove that your message was not stored or processed", "does not delete saved messages or cancel server work", "No product-wide retention, training-use or data-residency promise", "Do not submit confidential client material", "Feedback has not been sent", "no feedback submission or storage service"]) includes(help, text, "Help: processing/storage boundaries remain explicit");
+  includes(help, 'for="workspace-feedback-note"', "Feedback has a native associated label");
+  includes(help, 'aria-describedby="help-feedback-gate help-feedback-storage"', "Feedback describes sending and restoration limits");
+  includes(help, 'aria-describedby="help-deletion-gate"', "Deletion describes unavailability");
+  for (const name of ["Send feedback", "Delete saved data"]) {
+    assert.match(help, new RegExp(`<button[^>]*disabled=""[^>]*>${name}</button>`)); assertions++;
+  }
+  for (const text of ["<form", 'name="', "action=", "mailto:", "<script"]) excludes(help, text, "Help: no submission or executable collection surface");
+  for (const summary of ["Questions and conversations", "Processing, retention and deletion", "Prepare a feedback note"]) {
+    closedDetails(help, 'class="ws-details"(?=><summary>' + summary + ')', "Help disclosures start closed");
+  }
+  const helpSource = readFileSync(new URL("src/app/workspace/help/page.tsx", root), "utf8");
+  for (const text of ['"use client"', "fetch(", "localStorage", "sessionStorage", "navigator.clipboard", "onSubmit", "onClick", "onChange"]) excludes(helpSource, text, "Help: server-only native note, no collection handler");
+  includes(layout, 'href="/workspace/help"', "Shell: Help is available without adding primary navigation");
+  for (const text of ["Facts stay in this page’s memory", "There is no saved conversation", "A service error means the check did not complete", "Examples and local checks"]) excludes(limits, text, "Limits: stale or overcertain copy removed");
+  for (const text of ["does not establish whether server work completed", "not a legal clearance", "not a reconstruction of historical law", "captured samples retain their recorded dates", "does not submit a document for review", 'href="/workspace/help"']) includes(limits, text, "Limits: current boundaries and Help link retained");
+  console.log(`PASS: ${assertions - askAssertions} Help/limitations structural render assertions; browser acceptance remains separate.`);
 } finally {
   hooks.deregister();
 }

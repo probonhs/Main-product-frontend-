@@ -257,3 +257,17 @@ Do not copy historical decisions here unless they are still in force. Link their
 - **Boundary/reversal:** Q-010/Q-013/Q-014 and verified roles/store/processing/download bytes must precede live
   enablement. New contracts or practitioner confusion warrant a scoped change, not fake capability. Rollback:
   remove the sample link/route; no client/backend state migration. Founder retains final release authority.
+
+## D-022 — Phase 5 preparation after the saved Phase 4 checkpoint (6 October 2026)
+
+- **Authority:** Founder says “phase 4 done continue phase 5”; proceed from published47909e3 under D-013.
+  Progression is not evidence that unfinished drafts/version/diff/DOCX or company/law-change work exists.
+- **Decision:** Compact server-only Help & data, native unsent feedback note, corrected limitations and
+  an eleven-gate release-candidate declaration inventory. Preserve chat/brand/primary navigation.
+- **Boundary:** No feedback sink, processing consent, retention policy, deletion guarantee, auth choice or
+  pilot scope invented. Failed response does not prove no server work/storage. Even complete declarations
+  never authorize release; actual checks and human review remain mandatory.
+- **Evidence:** PHASE_5_PREPARATION.md; Hilbert privacy/backend and Newton R2/Devil's Advocate reviews cleared
+  targeted fixes;115 readiness +46 Help assertions. Local webpack pass is not remote CI or browser proof.
+- **CI:** Add missing codex/** push coverage with existing read-only permissions; test declarations, not
+  incomplete pilot acceptance. No merge/deploy/back-end changes. Revisit if validated contracts/policy change.
