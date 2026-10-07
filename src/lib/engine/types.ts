@@ -1,7 +1,8 @@
 import { z } from "zod";
 /**
  * Wire contract for the Placedon legal engine, verified against `checker/api.py`
- * Eight routes exist; company standing is not a served capability.
+ * (bubblebee1408/placedon-law-backend). Eight routes exist, including `/v1/ask` and
+ * `/v1/mca-strip`; company standing is not a served capability.
  */
 export const ENGINE_ROUTES = {
   health: "/v1/health",
@@ -13,7 +14,59 @@ export const ENGINE_ROUTES = {
   event: "/v1/company/{cin}/events/{event_id}",
   instrumentAffected: "/v1/instruments/{fragment}/affected",
 } as const;
-export type EngineRoute = (typeof ENGINE_ROUTES)[keyof typeof ENGINE_ROUTES];
+
+/**
+ * The gateway's `/v2` verbs, generated in the backend from ONE verb table
+ * (`gateway/verbs.py`) that also produces its MCP tools and CLI, with a parity test so the
+ * three cannot drift. Paths are taken from that table, not retyped from memory.
+ *
+ * Every one of these requires an API key that resolves to a tenant. The key lives in a
+ * server-only env var and never reaches a bundle.
+ */
+export const GATEWAY_ROUTES = {
+  ask: "/v2/ask",
+  reviewContract: "/v2/review-contract",
+  runGet: "/v2/runs/{run_id}",
+  runTrace: "/v2/runs/{run_id}/trace",
+  documentUpload: "/v2/documents/upload",
+  reviewDocument: "/v2/review-document",
+  // `runs.approve` -> head `runs/approve`, then the path field. NOT
+  // `/v2/runs/{run_id}/approve`, which is the shape a REST habit reaches for and which
+  // the gateway does not serve. Read from rest_spec() rather than assumed.
+  runApprove: "/v2/runs/approve/{run_id}",
+  runReject: "/v2/runs/reject/{run_id}",
+  runCancel: "/v2/runs/cancel/{run_id}",
+  // Taken from `rest_path()` in the backend's verb table, verified against a live gateway
+  // on 2026-10-04. A dotted verb's head becomes the path segment, so `review_table.create`
+  // is `/v2/review-table/create` -- hyphen, not underscore, and not a REST noun.
+  vaultUpload: "/v2/vault/upload",
+  vaultStatus: "/v2/vault/status",
+  vaultFind: "/v2/vault/find",
+  vaultVerify: "/v2/vault/verify",
+  // document.verify runs INSIDE document.check; the screen calls only the latter.
+  documentCheck: "/v2/document/check",
+  tableCreate: "/v2/review-table/create",
+  tableStatus: "/v2/review-table/status",
+  tableExport: "/v2/review-table/export",
+  tableCancel: "/v2/review-table/cancel",
+  draftCreate: "/v2/draft/create",
+  draftRevise: "/v2/draft/revise",
+  draftVersions: "/v2/draft/versions",
+  draftDiff: "/v2/draft/diff",
+  draftExport: "/v2/draft/export",
+  calendarUpcoming: "/v2/calendar/upcoming",
+  // C2, the conversation layer. `conversation.get` and `citation.get` end in `.get`, so
+  // `rest_path()` drops the `/get` head: `/v2/conversation/{id}` and `/v2/citation`.
+  // Verified against a live gateway on 2026-10-07.
+  conversationSend: "/v2/conversation/send",
+  conversationGet: "/v2/conversation/{conversation_id}",
+  citationGet: "/v2/citation",
+} as const;
+
+export type EngineV1Route = (typeof ENGINE_ROUTES)[keyof typeof ENGINE_ROUTES];
+export type GatewayRoute = (typeof GATEWAY_ROUTES)[keyof typeof GATEWAY_ROUTES];
+/** Every route this app may name in an error. Widened for the gateway on 2026-09-29. */
+export type EngineRoute = EngineV1Route | GatewayRoute;
 
 /* ── Shared primitives ───────────────────────────────────────────────────── */
 

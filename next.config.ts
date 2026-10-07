@@ -25,6 +25,11 @@ const nextConfig: NextConfig = {
       ],
     }];
   },
+  /**
+   * The development-only route badge sits bottom-left, exactly where the console's account
+   * avatar is, and reads as a broken avatar. Off; compile and runtime errors still show.
+   */
+  devIndicators: false,
 };
 
 export default nextConfig;
