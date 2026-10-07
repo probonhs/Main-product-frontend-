@@ -1,4 +1,4 @@
-# Frontend handoff — 6 October 2026
+# Frontend handoff — 8 October 2026
 
 Repository: `probonhs/Main-product-frontend-`
 Branch: `codex/frontend-handoff`; inspect `git log -5 --oneline` for actual HEAD before continuing.
@@ -8,6 +8,16 @@ Founder subsequently reviewed and approved all work through `5343e98` and reques
 Implementation was already committed/published; this approval is recorded without changing release gates.
 
 ## Current sequence and build checkpoints
+
+Newest D-023: ASK_MINIMAL_APPEARANCE.md. Founder requests minimal welcome + thin rectangular ChatGPT-like
+composer + dark mode; tall Claude-style composer superseded. Help/data/samples consolidated in Known
+limitations; detailed facts stay available through an explicit check/revision flow. No backend/policy changes.
+Independent delta review corrected notice discoverability, examples link, touch width and draft-loss navigation.
+Full offline tests/typecheck/lint/readiness/loop and defaultTurbopack31routes/budget20chunks291,766bytes PASS.
+Brave light/dark start +questions/examples disclosures confirmed; later answer navigation interrupted by user
+browser use. Complete responsive/live/accessibility/practitioner checks remain outstanding. No merge/deploy.
+Previous fcba483 remote CI run37421121642 passed. New checkpoint remoteCI remains separate evidence.
+DevPID46363 still serves127.0.0.1:3300; no credentials/env changes. Inspect Git for current publication.
 
 Newest D-022: PHASE_5_PREPARATION.md, baseline47909e3 verified published. Founder requests Phase5;
 unbuilt Phase4 drafts/version/diff/DOCX and canonical company work remain backlog, not accepted.

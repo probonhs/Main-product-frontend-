@@ -1,6 +1,14 @@
 # Frontend loop state
 
-Updated 6 October 2026. Current authority: `docs/START_HERE.md` and the five-phase loop prompt.
+Updated 8 October 2026. Current authority: `docs/START_HERE.md` and the five-phase loop prompt.
+
+Newest appearance checkpoint D-023: ASK_MINIMAL_APPEARANCE.md. Minimal centred Ask with thin rectangular
+composer; no welcome company-context/intro/footer; consolidated Known limitations and workspace dark mode.
+Detailed facts remain in an explicit check/revision flow. Sources/result guards unchanged. Default Turbopack
+build31routes and budget20chunks291,766bytes PASS; full offline contracts/typecheck/lint/readiness/loop PASS.
+Brave light/dark start and limitations disclosures inspected; full responsive/live acceptance still pending.
+Prior fcba483 remote CI is verified PASS (run37421121642); new checkpoint CI must be checked separately.
+No release/policy/backend/env changes. Inspect Git for current publication SHA, not the historical entries below.
 
 - Product repository: `probonhs/Main-product-frontend-`; review branch: `codex/frontend-handoff`.
 - Execution: Phase 5 frontend preparation at the founder's request (D-022), under D-013.

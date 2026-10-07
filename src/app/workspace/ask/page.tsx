@@ -5,10 +5,10 @@ import { conversationConfiguration } from "@/lib/engine/conversations";
 import { ConversationWorkspace } from "../conversations/conversation-workspace";
 
 export const dynamic = "force-dynamic";
-export default async function AskPage({ searchParams }: { searchParams: Promise<{ example?: string }> }) {
-  const { example } = await searchParams;
+export default async function AskPage({ searchParams }: { searchParams: Promise<{ example?: string; details?: string }> }) {
+  const { example, details } = await searchParams;
   const selected = WORKSPACE_SAMPLES.some((item) => item.id === example) ? example : undefined;
   const sample = selected ? await readAskSample(selected) : null;
-  if (!selected && conversationConfiguration()) return <ConversationWorkspace enabled />;
-  return <AskWorkspace key={selected || "new"} liveEnabled={workspaceLiveEnabled()} initialRecord={sample ? { ...sample, mode: "sample" } : null} />;
+  if (!selected && details !== "1" && conversationConfiguration()) return <ConversationWorkspace enabled />;
+  return <AskWorkspace key={`${selected || "new"}-${details === "1"}`} includeFacts={details === "1"} liveEnabled={workspaceLiveEnabled()} initialRecord={sample ? { ...sample, mode: "sample" } : null} />;
 }

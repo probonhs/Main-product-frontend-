@@ -1,10 +1,33 @@
+import { WORKSPACE_SAMPLES } from "@/lib/workspace-samples";
+import { WorkspaceDataDetails } from "./data-details";
+
 export default function Limitations() {
-  return <article className="ws-primary"><p className="ws-kicker">Scope &amp; limitations</p><h1 className="ws-heading">Know what the record can establish.</h1><p className="ws-intro">Read the conclusion, its sources and what remains unresolved before acting.</p>
-    <section className="ws-section"><h2>Questions and legal scope</h2><p>A question is answered only within the law and facts checked for that result. Supported corporate-law checks can retrieve held provisions, show prescribed figures and evaluate duties from supplied facts. A text match alone does not decide whether your company complies.</p><p>Read the scope and law/source-not-held boundary attached to each answer. The workspace does not promise coverage of every Act or question.</p></section>
-    <section className="ws-section"><h2>Dates and sources</h2><p>Today is the default for a new check. Read the date attached to the actual result; captured samples retain their recorded dates. Section text may be the current consolidation held in the record, not a reconstruction of historical law. Dated figures carry their governing instrument and effective date. Earlier-date checks remain unavailable until the relevant coverage and point-in-time text are established.</p></section>
-    <section className="ws-section"><h2>Documents and review</h2><p>Adding text prepares a working copy; it does not submit a document for review. Corporate-document checks, contract comparisons and review tables have separate evidence and limits. Captured samples do not review your working copy.</p><p>A reported match, a completed check or a table with no pending cells is not a legal clearance. Unreadable documents and failed checks do not establish that a clause is absent.</p></section>
-    <section className="ws-section"><h2>When a result remains unresolved</h2><p>Missing company facts may be supplied and checked again. Missing legal sources require verification by Placedon. A service error does not establish whether server work completed; it is never a legal finding.</p></section>
-    <section className="ws-section"><h2>Actions not available here</h2><p>Drafting and live document-review actions, case-law research, sanctions checks, filing, alerts, billing and company-register connections are not enabled in this workspace. Changes in law are not company-specific monitoring. No result certifies compliance or replaces professional review.</p></section>
-    <div className="ws-actions"><a className="ws-secondary" href="/workspace/help">Help &amp; data</a><a className="ws-secondary" href="/workspace">Return to Ask</a></div>
+  return <article className="ws-primary ws-limitations">
+    <h1 className="ws-heading">Known limitations</h1>
+    <p className="ws-intro">What Placedon can check, how your work is handled, and what still needs professional review.</p>
+    <details className="ws-details"><summary>What an answer can establish</summary>
+      <p>Each answer is limited to the law, sources and facts checked. A retrieved provision alone does not establish compliance. Read the answer’s legal basis and unresolved items before acting.</p>
+      <p>Missing facts can be supplied for another check. Missing legal sources require verification by Placedon. A service error does not establish whether server work completed; it is never a legal finding.</p>
+      <p>For professional review, not legal advice. No result certifies compliance or replaces your professional judgment.</p>
+    </details>
+    <details className="ws-details"><summary>Dates and sources</summary>
+      <p>New checks use today by default; captured samples retain their recorded dates. Read the date on each result. Held section text may be a current consolidation, not a reconstruction of historical law.</p>
+      <p>Dated figures carry their governing instrument and effective date. Earlier-date checks are unavailable until the relevant coverage and point-in-time text are established.</p>
+    </details>
+    <details className="ws-details"><summary>Documents and working copies</summary>
+      <p>Adding text prepares a working copy; it does not submit a document for review. Documents does not upload or review that copy. Captured checks do not review your own document.</p>
+      <p>A reported match or completed check is not a legal clearance. Unreadable text and failed checks cannot establish that a clause is absent.</p>
+      <p>Use <strong>Clear working copy</strong> to remove the draft from Documents. This is not deletion of a file on your computer or a server record. Your browser may retain or restore page content.</p>
+    </details>
+    <WorkspaceDataDetails />
+    <details className="ws-details"><summary>Actions not available here</summary>
+      <p>Live document review and uploads, drafting, case-law research, sanctions checks, filing, alerts, billing and company-register connections are not enabled. The workspace does not cover every Act or question.</p>
+      <p>Changes in law are not company-specific monitoring. A completed process is not a finding about compliance.</p>
+    </details>
+    <details className="ws-details" id="workspace-examples"><summary>Captured example checks</summary>
+      <p>These are recorded results with sample facts, not your saved conversations or a new check of your company.</p>
+      <div className="ws-samples">{WORKSPACE_SAMPLES.map(sample => <a className="ws-secondary" key={sample.id} href={`/workspace/ask?example=${sample.id}`}>{sample.title}</a>)}</div>
+    </details>
+    <div className="ws-actions"><a className="ws-secondary" href="/workspace">Return to Ask</a></div>
   </article>;
 }

@@ -1,5 +1,10 @@
 /* Assistant workspace only; marketing styles never inherit these rules. */
 .workspace {
+  --ink: #0c0c0d;
+  --cream: #f4efe6;
+  --paper: #ede7dc;
+  --grey: #6b665f;
+  --rule: #d8d1c5;
   --background: var(--cream);
   --foreground: var(--ink);
   --surface: var(--paper);
@@ -19,6 +24,15 @@
   font-size: 14px;
   line-height: 1.6;
   overflow-wrap: anywhere;
+}
+.workspace[data-theme="dark"] {
+  --ink: #f4efe6;
+  --cream: #171716;
+  --paper: #222220;
+  --grey: #b0aba2;
+  --rule: #3c3b37;
+  --abstain: #a4adbc;
+  color-scheme: dark;
 }
 .workspace *, .workspace *::before, .workspace *::after { box-sizing: border-box; }
 .workspace :where(div, main, section, article, aside, form, fieldset, nav, details) { min-width: 0; }
@@ -53,6 +67,8 @@
 .workspace .ws-brand { display: inline-flex; align-items: center; flex-wrap: wrap; gap: 8px; min-height: 44px; padding-inline: 10px; font-family: var(--font-display), Fraunces, Georgia, serif; font-size: 24px; line-height: 1.2; letter-spacing: -0.02em; text-decoration: none; }
 .workspace .ws-brand :where(img, svg) { width: 26px; height: 30px; object-fit: contain; }
 .workspace .ws-brand .ws-muted { font: 12px/1.5 var(--font-body), Inter, sans-serif; letter-spacing: 0; }
+.workspace .ws-appearance { display: flex; align-items: center; gap: 8px; margin-top: auto; min-width: 44px; min-height: 44px; padding: 10px 12px; border: 0; border-radius: 5px; background: transparent; color: var(--grey); font-size: 13px; text-align: left; cursor: pointer; }
+.workspace .ws-appearance:hover { background: var(--cream); color: var(--ink); }
 .workspace .ws-nav { display: flex; flex-direction: column; gap: 4px; }
 .workspace .ws-nav a { gap: 8px; }
 .workspace :where(.ws-nav a, .ws-button, .ws-secondary) > svg { flex-shrink: 0; }
@@ -65,13 +81,13 @@
 .workspace .ws-topbar :where(h1, h2) { font-family: var(--font-body), Inter, sans-serif; font-size: 14px; font-weight: 600; line-height: 1.5; letter-spacing: 0; }
 .workspace .ws-topbar a { display: inline-flex; align-items: center; min-height: 44px; }
 .workspace .ws-primary { display: flex; flex-direction: column; gap: 18px; width: min(var(--ws-reading-width), calc(100% - 2 * var(--ws-gutter))); margin: 32px auto; min-width: 0; }
-.workspace .ws-primary.ws-chat { max-width: 800px; gap: 16px; margin-block: 32px 24px; }
+.workspace .ws-primary.ws-chat { max-width: 800px; gap: 20px; margin-block: 32px 24px; }
 .workspace .ws-welcome { display: grid; gap: 10px; padding-block: 12px 8px; }
-.workspace .ws-welcome :where(h1, .ws-heading) { max-width: 25ch; font-family: var(--font-display), Fraunces, Georgia, serif; font-size: clamp(30px, 3vw, 36px); line-height: 1.2; }
+.workspace .ws-welcome :where(h1, .ws-heading) { max-width: 25ch; font-family: var(--font-display), Fraunces, Georgia, serif; font-size: clamp(30px, 3.4vw, 42px); line-height: 1.2; }
 .workspace .ws-welcome p { max-width: 62ch; color: var(--grey); }
 .workspace .ws-chat-has-answer .ws-welcome .ws-heading { font-size: 26px; }
 .workspace .ws-content:has(> :is(.ws-chat, .ws-conversation)) > .ws-topbar { display: none; }
-.workspace .ws-chat:not(.ws-chat-has-answer), .workspace .ws-conversation-start { flex: 1; justify-content: center; padding-block: 32px; }
+.workspace .ws-chat:not(.ws-chat-has-answer), .workspace .ws-conversation-start { flex: 1; justify-content: center; padding-block: 48px 96px; }
 .workspace .ws-chat:not(.ws-chat-has-answer) .ws-welcome, .workspace .ws-conversation-start .ws-conversation-head { text-align: center; margin: 0; }
 .workspace .ws-chat:not(.ws-chat-has-answer) .ws-welcome > *, .workspace .ws-conversation-start .ws-conversation-head > div { margin-inline: auto; }
 .workspace .ws-conversation-start .ws-conversation-head > button { display: none; }
@@ -82,7 +98,8 @@
 .workspace .ws-chat-secondary:has(details[open]) { display: block; }
 .workspace .ws-chat-hint { color: var(--grey); font-size: 11px; text-align: center; }
 .workspace .ws-prompt-suggestions { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px; }
-.workspace .ws-prompt-suggestions .ws-secondary { font-size: 12px; font-weight: 400; }
+.workspace .ws-prompt-suggestions .ws-secondary { font-size: 12px; font-weight: 400; border-color: transparent; border-radius: 6px; color: var(--grey); padding-inline: 12px; }
+.workspace .ws-prompt-suggestions .ws-secondary:hover { border-color: var(--rule); color: var(--ink); }
 .workspace .ws-heading { font-family: var(--font-display), Fraunces, Georgia, serif; font-size: clamp(30px, 3vw, 36px); line-height: 1.2; letter-spacing: -0.02em; font-weight: 450; font-variation-settings: "opsz" 34, "SOFT" 0, "WONK" 0; }
 .workspace .ws-intro { max-width: 68ch; color: var(--grey); font-size: 14px; }
 .workspace .ws-kicker { color: var(--grey); font-size: 12px; font-weight: 500; }
@@ -98,14 +115,23 @@
 .workspace .ws-breadcrumb { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; color: var(--grey); font-size: 12px; }
 .workspace .ws-breadcrumb a { display: inline-flex; align-items: center; min-height: 44px; text-decoration: underline; }
 
-/* Composer: the question remains the primary control; context stays disclosed. */
+/* Soft chat composer; evidence and document records keep their restrained corners. */
 .workspace .ws-form { display: grid; gap: 12px; padding: 16px; border: 1px solid var(--rule); border-radius: 6px; background: var(--paper); }
 .workspace .ws-form:focus-within { border-color: var(--grey); }
-.workspace .ws-composer { gap: 8px; }
-.workspace .ws-chat .ws-composer { grid-template-columns: minmax(0, 1fr) auto; align-items: end; }
-.workspace .ws-chat .ws-composer > :is(.ws-field, .ws-mode-note), .workspace .ws-chat .ws-composer-context:has(details[open]) { grid-column: 1 / -1; }
-.workspace .ws-composer .ws-textarea { min-height: 88px; border: 0; background: transparent; padding: 4px 0; }
-.workspace .ws-composer .ws-send { flex: 0 0 44px; padding: 9px; width: 44px; height: 44px; }
+.workspace .ws-composer { gap: 8px; padding: 12px 16px; border-radius: 12px; }
+.workspace .ws-chat .ws-composer { grid-template-columns: minmax(0, 1fr) 44px 44px; align-items: end; }
+.workspace .ws-chat .ws-composer > .ws-field { grid-column: 1; grid-row: 1; }
+.workspace .ws-chat .ws-composer > .ws-mode-note, .workspace .ws-chat .ws-composer-context { grid-column: 1 / -1; }
+.workspace .ws-composer .ws-textarea { min-height: 44px; max-height: 180px; field-sizing: content; resize: none; border: 0; background: transparent; padding: 10px 0; font-size: 16px; text-align: left; }
+.workspace .ws-composer .ws-textarea:not([aria-invalid="true"]):focus-visible { outline: none; }
+.workspace .ws-composer:has(.ws-textarea:focus-visible) { border-color: var(--ink); box-shadow: 0 0 0 1px var(--ink); }
+.workspace .ws-composer .ws-composer-mode { min-width: 44px; min-height: 44px; display: inline-flex; align-items: center; justify-content: center; color: var(--grey); text-decoration: none; border-radius: 6px; }
+.workspace .ws-composer .ws-composer-mode:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
+.workspace .ws-chat .ws-composer > .ws-composer-mode { grid-column: 2; grid-row: 1; }
+.workspace .ws-composer .ws-send { flex: 0 0 44px; padding: 9px; width: 44px; height: 44px; border-radius: 8px; }
+.workspace .ws-chat .ws-composer > .ws-actions { grid-column: 3; grid-row: 1; }
+.workspace .ws-conversation .ws-composer { grid-template-columns: minmax(0, 1fr) auto; align-items: end; }
+.workspace .ws-conversation .ws-composer .ws-conversation-tools { flex-wrap: nowrap; padding: 0; }
 .workspace .ws-composer-context .ws-details > summary { width: fit-content; }
 .workspace .ws-composer .ws-conversation-tools { margin-top: 0; border: 0; gap: 6px 14px; }
 .workspace .ws-fields { display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px 16px; }
@@ -180,7 +206,12 @@
 .workspace .ws-document-text { max-height: 420px; overflow: auto; padding: 16px; border: 1px solid var(--rule); background: var(--paper); border-radius: 4px; }
 .workspace .ws-document-text pre { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; font: 14px/1.7 Georgia, "Times New Roman", serif; }
 .workspace .ws-chat-answer { min-width: 0; }
-.workspace .ws-question-bubble { width: fit-content; max-width: 88%; margin: 0 0 22px auto; padding: 12px 16px; background: var(--paper); border-radius: 6px; font-size: 14px; }
+.workspace .ws-question-bubble { width: fit-content; max-width: 88%; margin: 0 0 22px auto; padding: 12px 16px; background: var(--paper); border-radius: 16px; font-size: 14px; }
+.workspace .ws-limitations { gap: 16px; max-width: 700px; }
+.workspace .ws-limitations .ws-details { margin: 0; border-top: 0; }
+.workspace .ws-limitations .ws-details > summary { padding-block: 16px; font-size: 14px; }
+.workspace .ws-limitations .ws-details > :not(summary) { font-size: 14px; max-width: 64ch; }
+.workspace .ws-limitations .ws-actions { margin-top: 12px; }
 .workspace .ws-question-bubble p { white-space: pre-wrap; }
 .workspace .ws-review-examples { padding-top: 0; }
 .workspace .ws-document-review .ws-verbatim { white-space: pre-wrap; overflow-wrap: anywhere; }
@@ -264,11 +295,19 @@
   .workspace { grid-template-columns: minmax(0, 1fr); }
   .workspace .ws-sidebar { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 8px; padding: 8px 12px; border-right: 0; border-bottom: 1px solid var(--rule); }
   .workspace .ws-brand { padding-inline: 4px; font-size: 22px; }
+  .workspace .ws-appearance { grid-column: 2; grid-row: 1; margin: 0; padding: 10px; }
+  .workspace .ws-appearance > span { display: none; }
   .workspace .ws-nav { grid-column: 1 / -1; grid-row: 2; flex-direction: row; flex-wrap: wrap; gap: 4px; }
   .workspace .ws-nav a { padding: 9px 10px; font-size: 12px; }
   .workspace .ws-topbar { min-height: 48px; padding-block: 8px; font-size: 12px; }
   .workspace .ws-primary, .workspace .ws-primary.ws-chat { margin-block: 20px; }
   .workspace .ws-welcome { padding-block: 4px; }
+  .workspace .ws-chat:not(.ws-chat-has-answer), .workspace .ws-conversation-start { padding-block: 32px 56px; }
+  .workspace .ws-composer { padding: 10px 12px; border-radius: 10px; }
+  .workspace .ws-conversation .ws-composer .ws-conversation-tools { gap: 6px; }
+  .workspace .ws-composer #conversation-sources { justify-content: center; min-width: 44px; }
+  .workspace .ws-composer #conversation-sources > svg { margin: 0; }
+  .workspace .ws-composer #conversation-sources > span { display: none; }
 }
 @media (max-width: 399px) {
   .workspace .ws-form { padding: 12px; }

@@ -271,3 +271,20 @@ Do not copy historical decisions here unless they are still in force. Link their
   targeted fixes;115 readiness +46 Help assertions. Local webpack pass is not remote CI or browser proof.
 - **CI:** Add missing codex/** push coverage with existing read-only permissions; test declarations, not
   incomplete pilot acceptance. No merge/deploy/back-end changes. Revisit if validated contracts/policy change.
+
+## D-023 — Minimal Ask, thin rectangular composer and dark mode (7 October 2026)
+
+- **Authority:** Founder asks for minimal welcome, no company-context/footer clutter, consolidated Known
+  limitations and dark mode; follow-up specifically rejects a tall composer and requests ChatGPT-like thinness.
+- **Decision:** Approximately70px empty composer with one starting text row, 12px corners and adjacent
+  info/send controls; centre welcome only, keep question/answer reading left-aligned. Workspace theme toggle
+  stores only appearance. Help/data/samples move into closed Known limitations disclosures.
+- **Override:** Current explicit request supersedes the old ≤6px rule for chat composer/message bubbles
+  only. Legal records/source panels retain restrained corners; no copied provider identity/model controls.
+- **Boundary:** Facts remain optional in a dedicated check/revision flow, not a welcome control. No source,
+  legal result boundary or unavailable-service guard removed. Notice links open separately to preserve drafts.
+  No model, auth, API, processing policy, upload, deletion or feedback capability added.
+- **Evidence:** ASK_MINIMAL_APPEARANCE.md; targeted independent review fixes, full offline tests, production
+  build and unchanged budget pass. Brave light/dark start and disclosures inspected; full acceptance pending.
+- **Revisit:** Practitioner confusion about independent checks versus saved conversations or browser reflow
+  regressions warrants a scoped change. Founder retains final appearance/release review.

@@ -48,7 +48,7 @@ const fixture = (id) => JSON.parse(readFileSync(new URL(`fixtures/engine/${id}.j
 const { AskWorkspace, ResultRecord } = await import("../src/app/workspace/ask/ask-workspace.tsx");
 const { askRecordReducer, initialAskRecordState, retainedAskNotice } = await import("../src/lib/engine/ask-record-state.ts");
 const render = (source, liveEnabled = false) => renderToStaticMarkup(React.createElement(AskWorkspace, {
-  liveEnabled,
+  liveEnabled, includeFacts: liveEnabled,
   initialRecord: { data: source.response, mode: "sample", sample: { id: source.fixture_id, capturedAt: source.captured_at, backendCommit: source.backend_commit } },
 }));
 const blank = (liveEnabled) => renderToStaticMarkup(React.createElement(AskWorkspace, { liveEnabled }));
@@ -148,7 +148,7 @@ try {
   includes(liveHtml, "captured example, not a new local check", "Sample answer remains labelled with live composer");
   includes(liveHtml, "not a saved chat", "Live mode disclaims persistence");
   closedDetails(liveHtml, 'id="ws-company-facts"', "Live context disclosure");
-  includes(liveHtml, "Add context", "Live context groups provisions and facts behind a compact control");
+  includes(liveHtml, "Details for this check", "Dedicated fact check groups provisions and facts");
   includes(liveHtml, 'name="provisions"', "Live context includes provision control");
   includes(liveHtml, '<label class="ws-sr-only" for="ws-question">Your question</label>', "Live composer keeps an accessible stable label after result");
   includes(liveHtml, 'id="ws-question" name="question"', "Live composer textarea linked to label");
@@ -157,9 +157,9 @@ try {
   for (const [mode, html] of [["live", blankLive], ["sample", blankSample]]) {
     includes(html, "Start with your question.", `${mode}: neutral welcome`);
     excludes(html, "Ask about the <em>Companies Act", `${mode}: no statute-specific welcome`);
-    closedDetails(html, 'class="ws-details ws-chat-info"(?=><summary>About this check)', `${mode}: check context is disclosed on demand`);
-    closedDetails(html, 'id="ws-sample-results"', `${mode}: samples are secondary`);
-    includes(html, "not your saved conversations", `${mode}: samples are not fake history`);
+    excludes(html, 'id="ws-company-facts"', `${mode}: welcome has no company-context panel`);
+    excludes(html, 'id="ws-sample-results"', `${mode}: samples move to Known limitations`);
+    excludes(html, "Keep the legal basis", `${mode}: no welcome introduction`);
     excludes(html, "A result with its basis", `${mode}: no empty result placeholder`);
     excludes(html, 'id="ws-source-heading"', `${mode}: no empty Sources region`);
     excludes(html, 'class="ws-chat-answer"', `${mode}: no empty answer bubble`);
@@ -168,7 +168,7 @@ try {
   }
   includes(blankLive, '<label class="ws-sr-only" for="ws-question">Your question</label>', "Blank composer question labelled");
   includes(blankLive, 'id="ws-question" name="question"', "Blank composer textarea linked to label");
-  closedDetails(blankLive, 'id="ws-company-facts"', "Blank context disclosure");
+  excludes(blankLive, "Add context", "Welcome has no company-context control");
   includes(blankSample, 'class="ws-form ws-composer"', "Blank sample mode can draft without submitting");
   includes(blankSample, "Sending is unavailable.", "Blank sample mode explains disabled sending");
   includes(blankLive, "Each question is checked independently.", "Chat appearance does not invent independent-Ask memory");
@@ -247,10 +247,11 @@ try {
   // Structural regressions only: these checks do not replace browser focus/reflow acceptance.
   const layout = readFileSync(new URL("src/app/workspace/layout.tsx", root), "utf8");
   for (const text of ["Product preview", "Preview workspace", "ws-sidebar-note", "ws-sidebar-examples", "WORKSPACE_SAMPLES", "gateway connection"]) excludes(layout, text, "Shell: removed development/demo chrome");
-  includes(layout, 'href="#workspace-content"', "Shell: local skip link bypasses workspace navigation");
+  const shell = readFileSync(new URL("src/app/workspace/workspace-nav.tsx", root), "utf8");
+  includes(shell, 'href="#workspace-content"', "Shell: local skip link bypasses workspace navigation");
   includes(layout, 'id="workspace-content" tabIndex={-1}', "Shell: skip target accepts focus");
-  assert.ok(layout.indexOf('href="#workspace-content"') < layout.indexOf("<aside"));
-  assert.ok(layout.indexOf('id="workspace-content"') > layout.indexOf("</aside>"));
+  assert.ok(shell.indexOf('href="#workspace-content"') < shell.indexOf("<aside"));
+  assert.ok(shell.indexOf("{children}") > shell.indexOf("</aside>"));
   assertions += 2;
   const css = readFileSync(new URL("src/app/workspace/workspace.css", root), "utf8");
   includes(css, ".workspace .ws-skip-link:focus", "Shell: local skip control becomes visible on focus");
@@ -260,11 +261,11 @@ try {
 
   console.log(`PASS: ${assertions} offline static-render assertions across five captured Ask records`);
   const askAssertions = assertions;
-  const { default: Help } = await import("../src/app/workspace/help/page.tsx");
+  const { WorkspaceDataDetails } = await import("../src/app/workspace/limitations/data-details.tsx");
   const { default: Limitations } = await import("../src/app/workspace/limitations/page.tsx");
-  const help = renderToStaticMarkup(React.createElement(Help));
+  const help = renderToStaticMarkup(React.createElement(WorkspaceDataDetails));
   const limits = renderToStaticMarkup(React.createElement(Limitations));
-  for (const text of ["Clear working copy", "does not upload or review", "not deletion of a file", "browser may retain or restore", "Processing may involve a model", "does not prove that your message was not stored or processed", "does not delete saved messages or cancel server work", "No product-wide retention, training-use or data-residency promise", "Do not submit confidential client material", "Feedback has not been sent", "no feedback submission or storage service"]) includes(help, text, "Help: processing/storage boundaries remain explicit");
+  for (const text of ["Clear working copy", "does not upload or review", "not deletion of a file", "browser may retain or restore", "Processing may involve a model", "does not prove that your message was not stored or processed", "does not delete saved messages or cancel server work", "No product-wide retention, training-use or data-residency promise", "Do not submit confidential client material", "Feedback has not been sent", "no feedback submission or storage service"]) includes(limits, text, "Known limitations: processing/storage boundaries remain explicit");
   includes(help, 'for="workspace-feedback-note"', "Feedback has a native associated label");
   includes(help, 'aria-describedby="help-feedback-gate help-feedback-storage"', "Feedback describes sending and restoration limits");
   includes(help, 'aria-describedby="help-deletion-gate"', "Deletion describes unavailability");
@@ -272,14 +273,16 @@ try {
     assert.match(help, new RegExp(`<button[^>]*disabled=""[^>]*>${name}</button>`)); assertions++;
   }
   for (const text of ["<form", 'name="', "action=", "mailto:", "<script"]) excludes(help, text, "Help: no submission or executable collection surface");
-  for (const summary of ["Questions and conversations", "Processing, retention and deletion", "Prepare a feedback note"]) {
-    closedDetails(help, 'class="ws-details"(?=><summary>' + summary + ')', "Help disclosures start closed");
+  for (const summary of ["Questions and conversations", "Processing, retention and deletion", "Report an issue"]) {
+    closedDetails(help, 'class="ws-details"[^>]*(?=><summary>' + summary + ')', "Help disclosures start closed");
   }
-  const helpSource = readFileSync(new URL("src/app/workspace/help/page.tsx", root), "utf8");
+  const helpSource = readFileSync(new URL("src/app/workspace/limitations/data-details.tsx", root), "utf8");
   for (const text of ['"use client"', "fetch(", "localStorage", "sessionStorage", "navigator.clipboard", "onSubmit", "onClick", "onChange"]) excludes(helpSource, text, "Help: server-only native note, no collection handler");
-  includes(layout, 'href="/workspace/help"', "Shell: Help is available without adding primary navigation");
+  for (const text of ["<footer", 'href="/workspace/help"', "Scope & limitations", "Help &amp; data"]) excludes(layout, text, "Shell: no footer/help clutter");
+  includes(shell, 'href="/workspace/limitations"', "Known limitations remains available in primary navigation");
+  includes(readFileSync(new URL("src/app/workspace/help/page.tsx", root), "utf8"), 'redirect("/workspace/limitations#workspace-data")', "Old Help URL points to consolidated data information");
   for (const text of ["Facts stay in this page’s memory", "There is no saved conversation", "A service error means the check did not complete", "Examples and local checks"]) excludes(limits, text, "Limits: stale or overcertain copy removed");
-  for (const text of ["does not establish whether server work completed", "not a legal clearance", "not a reconstruction of historical law", "captured samples retain their recorded dates", "does not submit a document for review", 'href="/workspace/help"']) includes(limits, text, "Limits: current boundaries and Help link retained");
+  for (const text of ["does not establish whether server work completed", "not a legal clearance", "not a reconstruction of historical law", "captured samples retain their recorded dates", "does not submit a document for review", 'href="/workspace/ask?details=1"']) includes(limits, text, "Limits: current boundaries and fact-check entry retained");
   console.log(`PASS: ${assertions - askAssertions} Help/limitations structural render assertions; browser acceptance remains separate.`);
 } finally {
   hooks.deregister();

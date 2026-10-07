@@ -6,7 +6,7 @@ import { askLabel } from "@/lib/engine/ask-label";
 import { askRecordReducer, initialAskRecordState, retainedAskNotice, type LoadedAskRecord } from "@/lib/engine/ask-record-state";
 import { WORKSPACE_SAMPLES } from "@/lib/workspace-samples";
 import { CHAT_STARTERS, chatEnterAction } from "@/lib/chat-input";
-import { ArrowUp, BookOpen, SlidersHorizontal } from "lucide-react";
+import { ArrowUp, BookOpen, Info, SlidersHorizontal } from "lucide-react";
 
 type RecordValue = Record<string, unknown>;
 const object = (value: unknown): RecordValue => value && typeof value === "object" && !Array.isArray(value) ? value as RecordValue : {};
@@ -88,13 +88,14 @@ export function ResultRecord({ record, revise, previous }: { record: LoadedRecor
   </div></div>;
 }
 
-export function AskWorkspace({ liveEnabled, initialRecord }: { liveEnabled: boolean; initialRecord?: LoadedRecord | null }) {
+export function AskWorkspace({ liveEnabled, initialRecord, includeFacts = false }: { liveEnabled: boolean; initialRecord?: LoadedRecord | null; includeFacts?: boolean }) {
   const [state, dispatch] = useReducer(askRecordReducer, initialRecord ?? null, initialAskRecordState);
   const { record, error } = state;
   const busy = state.pendingId !== null;
   const notice = retainedAskNotice(state);
   const [question, setQuestion] = useState("");
   const [contextCount, setContextCount] = useState(0);
+  const [showFacts, setShowFacts] = useState(includeFacts);
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const form = useRef<HTMLFormElement>(null);
   const composing = useRef(false);
@@ -116,6 +117,12 @@ export function AskWorkspace({ liveEnabled, initialRecord }: { liveEnabled: bool
   }, []);
   useEffect(() => () => controller.current?.abort(), []);
   useEffect(() => { if (record) document.getElementById("ws-result-heading")?.focus(); }, [record]);
+  useEffect(() => {
+    if (showFacts) {
+      const details = document.getElementById("ws-company-facts") as HTMLDetailsElement | null;
+      if (details) { details.open = true; details.querySelector("summary")?.focus(); }
+    }
+  }, [showFacts]);
   function fieldError(key: string) { return fieldErrors[key] ? <p id={`error-${key}`} className="ws-field-error">{fieldErrors[key]}</p> : null; }
   function fieldA11y(key: string) { return { "aria-invalid": !!fieldErrors[key], "aria-describedby": fieldErrors[key] ? `error-${key}` : undefined }; }
   function editDraft() {
@@ -182,11 +189,12 @@ export function AskWorkspace({ liveEnabled, initialRecord }: { liveEnabled: bool
       if (samples) { samples.open = true; samples.querySelector("summary")?.focus(); }
       return;
     }
+    setShowFacts(true);
     const details = document.getElementById("ws-company-facts") as HTMLDetailsElement | null;
     if (details) { details.open = true; details.querySelector("summary")?.focus(); }
   }
   return <div className={`ws-primary ws-chat${record ? " ws-chat-has-answer" : ""}`}>
-    <div className="ws-welcome"><h1 className="ws-heading">{record ? "Ask Placedon" : "What are you working on?"}</h1>{!record && <p className="ws-intro">Start with your question. Keep the legal basis and sources within reach.</p>}</div>
+    <div className="ws-welcome"><h1 className="ws-heading">{record ? "Ask Placedon" : "Start with your question."}</h1></div>
     {notice && <div className="ws-record-notice" role="status"><strong>{notice.title}</strong><p>{notice.detail}</p></div>}
     {record && <ResultRecord key={text(object(record.data).turn_id)} record={record} revise={revise} previous={!!notice} />}
     <form ref={form} className="ws-form ws-composer" onSubmit={runLive} onChange={(event) => {
@@ -200,9 +208,9 @@ export function AskWorkspace({ liveEnabled, initialRecord }: { liveEnabled: bool
       dispatch({ type: "invalid", message: "Check the highlighted fields. No request was sent." });
       setFieldErrors((previous) => ({ ...previous, [control.name]: control.validationMessage }));
     }}>
-      <div className="ws-field"><label className="ws-sr-only" htmlFor="ws-question">Your question</label><textarea className="ws-textarea" id="ws-question" name="question" value={question} onChange={(event) => setQuestion(event.target.value)} required maxLength={2000} rows={3} placeholder="Ask Placedon…" onCompositionStart={() => { composing.current = true; }} onCompositionEnd={() => { composing.current = false; }} onKeyDown={event => { const action = chatEnterAction({ key: event.key, keyCode: event.nativeEvent.keyCode, shiftKey: event.shiftKey, altKey: event.altKey, repeat: event.repeat, isComposing: event.nativeEvent.isComposing || composing.current }); if (action !== "edit") { event.preventDefault(); if (action === "send" && liveEnabled && !busy && question.trim()) form.current?.requestSubmit(); } }} {...fieldA11y("question")} />{fieldError("question")}</div>
+      <div className="ws-field"><label className="ws-sr-only" htmlFor="ws-question">Your question</label><textarea className="ws-textarea" id="ws-question" name="question" value={question} onChange={(event) => setQuestion(event.target.value)} required maxLength={2000} rows={1} placeholder="Ask Placedon…" onCompositionStart={() => { composing.current = true; }} onCompositionEnd={() => { composing.current = false; }} onKeyDown={event => { const action = chatEnterAction({ key: event.key, keyCode: event.nativeEvent.keyCode, shiftKey: event.shiftKey, altKey: event.altKey, repeat: event.repeat, isComposing: event.nativeEvent.isComposing || composing.current }); if (action !== "edit") { event.preventDefault(); if (action === "send" && liveEnabled && !busy && question.trim()) form.current?.requestSubmit(); } }} {...fieldA11y("question")} />{fieldError("question")}</div>
       {notice && <p className="ws-mode-note">Draft only. The answer above does not include these changes.</p>}
-      {liveEnabled && <div className="ws-composer-context"><details className="ws-details" id="ws-company-facts"><summary><SlidersHorizontal size={16} aria-hidden="true" />Add context{contextCount > 0 ? ` (${contextCount} included)` : ""}</summary><p className="ws-muted">Name a provision for a more precise check. Add company facts only when you want to check how it applies.</p><button className="ws-secondary" type="button" onClick={clearContext}>Clear details</button>
+      {liveEnabled && showFacts && <div className="ws-composer-context"><details className="ws-details" id="ws-company-facts"><summary><SlidersHorizontal size={16} aria-hidden="true" />Details for this check{contextCount > 0 ? ` (${contextCount} included)` : ""}</summary><p className="ws-muted">Name a provision for a more precise check. Add company facts only when you want to check how it applies.</p><button className="ws-secondary" type="button" onClick={clearContext}>Clear details</button>
       <div className="ws-field"><label htmlFor="ws-provisions">Provisions to check <span className="ws-muted">(required with company facts)</span></label><input className="ws-input" id="ws-provisions" name="provisions" placeholder="Section 2(85), Section 173" {...fieldA11y("provisions")} /><p className="ws-muted">Separate provisions with commas. Without a named provision, a text match may leave the question unresolved.</p>{fieldError("provisions")}</div>
       <label className="ws-label"><input type="checkbox" name="figures" /> Include the prescribed small-company capital and turnover limits</label>
       <h2>Company facts for this check</h2><p className="ws-muted">All entered facts are submitted, even when this panel is closed. Leave unknown facts blank; blank never means zero or no. Company type and incorporation date are required with facts. A missing legal source cannot be resolved by supplying facts.</p><div className="ws-fields">
@@ -214,15 +222,15 @@ export function AskWorkspace({ liveEnabled, initialRecord }: { liveEnabled: bool
         {Object.entries(EVIDENCE_DATES).map(([key, label]) => <div className="ws-field" key={key}><label htmlFor={`ws-${key}`}>{label}</label><input className="ws-input" type="date" id={`ws-${key}`} name={key} {...fieldA11y(key)} />{fieldError(key)}</div>)}
         {[["agm_dates", "AGM dates"], ["board_meetings", "Board meeting dates"]].map(([key, label]) => <div className="ws-field" key={key}><label htmlFor={`ws-${key}`}>{label}</label><input className="ws-input" id={`ws-${key}`} name={key} placeholder="YYYY-MM-DD, YYYY-MM-DD" {...fieldA11y(key)} /><p className="ws-muted">Use ISO dates separated by commas. Leave blank if unknown.</p>{fieldError(key)}</div>)}
       </div></details></div>}
+      <a className="ws-composer-mode" href="/workspace/limitations#workspace-questions" target="_blank" rel="noopener noreferrer" title="How this question is handled (opens in a new tab)" aria-label="Independent check: submitted questions are processed without conversation memory. Read sending and storage limitations in a new tab."><Info size={18} aria-hidden="true" /></a>
       <div className="ws-actions"><button className="ws-button ws-send" aria-label={busy ? "Checking question" : "Send question"} aria-describedby="ws-send-note" disabled={!liveEnabled || busy || !question.trim()}><ArrowUp size={18} aria-hidden="true" /></button></div>
     </form>
-    <p className="ws-chat-hint" id="ws-send-note">{liveEnabled ? "Each question is checked independently." : "Sending is unavailable. You can draft a question here."}</p>
+    <p className={liveEnabled ? "ws-sr-only" : "ws-chat-hint"} id="ws-send-note">{liveEnabled ? "Each question is checked independently. Enter to send · Shift + Enter for a new line." : "Sending is unavailable. You can draft a question here. Shift + Enter for a new line."}</p>
     {!record && <div className="ws-prompt-suggestions" aria-label="Suggested questions">{CHAT_STARTERS.map(starter => <button type="button" className="ws-secondary" key={starter.label} disabled={busy} onClick={() => { editDraft(); setQuestion(starter.question); document.getElementById("ws-question")?.focus(); }}>{starter.label}</button>)}</div>}
-    <p className="ws-chat-hint">Enter to send · Shift + Enter for a new line</p>
-    <div className="ws-chat-secondary">
-      <details className="ws-details ws-chat-info"><summary>About this check</summary><p className="ws-mode-note">{liveEnabled ? "Local checks configured. Sending a new question submits your question and facts to the local engine, not a saved chat." : "Sample mode. These captured examples show how Placedon checks a question. They do not analyse your company."}{liveEnabled && record?.mode === "sample" && " The answer above is a captured example, not a new local check."}<a className="ws-link" href="/workspace/limitations">See supported scope</a></p></details>
+    {record && <div className="ws-chat-secondary">
+      <details className="ws-details ws-chat-info"><summary>About this check</summary><p className="ws-mode-note">{liveEnabled ? "Local checks configured. Sending a new question submits your question and facts to the local engine, not a saved chat." : "Sample mode. These captured examples show how Placedon checks a question. They do not analyse your company."}{liveEnabled && record.mode === "sample" && " The answer above is a captured example, not a new local check."}<a className="ws-link" href="/workspace/limitations">Known limitations</a></p></details>
       <details className="ws-details" id="ws-sample-results"><summary>See sample results</summary><p className="ws-muted">Captured checks with sample facts, not your saved conversations.</p><div className="ws-samples">{WORKSPACE_SAMPLES.map((sample) => <button key={sample.id} className="ws-secondary" disabled={busy} onClick={() => void submit({ sampleId: sample.id })}>{sample.title}</button>)}</div></details>
-    </div>
+    </div>}
     <p className="ws-muted" role="status" aria-live="polite">{busy ? "Checking the record…" : notice ? "No new result for your draft. The earlier record remains available." : record ? `Record ready: ${askLabel(record.data)}.` : ""}</p>
     {error && <div role="alert" className="ws-error"><h2>Check not completed</h2><p>{error}</p><p>No new legal conclusion was returned. Your question and facts are preserved.{record && " The record above belongs to an earlier check or captured example."}</p></div>}
   </div>;
